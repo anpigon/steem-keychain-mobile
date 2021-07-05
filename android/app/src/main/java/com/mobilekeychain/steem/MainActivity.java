@@ -1,4 +1,4 @@
-package com.mobilekeychain;
+package com.mobilekeychain.steem;
 
 import com.facebook.react.ReactActivity;
 
