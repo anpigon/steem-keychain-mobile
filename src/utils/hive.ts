@@ -18,7 +18,7 @@ import {RequestPost} from './keychain.types';
 
 type BroadcastResult = {id: string};
 
-const DEFAULT_RPC = 'https://api.hive.blog';
+const DEFAULT_RPC = 'https://api.steemit.com';
 let client = new Client(DEFAULT_RPC);
 hiveTx.config.rebranded_api = true;
 hiveTx.updateOperations();
