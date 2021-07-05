@@ -19,7 +19,7 @@ const Introduction = ({navigation}: IntroductionNavProp) => {
         <Separator height={height / 15} />
         <KeychainLogo {...styles.image} />
         <Separator height={height / 20} />
-        <GradientEllipse style={styles.gradient} dotColor="red">
+        <GradientEllipse style={styles.gradient} dotColor="#4CA2F0">
           <Text style={styles.text}>{translate('intro.text')}</Text>
         </GradientEllipse>
         <GradientEllipse style={styles.gradient} dotColor="white">
