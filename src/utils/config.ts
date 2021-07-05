@@ -3,10 +3,10 @@ export const hiveEngine = {
 };
 
 export const hiveConfig = {
-  CREATE_ACCOUNT_URL: 'https://signup.hive.io/',
+  CREATE_ACCOUNT_URL: 'https://signup.steemit.com',
 };
 export const BrowserConfig = {
-  HOMEPAGE_URL: 'https://hive.io',
+  HOMEPAGE_URL: 'https://steemit.com',
   FOOTER_HEIGHT: 40,
   HEADER_HEIGHT: 40,
 };
