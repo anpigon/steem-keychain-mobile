@@ -7,7 +7,7 @@
     "existingAccount": "Existing Account",
     "createAccount": "New Account"
   },
-  "addAccountByKey": {"text": "Add your existing HIVE account to Keychain"},
+  "addAccountByKey": {"text": "Add your existing STEEM account to Keychain"},
   "keys": {
     "posting": "Posting",
     "active": "Active",
