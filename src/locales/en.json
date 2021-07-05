@@ -2,8 +2,8 @@
   "unlock": {"enterPIN": "Enter your PIN", "authenticate": "Authenticate"},
   "signup": {"confirm": "Confirm your PIN", "choose": "Choose your PIN"},
   "intro": {
-    "text": "HIVE powers a growing ecosystem of Web 3.0 websites and applications.",
-    "manage": "Safely manage your funds and connect to HIVE based services with KEYCHAIN.",
+    "text": "STEEM powers a growing ecosystem of Web 3.0 websites and applications.",
+    "manage": "Safely manage your funds and connect to STEEM based services with KEYCHAIN.",
     "existingAccount": "Existing Account",
     "createAccount": "New Account"
   },
