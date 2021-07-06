@@ -2,7 +2,7 @@ const dsteem = require('dsteem');
 import {
   AccountWitnessProxyOperation,
   AccountWitnessVoteOperation,
-  Client,
+  // Client,
   CommentOptionsOperation,
   ConvertOperation,
   DelegateVestingSharesOperation,
@@ -15,11 +15,13 @@ import api from 'api/keychain';
 import hiveTx from 'hive-tx';
 import {steemEngine} from 'utils/config';
 import {RequestPost} from './keychain.types';
+const Client = require('dsteem/lib/client').Client;
 
 type BroadcastResult = {id: string};
 
+const timeout = 10 * 1000;
 const DEFAULT_RPC = 'https://api.steemit.com';
-let client = new Client(DEFAULT_RPC);
+let client = new Client(DEFAULT_RPC, {timeout});
 hiveTx.config.rebranded_api = true;
 hiveTx.updateOperations();
 
@@ -27,7 +29,7 @@ const getDefault: () => Promise<string> = async () => {
   // try {
   //   return (await api.get('/hive/rpc')).data.rpc;
   // } catch (e) {
-    return DEFAULT_RPC;
+  return DEFAULT_RPC;
   // }
 };
 
@@ -35,7 +37,7 @@ export const setRpc = async (rpc: string) => {
   if (rpc === 'DEFAULT') {
     rpc = await getDefault();
   }
-  client = new Client(rpc);
+  client = new Client(rpc, {timeout});
   hiveTx.config.node = rpc;
 };
 
