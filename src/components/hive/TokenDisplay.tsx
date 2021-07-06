@@ -80,7 +80,7 @@ const renderLeftBottom = (
   incoming?: number,
   outgoing?: number,
 ) => {
-  if (currency !== 'HP') {
+  if (currency !== 'SP') {
     return (
       <View style={[styles.row, styles.halfLine]}>
         <Text style={styles.price}>{`$ ${price.Usd}`}</Text>

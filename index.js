@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import './global';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {AppRegistry, StatusBar} from 'react-native';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
@@ -13,20 +13,17 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 const Root = () => {
   const [gateLifted, setGateLifted] = useState(false);
 
-  const onBeforeLift = () => {
-    // Take an action before the gate lifts
+  useEffect(() => {
     setTimeout(() => {
       setGateLifted(true);
     }, 1000);
-  };
+  });
+
   return (
     <SafeAreaProvider>
       <Provider store={store}>
         <StatusBar backgroundColor="black" />
-        <PersistGate
-          loading={<Loading />}
-          persistor={persistor}
-          onBeforeLift={onBeforeLift}>
+        <PersistGate loading={<Loading />} persistor={persistor}>
           {gateLifted ? <App /> : <Loading />}
         </PersistGate>
       </Provider>

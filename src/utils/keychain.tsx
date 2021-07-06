@@ -245,7 +245,7 @@ const isProposalIDs = (obj: string) => {
 };
 
 const isFilledDelegationMethod = (obj: string) => {
-  return obj === 'VESTS' || obj === 'HP';
+  return obj === 'VESTS' || obj === 'SP';
 };
 
 const isFilledDate = (date: string) => {
@@ -266,7 +266,7 @@ const isFilledAmtSP = (obj: RequestDelegation) => {
   return (
     isFilled(obj.amount) &&
     !isNaN(parseFloat(obj.amount)) &&
-    ((countDecimals(obj.amount) === 3 && obj.unit === 'HP') ||
+    ((countDecimals(obj.amount) === 3 && obj.unit === 'SP') ||
       (countDecimals(obj.amount) === 6 && obj.unit === 'VESTS'))
   );
 };

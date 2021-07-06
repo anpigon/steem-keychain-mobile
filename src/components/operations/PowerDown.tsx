@@ -18,7 +18,7 @@ import Balance from './Balance';
 import Operation from './Operation';
 
 type Props = PropsFromRedux & {currency?: string};
-const PowerDown = ({currency = 'HP', user, loadAccount, properties}: Props) => {
+const PowerDown = ({currency = 'SP', user, loadAccount, properties}: Props) => {
   const [amount, setAmount] = useState('');
   const [loading, setLoading] = useState(false);
 

@@ -21,7 +21,7 @@ import Operation from './Operation';
 type Props = PropsFromRedux & {currency?: string; delegatee?: string};
 
 const Delegation = ({
-  currency = 'HP',
+  currency = 'SP',
   user,
   loadAccount,
   properties,
