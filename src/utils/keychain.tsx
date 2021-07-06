@@ -1,4 +1,4 @@
-import {CommentOptionsOperation} from '@hiveio/dhive';
+import {CommentOptionsOperation} from 'dsteem';
 import {Account, KeyTypes} from 'actions/interfaces';
 import {MutableRefObject} from 'react';
 import WebView from 'react-native-webview';
@@ -47,7 +47,7 @@ export const sendError = (
 ) => {
   console.log(tabRef, error);
   tabRef.current.injectJavaScript(
-    `window.hive_keychain.onAnswerReceived("hive_keychain_response",${JSON.stringify(
+    `window.steem_keychain.onAnswerReceived("steem_keychain_response",${JSON.stringify(
       {success: false, result: null, ...error},
     )})`,
   );
@@ -58,7 +58,7 @@ export const sendResponse = (
   obj: RequestSuccess,
 ) => {
   tabRef.current.injectJavaScript(
-    `window.hive_keychain.onAnswerReceived("hive_keychain_response",${JSON.stringify(
+    `window.steem_keychain.onAnswerReceived("steem_keychain_response",${JSON.stringify(
       {success: true, error: null, ...obj},
     )})`,
   );
@@ -245,7 +245,7 @@ const isProposalIDs = (obj: string) => {
 };
 
 const isFilledDelegationMethod = (obj: string) => {
-  return obj === 'VESTS' || obj === 'HP';
+  return obj === 'VESTS' || obj === 'SP';
 };
 
 const isFilledDate = (date: string) => {
@@ -266,7 +266,7 @@ const isFilledAmtSP = (obj: RequestDelegation) => {
   return (
     isFilled(obj.amount) &&
     !isNaN(parseFloat(obj.amount)) &&
-    ((countDecimals(obj.amount) === 3 && obj.unit === 'HP') ||
+    ((countDecimals(obj.amount) === 3 && obj.unit === 'SP') ||
       (countDecimals(obj.amount) === 6 && obj.unit === 'VESTS'))
   );
 };
@@ -292,7 +292,7 @@ const isFilledWeight = (obj: string | number) => {
 };
 
 const isFilledCurrency = (obj: string) => {
-  return isFilled(obj) && (obj === 'HIVE' || obj === 'HBD');
+  return isFilled(obj) && (obj === 'STEEM' || obj === 'SBD');
 };
 
 const isFilledKey = (obj: string) => {

@@ -1,8 +1,8 @@
 import EllipticButton from 'components/form/EllipticButton';
 import CustomModal from 'components/modals/CustomModal';
 import Separator from 'components/ui/Separator';
-import {SignupNavProp} from 'navigators/Signup.types';
-import {UnlockNavigationProp} from 'navigators/Unlock.types';
+import {SignupNavigation, SignupNavProp} from 'navigators/Signup.types';
+import {UnlockNavigation, UnlockNavigationProp} from 'navigators/Unlock.types';
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Text} from 'react-native-elements';
@@ -18,7 +18,7 @@ interface Props {
   title: string;
   confirm?: string;
   submit: (pin: string, callback?: (unsafe?: boolean) => void) => void;
-  navigation: UnlockNavigationProp | SignupNavProp;
+  navigation: UnlockNavigationProp | SignupNavProp | UnlockNavigation | SignupNavigation;
 }
 
 const PinCode = ({
@@ -59,7 +59,7 @@ const PinCode = ({
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
+    const unsubscribe = (navigation as SignupNavigation).addListener('focus', () => {
       setStep(0);
       setCode([]);
       setConfirmCode([]);
@@ -189,6 +189,7 @@ const styles = StyleSheet.create({
   sub: {color: 'white'},
   container: {
     width: '80%',
+    maxWidth: 400,
     marginLeft: '10%',
     display: 'flex',
     flexDirection: 'column',

@@ -50,6 +50,6 @@ export const lock = () => {
 
 export * from 'actions/accounts';
 export * from 'actions/browser';
-export * from 'actions/hive';
-export * from 'actions/hiveEngine';
+export * from 'actions/steem';
+export * from 'actions/steemEngine';
 export * from 'actions/settings';

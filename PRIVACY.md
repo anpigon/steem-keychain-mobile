@@ -1,15 +1,15 @@
 ## Privacy Policy
 ## Effective date: December 1, 2020
 
-Quentin Correa (@stoodkev) ("us", "we", or "our") provides and operates the Hive Keychain Mobile App (the "Service").
+Quentin Correa (@stoodkev) ("us", "we", or "our") provides and operates the Steem Keychain Mobile App (the "Service").
 
 This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use our Service and the choices you have associated with that data.
 
 ### Information Collection And Use
-The Hive Keychain Mobile App does not collect any personal data of any kind. Account names and private keys entered into the extension are stored locally, are never transmitted anywhere, and are securely encrypted using the user-chosen password.
+The Steem Keychain Mobile App does not collect any personal data of any kind. Account names and private keys entered into the extension are stored locally, are never transmitted anywhere, and are securely encrypted using the user-chosen password.
 
 ### Usage Data
-The Hive Keychain Mobile App does not collect usage data of any kind.
+The Steem Keychain Mobile App does not collect usage data of any kind.
 
 ### Tracking & Cookies Data
 The Service does not perform any tracking or store any cookies on users' devices.
@@ -30,4 +30,4 @@ You are advised to review this Privacy Policy periodically for any changes. Chan
 ### Contact Us
 If you have any questions about this Privacy Policy, please contact us:
 
-By email: stoodkev@hive-keychain.com
+By email: stoodkev@Steem-keychain.com

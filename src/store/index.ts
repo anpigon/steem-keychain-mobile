@@ -1,8 +1,9 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import reducers from 'reducers/index';
 import {applyMiddleware, createStore} from 'redux';
 import {persistReducer, persistStore} from 'redux-persist';
 import thunk from 'redux-thunk';
+import { composeWithDevTools } from 'remote-redux-devtools';
 
 const persistConfig = {
   key: 'root',
@@ -11,7 +12,7 @@ const persistConfig = {
 };
 
 const persistedReducers = persistReducer(persistConfig, reducers);
-const store = createStore(persistedReducers, applyMiddleware(thunk));
+const store = createStore(persistedReducers, composeWithDevTools(applyMiddleware(thunk)));
 
 const persistor = persistStore(store);
 

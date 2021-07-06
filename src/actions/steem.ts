@@ -1,11 +1,11 @@
 import {decodeMemo} from 'components/bridge';
 import {AppThunk} from 'src/hooks/redux';
-import dhive, {getClient} from 'utils/hive';
+import dsteem, {getClient} from 'utils/steem';
 import {
   getConversionRequests,
   getDelegatees,
   getDelegators,
-} from 'utils/hiveUtils';
+} from 'utils/steemUtils';
 import {translate} from 'utils/localize';
 import {getBittrexPrices} from 'utils/price';
 import {getPhishingAccounts} from 'utils/transferValidator';
@@ -90,6 +90,7 @@ export const loadBittrex = (): AppThunk => async (dispatch) => {
 export const initAccountTransactions = (
   accountName: string,
 ): AppThunk => async (dispatch, getState) => {
+  console.debug('call initAccountTransactions');
   const memoKey = getState().accounts.find((a) => a.name === accountName)!.keys
     .memo;
   const transfers = await getAccountTransactions(accountName, null, memoKey);
@@ -119,15 +120,22 @@ const getAccountTransactions = async (
   memoKey?: string,
 ): Promise<Transaction[]> => {
   try {
-    const op = dhive.utils.operationOrders;
-    const operationsBitmask = dhive.utils.makeBitMaskFilter([op.transfer]);
-    const transactions = await getClient().database.getAccountHistory(
+    const op = dsteem.utils.operationOrders;
+    const operationsBitmask = dsteem.utils.makeBitMaskFilter([op.transfer]);
+    console.log('operationsBitmask: ' + operationsBitmask);
+    const transactions = await getClient().database.call('get_account_history', [
       accountName,
       start || -1,
       start ? Math.min(10, start) : 1000,
-      //@ts-ignore
       operationsBitmask,
-    );
+    ]);
+    // .getAccountHistory(
+    //   accountName,
+    //   start || -1,
+    //   start ? Math.min(10, start) : 1000,
+    //   //@ts-ignore
+    //   operationsBitmask,
+    // );
 
     const transfers = transactions
       .filter((e) => e[1].op[0] === 'transfer')
@@ -146,7 +154,6 @@ const getAccountTransactions = async (
         (a, b) =>
           new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
       );
-    console.log(transfers);
 
     if (start && Math.min(1000, start) !== 1000 && transfers.length) {
       transfers[transfers.length - 1].last = true;

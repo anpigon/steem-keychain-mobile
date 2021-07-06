@@ -1,9 +1,9 @@
-import {Operation} from '@hiveio/dhive';
+import {Operation} from 'dsteem';
 import {Account, KeyTypes} from 'actions/interfaces';
 import {encodeMemo} from 'components/bridge';
 import React from 'react';
-import {broadcast} from 'utils/hive';
-import {getAccountKeys} from 'utils/hiveUtils';
+import {broadcast} from 'utils/steem';
+import {getAccountKeys} from 'utils/steemUtils';
 import {
   RequestBroadcast,
   RequestError,

@@ -26,6 +26,7 @@ import {connect, ConnectedProps} from 'react-redux';
 import {RootState} from 'store';
 import validateNewAccount from 'utils/keyValidation';
 import {translate} from 'utils/localize';
+import axios from 'axios';
 
 const AddAccountByKey = ({
   addAccount,
@@ -33,9 +34,13 @@ const AddAccountByKey = ({
   route,
 }: PropsFromRedux &
   (AddAccNavigationProps | AddAccFromWalletNavigationProps)) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [account, setAccount] = useState('');
   const [key, setKey] = useState('');
   const onImportKeys = async () => {
+    if(!account || !key) return;
+
+    setIsLoading(true);
     try {
       const keys = await validateNewAccount(account, key);
       if (keys) {
@@ -45,7 +50,10 @@ const AddAccountByKey = ({
         Toast.show(translate('toast.error_add_account'));
       }
     } catch (e) {
+      console.error(e);
       Toast.show(e.message);
+    } finally {
+      setIsLoading(false);
     }
   };
   const {height} = useWindowDimensions();
@@ -89,6 +97,7 @@ const AddAccountByKey = ({
           />
           <Separator height={height / 7.5} />
           <Button
+            isLoading={isLoading}
             title={translate('common.import').toUpperCase()}
             onPress={onImportKeys}
           />

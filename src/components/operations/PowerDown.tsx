@@ -1,5 +1,5 @@
 import {loadAccount} from 'actions/index';
-import Hp from 'assets/wallet/icon_hp_dark.svg';
+import Hp from 'assets/wallet/icon_sp_dark.svg';
 import ActiveOperationButton from 'components/form/ActiveOperationButton';
 import OperationInput from 'components/form/OperationInput';
 import Separator from 'components/ui/Separator';
@@ -8,17 +8,17 @@ import {Keyboard, StyleSheet, Text} from 'react-native';
 import Toast from 'react-native-simple-toast';
 import {connect, ConnectedProps} from 'react-redux';
 import {RootState} from 'store';
-import {fromHP, toHP, withCommas} from 'utils/format';
-import {powerDown} from 'utils/hive';
-import {getCurrencyProperties} from 'utils/hiveReact';
-import {sanitizeAmount} from 'utils/hiveUtils';
+import {fromSP, toSP, withCommas} from 'utils/format';
+import {powerDown} from 'utils/steem';
+import {getCurrencyProperties} from 'utils/steemReact';
+import {sanitizeAmount} from 'utils/steemUtils';
 import {translate} from 'utils/localize';
 import {goBack} from 'utils/navigation';
 import Balance from './Balance';
 import Operation from './Operation';
 
 type Props = PropsFromRedux & {currency?: string};
-const PowerDown = ({currency = 'HP', user, loadAccount, properties}: Props) => {
+const PowerDown = ({currency = 'SP', user, loadAccount, properties}: Props) => {
   const [amount, setAmount] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -28,12 +28,12 @@ const PowerDown = ({currency = 'HP', user, loadAccount, properties}: Props) => {
         <Text>
           <Text style={styles.bold}>Current power down : </Text>
           {`${withCommas(
-            toHP(user.account.withdrawn as string, properties.globals) /
+            toSP(user.account.withdrawn as string, properties.globals) /
               1000000 +
               '',
             1,
           )} / ${withCommas(
-            toHP(user.account.to_withdraw as string, properties.globals) /
+            toSP(user.account.to_withdraw as string, properties.globals) /
               1000000 +
               '',
             1,
@@ -51,7 +51,7 @@ const PowerDown = ({currency = 'HP', user, loadAccount, properties}: Props) => {
     try {
       await powerDown(user.keys.active!, {
         vesting_shares: sanitizeAmount(
-          fromHP(sanitizeAmount(amount), properties.globals!).toString(),
+          fromSP(sanitizeAmount(amount), properties.globals!).toString(),
           'VESTS',
           6,
         ),

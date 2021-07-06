@@ -1,4 +1,4 @@
-import {loadAccount} from 'actions/hive';
+import {loadAccount} from 'actions/steem';
 import Toast from 'react-native-simple-toast';
 import {AppThunk} from 'src/hooks/redux';
 import {encryptJson} from 'utils/encrypt';

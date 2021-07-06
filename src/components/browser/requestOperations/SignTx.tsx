@@ -1,6 +1,6 @@
 import {Account, KeyTypes} from 'actions/interfaces';
 import React from 'react';
-import {signTx} from 'utils/hive';
+import {signTx} from 'utils/steem';
 import {
   RequestError,
   RequestId,
@@ -28,7 +28,6 @@ export default ({
 }: Props) => {
   const {request_id, ...data} = request;
   const {method, username, tx} = data;
-  console.log(data);
   return (
     <RequestOperation
       sendResponse={sendResponse}

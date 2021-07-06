@@ -10,9 +10,9 @@ import Toast from 'react-native-simple-toast';
 import {connect, ConnectedProps} from 'react-redux';
 import {RootState} from 'store';
 import {fromHP} from 'utils/format';
-import {delegate} from 'utils/hive';
-import {getCurrencyProperties} from 'utils/hiveReact';
-import {sanitizeAmount, sanitizeUsername} from 'utils/hiveUtils';
+import {delegate} from 'utils/steem';
+import {getCurrencyProperties} from 'utils/steemReact';
+import {sanitizeAmount, sanitizeUsername} from 'utils/steemUtils';
 import {translate} from 'utils/localize';
 import {goBack} from 'utils/navigation';
 import Balance from './Balance';
@@ -21,7 +21,7 @@ import Operation from './Operation';
 type Props = PropsFromRedux & {currency?: string; delegatee?: string};
 
 const Delegation = ({
-  currency = 'HP',
+  currency = 'SP',
   user,
   loadAccount,
   properties,
@@ -45,7 +45,6 @@ const Delegation = ({
         delegatee: sanitizeUsername(to),
         delegator: user.account.name,
       });
-      console.log(delegation);
       loadAccount(user.account.name, true);
       goBack();
       if (parseFloat(amount.replace(',', '.')) !== 0) {

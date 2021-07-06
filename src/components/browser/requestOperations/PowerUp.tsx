@@ -1,6 +1,6 @@
 import {KeyTypes} from 'actions/interfaces';
 import React from 'react';
-import {powerUp} from 'utils/hive';
+import {powerUp} from 'utils/steem';
 import {RequestId, RequestPowerUp} from 'utils/keychain.types';
 import {translate} from 'utils/localize';
 import RequestItem from './components/RequestItem';
@@ -18,14 +18,14 @@ export default ({
   sendError,
 }: Props) => {
   const {request_id, ...data} = request;
-  const {username, recipient: to, steem: hive} = data;
+  const {username, recipient: to, steem } = data;
 
   return (
     <RequestOperation
       sendResponse={sendResponse}
       sendError={sendError}
       successMessage={translate('request.success.power_up', {
-        hive,
+        steem,
         to,
       })}
       beautifyError
@@ -38,7 +38,7 @@ export default ({
         return await powerUp(key, {
           from: username,
           to,
-          amount: `${hive} HIVE`,
+          amount: `${steem} STEEM`,
         });
       }}>
       <RequestItem
@@ -48,7 +48,7 @@ export default ({
       <RequestItem title={translate('request.item.to')} content={`@${to}`} />
       <RequestItem
         title={translate('request.item.amount')}
-        content={`${hive} HIVE`}
+        content={`${steem} STEEM`}
       />
     </RequestOperation>
   );

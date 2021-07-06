@@ -1,4 +1,4 @@
-import Clipboard from '@react-native-community/clipboard';
+import Clipboard from '@react-native-clipboard/clipboard';
 import {Account, KeyTypes} from 'actions/interfaces';
 import Copy from 'assets/settings/copy.svg';
 import Remove from 'assets/settings/remove.svg';

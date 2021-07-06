@@ -19,14 +19,14 @@ import Toast from 'react-native-simple-toast';
 import {connect, ConnectedProps} from 'react-redux';
 import {RootState} from 'store';
 import {beautifyTransferError} from 'utils/format';
-import {sendToken, transfer} from 'utils/hive';
-import {tryConfirmTransaction} from 'utils/hiveEngine';
-import {getCurrencyProperties} from 'utils/hiveReact';
+import {sendToken, transfer} from 'utils/steem';
+import {tryConfirmTransaction} from 'utils/steemEngine';
+import {getCurrencyProperties} from 'utils/steemReact';
 import {
   getAccountKeys,
   sanitizeAmount,
   sanitizeUsername,
-} from 'utils/hiveUtils';
+} from 'utils/steemUtils';
 import {translate} from 'utils/localize';
 import {goBack} from 'utils/navigation';
 import {getTransferWarning} from 'utils/transferValidator';

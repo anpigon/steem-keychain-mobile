@@ -2,7 +2,7 @@ import React from 'react';
 import {ImageBackground, StyleProp, StyleSheet, ViewStyle} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-const imageBgd = require('assets/background.png');
+const imageBgd = require('assets/background.jpg');
 
 interface BackgroundProps {
   style?: StyleProp<ViewStyle>;

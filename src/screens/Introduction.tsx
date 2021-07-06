@@ -1,4 +1,4 @@
-import KeychainLogo from 'assets/kc_hive.svg';
+import KeychainLogo from 'assets/kc_steem.svg';
 import EllipticButton from 'components/form/EllipticButton';
 import Background from 'components/ui/Background';
 import GradientEllipse from 'components/ui/GradientEllipse';
@@ -7,7 +7,7 @@ import {IntroductionNavProp} from 'navigators/Signup.types';
 import React from 'react';
 import {Linking, StyleSheet, Text, useWindowDimensions} from 'react-native';
 import {Dimensions} from 'utils/common.types';
-import {hiveConfig} from 'utils/config';
+import {steemConfig} from 'utils/config';
 import {translate} from 'utils/localize';
 
 const Introduction = ({navigation}: IntroductionNavProp) => {
@@ -19,7 +19,7 @@ const Introduction = ({navigation}: IntroductionNavProp) => {
         <Separator height={height / 15} />
         <KeychainLogo {...styles.image} />
         <Separator height={height / 20} />
-        <GradientEllipse style={styles.gradient} dotColor="red">
+        <GradientEllipse style={styles.gradient} dotColor="#4CA2F0">
           <Text style={styles.text}>{translate('intro.text')}</Text>
         </GradientEllipse>
         <GradientEllipse style={styles.gradient} dotColor="white">
@@ -36,10 +36,10 @@ const Introduction = ({navigation}: IntroductionNavProp) => {
         <EllipticButton
           title={translate('intro.createAccount')}
           onPress={() => {
-            Linking.canOpenURL(hiveConfig.CREATE_ACCOUNT_URL).then(
+            Linking.canOpenURL(steemConfig.CREATE_ACCOUNT_URL).then(
               (supported) => {
                 if (supported) {
-                  Linking.openURL(hiveConfig.CREATE_ACCOUNT_URL);
+                  Linking.openURL(steemConfig.CREATE_ACCOUNT_URL);
                 }
               },
             );

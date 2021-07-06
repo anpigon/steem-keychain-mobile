@@ -1,8 +1,8 @@
-import {Authority} from '@hiveio/dhive';
+import {Authority} from 'dsteem';
 import {Account, KeyTypes} from 'actions/interfaces';
 import {encodeMemo} from 'components/bridge';
 import React from 'react';
-import {getAccountKeys} from 'utils/hiveUtils';
+import {getAccountKeys} from 'utils/steemUtils';
 import {
   RequestEncode,
   RequestError,
@@ -28,7 +28,6 @@ export default ({
 }: Props) => {
   const {request_id, ...data} = request;
   const {receiver, method, username, message} = data;
-  console.log(data);
   return (
     <RequestOperation
       sendResponse={sendResponse}
