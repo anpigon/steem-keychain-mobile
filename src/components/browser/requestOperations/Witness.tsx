@@ -1,7 +1,7 @@
 import {KeyTypes} from 'actions/interfaces';
 import usePotentiallyAnonymousRequest from 'hooks/usePotentiallyAnonymousRequest';
 import React from 'react';
-import {voteForWitness} from 'utils/hive';
+import {voteForWitness} from 'utils/steem';
 import {RequestId, RequestWitnessVote} from 'utils/keychain.types';
 import {translate} from 'utils/localize';
 import RequestItem from './components/RequestItem';

@@ -1,6 +1,6 @@
-import {Authority, ExtendedAccount} from '@hiveio/dhive';
+import {ExtendedAccount,Authority} from 'dsteem';
 import {AccountKeys} from 'actions/interfaces';
-import hive, {getClient} from 'utils/hive';
+import hive, {getClient} from 'utils/steem';
 
 const isMemoWif = (publicKey: string, memo: string) => {
   return publicKey === memo;

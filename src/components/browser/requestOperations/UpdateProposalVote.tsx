@@ -1,6 +1,6 @@
 import {KeyTypes} from 'actions/interfaces';
 import React from 'react';
-import {updateProposalVote} from 'utils/hive';
+import {updateProposalVote} from 'utils/steem';
 import {RequestId, RequestUpdateProposalVote} from 'utils/keychain.types';
 import {translate} from 'utils/localize';
 import RequestItem from './components/RequestItem';
@@ -21,7 +21,6 @@ export default ({
   const {request_id, ...data} = request;
   const {username, proposal_ids, approve, extensions} = data;
   const ids = `#${JSON.parse(proposal_ids).join(', #')}`;
-  console.log(extensions, username, proposal_ids, approve);
 
   return (
     <RequestOperation

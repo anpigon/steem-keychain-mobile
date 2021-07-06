@@ -1,6 +1,6 @@
-# Hive Keychain for Mobile
+# Steem Keychain for Mobile
 
-React Native wallet for the Hive Blockchain
+React Native wallet for the Steem Blockchain
 
 # Install
 

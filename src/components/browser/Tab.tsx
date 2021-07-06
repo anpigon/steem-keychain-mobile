@@ -31,7 +31,7 @@ import {RequestError, RequestSuccess} from 'utils/keychain.types';
 import {goBack as navigationGoBack, navigate} from 'utils/navigation';
 import {hasPreference} from 'utils/preferences';
 import {requestWithoutConfirmation} from 'utils/requestWithoutConfirmation';
-import {hive_keychain} from './bridges/HiveKeychainBridge';
+import {steem_keychain} from './bridges/SteemKeychainBridge';
 import {BRIDGE_WV_INFO} from './bridges/WebviewInfo';
 import Footer from './Footer';
 import ProgressBar from './ProgressBar';
@@ -145,12 +145,12 @@ export default ({
     const {name, request_id, data} = JSON.parse(nativeEvent.data);
     const {current} = tabRef;
     switch (name) {
-      case 'swHandshake_hive':
+      case 'swHandshake_steem':
         current.injectJavaScript(
-          'window.hive_keychain.onAnswerReceived("hive_keychain_handshake")',
+          'window.steem_keychain.onAnswerReceived("steem_keychain_handshake")',
         );
         break;
-      case 'swRequest_hive':
+      case 'swRequest_steem':
         if (validateRequest(data)) {
           if (validateAuthority(accounts, data)) {
             showOperationRequestModal(request_id, data);
@@ -242,7 +242,7 @@ export default ({
           ref={tabRef}
           source={{uri: url}}
           sharedCookiesEnabled
-          injectedJavaScriptBeforeContentLoaded={hive_keychain}
+          injectedJavaScriptBeforeContentLoaded={steem_keychain}
           onMessage={onMessage}
           bounces={false}
           javaScriptEnabled

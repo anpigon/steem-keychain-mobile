@@ -7,7 +7,7 @@ import React, {useEffect} from 'react';
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {connect, ConnectedProps} from 'react-redux';
 import {RootState} from 'store';
-import {toHP, withCommas} from 'utils/format';
+import {toSP, withCommas} from 'utils/format';
 import {translate} from 'utils/localize';
 import {navigate} from 'utils/navigation';
 import Operation from './Operation';
@@ -44,7 +44,7 @@ const DelegationsList = ({
             <View style={styles.container}>
               <Text>{`@${item.delegator}`}</Text>
               <Text>{`${withCommas(
-                toHP(item.vesting_shares + '', properties.globals) + '',
+                toSP(item.vesting_shares + '', properties.globals) + '',
               )} HP`}</Text>
             </View>
           );
@@ -64,7 +64,7 @@ const DelegationsList = ({
               <Text style={styles.text}>{`@${item.delegatee}`}</Text>
               <View style={styles.rightContainer}>
                 <Text style={styles.text}>{`${withCommas(
-                  toHP(item.vesting_shares + '', properties.globals) + '',
+                  toSP(item.vesting_shares + '', properties.globals) + '',
                 )} HP`}</Text>
                 <TouchableOpacity
                   onPress={() => {

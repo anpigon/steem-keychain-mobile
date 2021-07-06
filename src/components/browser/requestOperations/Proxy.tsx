@@ -1,7 +1,7 @@
 import {KeyTypes} from 'actions/interfaces';
 import usePotentiallyAnonymousRequest from 'hooks/usePotentiallyAnonymousRequest';
 import React from 'react';
-import {setProxy} from 'utils/hive';
+import {setProxy} from 'utils/steem';
 import {RequestId, RequestProxy} from 'utils/keychain.types';
 import {translate} from 'utils/localize';
 import RequestItem from './components/RequestItem';

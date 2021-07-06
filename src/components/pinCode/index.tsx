@@ -2,7 +2,7 @@ import EllipticButton from 'components/form/EllipticButton';
 import CustomModal from 'components/modals/CustomModal';
 import Separator from 'components/ui/Separator';
 import {SignupNavigation, SignupNavProp} from 'navigators/Signup.types';
-import {UnlockNavigationProp} from 'navigators/Unlock.types';
+import {UnlockNavigation, UnlockNavigationProp} from 'navigators/Unlock.types';
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Text} from 'react-native-elements';
@@ -18,7 +18,7 @@ interface Props {
   title: string;
   confirm?: string;
   submit: (pin: string, callback?: (unsafe?: boolean) => void) => void;
-  navigation: UnlockNavigationProp | SignupNavProp | SignupNavigation;
+  navigation: UnlockNavigationProp | SignupNavProp | UnlockNavigation | SignupNavigation;
 }
 
 const PinCode = ({

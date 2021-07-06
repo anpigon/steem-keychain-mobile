@@ -3,8 +3,8 @@ import {encodeMemo} from 'components/bridge';
 import usePotentiallyAnonymousRequest from 'hooks/usePotentiallyAnonymousRequest';
 import React from 'react';
 import {beautifyTransferError} from 'utils/format';
-import {transfer} from 'utils/hive';
-import {getAccountKeys} from 'utils/hiveUtils';
+import {transfer} from 'utils/steem';
+import {getAccountKeys} from 'utils/steemUtils';
 import {RequestId, RequestTransfer} from 'utils/keychain.types';
 import {translate} from 'utils/localize';
 import RequestItem from './components/RequestItem';
@@ -48,14 +48,12 @@ export default ({
       performOperation={async () => {
         let finalMemo = memo;
         if (memo.length && memo[0] === '#') {
-          console.log('pwait');
           const receiverMemoKey = (await getAccountKeys(to.toLowerCase())).memo;
           finalMemo = await encodeMemo(
             getAccountMemoKey(),
             receiverMemoKey,
             memo,
           );
-          console.log(finalMemo);
         }
         return await transfer(getAccountKey(), {
           from: getUsername(),

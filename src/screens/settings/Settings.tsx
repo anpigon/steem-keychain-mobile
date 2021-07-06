@@ -1,4 +1,4 @@
-import {loadAccount} from 'actions/hive';
+import {loadAccount} from 'actions/steem';
 import {setRpc} from 'actions/index';
 import {removePreference} from 'actions/preferences';
 import CustomPicker from 'components/form/CustomPicker';
@@ -11,7 +11,7 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {connect, ConnectedProps} from 'react-redux';
 import {RootState} from 'store';
-import {rpcList} from 'utils/hiveUtils';
+import {rpcList} from 'utils/steemUtils';
 import {translate} from 'utils/localize';
 
 const AccountManagement = ({

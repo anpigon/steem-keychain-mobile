@@ -1,10 +1,10 @@
 import {
   DynamicGlobalProperties,
-  ExtendedAccount,
   Price,
+  ExtendedAccount,
   VestingDelegation,
-} from '@hiveio/dhive';
-import {Manabar} from '@hiveio/dhive/lib/chain/rc';
+} from 'dsteem';
+import {Manabar} from 'dsteem/lib/steem/rc';
 
 export interface ActionPayload<T> {
   readonly type: string;
@@ -195,8 +195,8 @@ export interface Currency extends Btc {
 
 export interface Bittrex {
   btc: Btc;
-  hive: Currency;
-  hbd: Currency;
+  steem: Currency;
+  sbd: Currency;
 }
 
 export interface AccountKeys {
@@ -253,5 +253,3 @@ export interface GlobalProperties {
   price?: Price;
   rewardFund?: RewardFund;
 }
-
-

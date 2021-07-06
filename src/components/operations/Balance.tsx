@@ -1,9 +1,9 @@
-import {DynamicGlobalProperties, ExtendedAccount} from '@hiveio/dhive';
+import {DynamicGlobalProperties, ExtendedAccount} from 'dsteem';
 import React from 'react';
 import {StyleSheet, Text, useWindowDimensions, View} from 'react-native';
 import {Width} from 'utils/common.types';
-import {formatBalance, toHP} from 'utils/format';
-import {getCurrencyProperties} from 'utils/hiveReact';
+import {formatBalance, toSP} from 'utils/format';
+import {getCurrencyProperties} from 'utils/steemReact';
 import {translate} from 'utils/localize';
 
 type Props = {
@@ -32,7 +32,7 @@ const TokenDisplay = ({
     parsedValue =
       parseFloat(value as string) -
       parseFloat(account.delegated_vesting_shares as string);
-    parsedValue = toHP(value as string, globalProperties);
+    parsedValue = toSP(value as string, globalProperties);
   }
   if (engine) {
     parsedValue = +tokenBalance!;

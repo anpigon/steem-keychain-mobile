@@ -1,7 +1,7 @@
 import {Account, KeyTypes} from 'actions/interfaces';
 import usePotentiallyAnonymousRequest from 'hooks/usePotentiallyAnonymousRequest';
 import React from 'react';
-import {broadcastJson} from 'utils/hive';
+import {broadcastJson} from 'utils/steem';
 import {
   RequestCustomJSON,
   RequestError,

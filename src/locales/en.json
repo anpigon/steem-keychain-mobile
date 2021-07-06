@@ -37,7 +37,7 @@
     "rc": "Resources:",
     "vp": "Voting:",
     "balance": "balance",
-    "no_tokens": "No Hive Engine token found.",
+    "no_tokens": "No Steem Engine token found.",
     "no_transaction": "No recent transaction.",
     "add_memo": "Please add your memo key to decrypt this message.",
     "add_active": "Please add your active key to perform this operation.",
@@ -62,11 +62,11 @@
       "powerup": {"title": "Power up!"},
       "powerdown": {"title": "Power down"},
       "delegation": {
-        "title": "Delegate Hive Power",
+        "title": "Delegate Steem Power",
         "incoming": "Incoming Delegations",
         "outgoing": "Outgoing Delegations"
       },
-      "convert": {"title": "Convert to HIVE", "button": "Convert"}
+      "convert": {"title": "Convert to STEEM", "button": "Convert"}
     }
   },
   "settings": {
@@ -86,7 +86,7 @@
           "style_do_not_translate": "important"
         },
         {
-          "text": "In the future, Hive Keychain for mobile will enable App to App transactions, removing the need to use your private keys directly in third-party Apps.",
+          "text": "In the future, Steem Keychain for mobile will enable App to App transactions, removing the need to use your private keys directly in third-party Apps.",
           "style_do_not_translate": "disclaimer"
         }
       ]
@@ -96,16 +96,16 @@
       "global": "Global Settings",
       "whitelisted": "Whitelisted operations",
       "disclaimer": [
-        "You can chose which RPC node is used to read information and broadcast transactions from/to the Hive Blockchain.",
-        "Use 'DEFAULT' RPC to let Hive Keychain chose the best RPC node at a given time."
+        "You can chose which RPC node is used to read information and broadcast transactions from/to the Steem Blockchain.",
+        "Use 'DEFAULT' RPC to let Steem Keychain chose the best RPC node at a given time."
       ],
       "user": "User settings"
     }
   },
   "components": {
     "moreInformation": {
-      "title": "KEYS (HIVE PASSWORDS)",
-      "text1": "Different actions require the use of different KEYS. These KEYS are generated when a new HIVE account is created.",
+      "title": "KEYS (STEEM PASSWORDS)",
+      "text1": "Different actions require the use of different KEYS. These KEYS are generated when a new STEEM account is created.",
       "text2": "You may use your Posting, Active, or Master Key to import your account.",
       "text3": "(Use your Master Key to unlock all app features).",
       "text4": "If you use a Master Key, it will NOT be saved and will only be used to generate your other Keys. You may add/edit Accounts or Keys at any time."
@@ -113,7 +113,7 @@
     "infoQR": {
       "title": "Import via QR Code",
       "text1": "You can import an account instantly by scanning its corresponding QR Code.",
-      "text2": "To import from Hive Keychain browser extension, navigate to",
+      "text2": "To import from Steem Keychain browser extension, navigate to",
       "text3": "Settings",
       "text4": " then click on",
       "text5": "Manage Accounts",
@@ -144,14 +144,14 @@
     "authFailed": "Authentication failed",
     "account_already": "You already registered this account",
     "transfer_success": "Your transfer was successful!",
-    "transfer_token_confirmed": "Your transfer was successfully broadcasted to Hive. Your balance might take a little while to update.",
-    "transfer_token_unconfirmed": "Your transfer was successfully broadcasted to Hive. However, we couldn't confirm that it was processed by Hive Engine. Please check your balance in a little while before trying again.",
+    "transfer_token_confirmed": "Your transfer was successfully broadcasted to Steem. Your balance might take a little while to update.",
+    "transfer_token_unconfirmed": "Your transfer was successfully broadcasted to Steem. However, we couldn't confirm that it was processed by Steem Engine. Please check your balance in a little while before trying again.",
     "powerup_success": "Your Power up was successful!",
     "powerdown_success": "Your Power down was successful!",
     "stop_powerdown_success": "You successfully stopped your Power down!",
     "delegation_success": "Your delegation was successful!",
     "stop_delegation_success": "You successfully stopped your delegation!",
-    "convert_success": "Your HBD conversion was successful!",
+    "convert_success": "Your SBD conversion was successful!",
     "keys": {
       "not_wanted_key": "This is not your {{type}} key!",
       "not_a_key": "This is not one of your private keys!",
@@ -256,8 +256,8 @@
       "witness_unvote": "Successfully unvoted @{{witness}} for witness.",
       "proxy": "Succesfully chose @{{proxy}} for proxy.",
       "remove_proxy": "Succesfully removed the proxy.",
-      "power_up": "Powered up {{hive}} HIVE on @{{to}}.",
-      "power_down": "Started a {{hp}} HP power down on @{{username}}.",
+      "power_up": "Powered up {{steem}} STEEM on @{{to}}.",
+      "power_down": "Started a {{sp}} SP power down on @{{username}}.",
       "approveProposal": "Successfully voted for proposal(s) {{ids}}.",
       "unApproveProposal": "Successfully unvoted proposal(s) {{ids}}.",
       "stop_power_down": "Stopped Power Down on @{{username}}.",

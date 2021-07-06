@@ -31,7 +31,6 @@ const Browser = ({
   showManagementScreen,
   showManagement,
 }: BrowserPropsFromRedux & BrowserNavigationProps) => {
-  console.log('a');
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       StatusBar.setHidden(true);
@@ -53,7 +52,6 @@ const Browser = ({
       quality: 0.2,
     }).then(
       (uri) => {
-        console.log(uri);
         updateTab(id, {id, url, icon, image: uri});
         showManagementScreen(true);
       },

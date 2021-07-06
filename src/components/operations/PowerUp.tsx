@@ -1,5 +1,5 @@
 import {loadAccount} from 'actions/index';
-import Hp from 'assets/wallet/icon_hp.svg';
+import Hp from 'assets/wallet/icon_sp.svg';
 import AccountLogoDark from 'assets/wallet/icon_username_dark.svg';
 import ActiveOperationButton from 'components/form/ActiveOperationButton';
 import OperationInput from 'components/form/OperationInput';
@@ -9,9 +9,9 @@ import {Keyboard, StyleSheet, Text} from 'react-native';
 import Toast from 'react-native-simple-toast';
 import {connect, ConnectedProps} from 'react-redux';
 import {RootState} from 'store';
-import {powerUp} from 'utils/hive';
-import {getCurrencyProperties} from 'utils/hiveReact';
-import {sanitizeAmount, sanitizeUsername} from 'utils/hiveUtils';
+import {powerUp} from 'utils/steem';
+import {getCurrencyProperties} from 'utils/steemReact';
+import {sanitizeAmount, sanitizeUsername} from 'utils/steemUtils';
 import {translate} from 'utils/localize';
 import {goBack} from 'utils/navigation';
 import Balance from './Balance';
@@ -19,7 +19,7 @@ import Operation from './Operation';
 
 type Props = PropsFromRedux & {currency?: string};
 
-const PowerUp = ({currency = 'HIVE', user, loadAccount}: Props) => {
+const PowerUp = ({currency = 'STEEM', user, loadAccount}: Props) => {
   const [to, setTo] = useState(user.account.name);
   const [amount, setAmount] = useState('');
   const [loading, setLoading] = useState(false);

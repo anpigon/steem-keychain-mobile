@@ -36,7 +36,6 @@ export default ({
   activeTab,
   show,
 }: Props) => {
-  console.log(activeTab, tabs);
   return (
     <View style={[styles.container, show ? null : styles.hide]}>
       <ScrollView>
@@ -103,7 +102,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   activeTab: {
-    borderColor: '#A3112A',
+    borderColor: '#4ca2f0',
   },
   nameContainer: {flexDirection: 'row', maxWidth: '80%', alignItems: 'center'},
   screenshot: {

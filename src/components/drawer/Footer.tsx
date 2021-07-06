@@ -2,7 +2,7 @@ import {ActiveAccount, KeyTypes} from 'actions/interfaces';
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Toast from 'react-native-simple-toast';
-import {voteForWitness} from 'utils/hive';
+import {voteForWitness} from 'utils/steem';
 import {translate} from 'utils/localize';
 
 export default ({user}: {user: ActiveAccount}) => {

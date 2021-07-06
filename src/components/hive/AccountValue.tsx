@@ -1,4 +1,4 @@
-import {ExtendedAccount} from '@hiveio/dhive';
+import {ExtendedAccount} from 'dsteem';
 import {Bittrex, GlobalProperties} from 'actions/interfaces';
 import React from 'react';
 import {StyleSheet, Text} from 'react-native';

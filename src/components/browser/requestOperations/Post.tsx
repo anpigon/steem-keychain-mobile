@@ -1,6 +1,6 @@
 import {Account, KeyTypes} from 'actions/interfaces';
 import React from 'react';
-import {post} from 'utils/hive';
+import {post} from 'utils/steem';
 import {
   RequestError,
   RequestId,

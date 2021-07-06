@@ -1,4 +1,4 @@
-const hive = require('@hiveio/dhive');
+const steem = require('dsteem');
 import {
   AccountWitnessProxyOperation,
   AccountWitnessVoteOperation,
@@ -10,7 +10,7 @@ import {
   TransferOperation,
   UpdateProposalVotesOperation,
   VoteOperation,
-} from '@hiveio/dhive';
+} from 'dsteem';
 import api from 'api/keychain';
 import hiveTx from 'hive-tx';
 import {hiveEngine} from 'utils/config';
@@ -24,11 +24,11 @@ hiveTx.config.rebranded_api = true;
 hiveTx.updateOperations();
 
 const getDefault: () => Promise<string> = async () => {
-  try {
-    return (await api.get('/hive/rpc')).data.rpc;
-  } catch (e) {
+  // try {
+  //   return (await api.get('/hive/rpc')).data.rpc;
+  // } catch (e) {
     return DEFAULT_RPC;
-  }
+  // }
 };
 
 export const setRpc = async (rpc: string) => {
@@ -163,7 +163,6 @@ export const updateProposalVote = async (
 export const broadcast = async (key: string, arr: Operation[]) => {
   const tx = new hiveTx.Transaction();
   await tx.create(arr);
-  console.log(JSON.stringify(tx));
   tx.sign(hiveTx.PrivateKey.from(key));
   try {
     const {error, result} = (await tx.broadcast()) as {
@@ -181,4 +180,4 @@ export const broadcast = async (key: string, arr: Operation[]) => {
     throw e;
   }
 };
-export default hive;
+export default steem;

@@ -36,8 +36,10 @@ const AddAccountByKey = ({
   const [account, setAccount] = useState('');
   const [key, setKey] = useState('');
   const onImportKeys = async () => {
+    console.log('onImportKeys');
     try {
       const keys = await validateNewAccount(account, key);
+      console.log(keys);
       if (keys) {
         const wallet = route.params ? route.params.wallet : false;
         addAccount(account, keys, wallet, false);
