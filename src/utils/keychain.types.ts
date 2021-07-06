@@ -1,4 +1,4 @@
-import {Operation, Transaction} from '@hiveio/dhive';
+import {Operation, Transaction} from 'dsteem';
 import {KeyTypes} from 'actions/interfaces';
 
 export enum KeychainRequestTypes {

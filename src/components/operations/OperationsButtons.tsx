@@ -120,7 +120,7 @@ export const SendConversion = () => {
         });
       }}
       size={36}
-      backgroundColor="#A3112A"
+      backgroundColor="#4ca2f0"
       content={<Conversion />}
     />
   );

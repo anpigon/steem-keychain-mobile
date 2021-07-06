@@ -42,7 +42,7 @@ const TokenDisplay = ({
   const styles = getDimensionedStyles({
     color,
     ...useWindowDimensions(),
-    change: price.DailyUsd!,
+    change: price?.DailyUsd ?? '0.0',
   });
   const [toggle, setToggle] = useState(false);
   return (
@@ -85,7 +85,7 @@ const renderLeftBottom = (
       <View style={[styles.row, styles.halfLine]}>
         <Text style={styles.price}>{`$ ${price.Usd}`}</Text>
         <Text style={styles.change}>{`${signedNumber(
-          +price.DailyUsd!,
+          +price?.DailyUsd ?? 0,
         )}%`}</Text>
       </View>
     );

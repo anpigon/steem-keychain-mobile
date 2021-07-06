@@ -9,7 +9,7 @@ import React, {useEffect} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import Modal from 'screens/Modal';
 import {RootState} from 'store';
-import {setRpc} from 'utils/hive';
+import {setRpc} from 'utils/steem';
 import setupLinking, {clearLinkingListeners} from 'utils/linking';
 import {modalOptions, noHeader, setNavigator} from 'utils/navigation';
 import {RootStackParam} from './navigators/Root.types';
@@ -62,7 +62,6 @@ const App = ({hasAccounts, auth, rpc, addTabFromLinking}: PropsFromRedux) => {
 };
 
 const mapStateToProps = (state: RootState) => {
-  console.log(state);
   return {
     hasAccounts: state.lastAccount.has,
     auth: state.auth,

@@ -2,16 +2,16 @@ import api from 'api/keychain';
 import {translate} from 'utils/localize';
 
 const getExchanges = () => [
-  {account: 'bittrex', tokens: ['HIVE', 'HBD']},
-  {account: 'deepcrypto8', tokens: ['HIVE']},
+  {account: 'bittrex', tokens: ['STEEM', 'SBD']},
+  {account: 'deepcrypto8', tokens: ['STEEM']},
   {account: 'binance-hot', tokens: []},
-  {account: 'ionomy', tokens: ['HIVE', 'HBD']},
-  {account: 'huobi-pro', tokens: ['HIVE']},
+  {account: 'ionomy', tokens: ['STEEM', 'SBD']},
+  {account: 'huobi-pro', tokens: ['STEEM']},
   {account: 'huobi-withdrawal', tokens: []},
-  {account: 'blocktrades', tokens: ['HIVE', 'HBD']},
-  {account: 'mxchive', tokens: ['HIVE']},
+  {account: 'blocktrades', tokens: ['STEEM', 'HBD']},
+  {account: 'mxchive', tokens: ['STEEM']},
   {account: 'hot.dunamu', tokens: []},
-  {account: 'probithive', tokens: ['HIVE']},
+  {account: 'probithive', tokens: ['STEEM']},
   {account: 'probitred', tokens: []},
   {account: 'upbitsteem', tokens: []},
 ];

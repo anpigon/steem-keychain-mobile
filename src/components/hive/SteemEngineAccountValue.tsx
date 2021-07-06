@@ -9,7 +9,7 @@ type Props = {
   tokens: TokenBalance[];
 };
 
-const HiveEngineAccountValue = ({tokens, tokensMarket, bittrex}: Props) => {
+const SteemEngineAccountValue = ({tokens, tokensMarket, bittrex}: Props) => {
   let accountValue = 0;
   if (tokensMarket.length) {
     for (const token of tokens) {
@@ -22,7 +22,7 @@ const HiveEngineAccountValue = ({tokens, tokensMarket, bittrex}: Props) => {
   }
   return (
     <Text style={styles.accountValue}>{`$ ${withCommas(
-      accountValue * parseFloat(bittrex.hive.Usd) + '',
+      accountValue * parseFloat(bittrex.steem.Usd) + '',
     )}`}</Text>
   );
 };
@@ -36,4 +36,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HiveEngineAccountValue;
+export default SteemEngineAccountValue;

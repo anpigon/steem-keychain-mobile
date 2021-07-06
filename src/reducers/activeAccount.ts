@@ -1,5 +1,5 @@
-import {ExtendedAccount} from '@hiveio/dhive';
-import {Manabar} from '@hiveio/dhive/lib/chain/rc';
+import {ExtendedAccount} from 'dsteem';
+import {Manabar} from 'dsteem/lib/steem/rc';
 import {AccountKeys, ActionPayload, ActiveAccount} from 'actions/interfaces';
 import {
   ACTIVE_ACCOUNT,

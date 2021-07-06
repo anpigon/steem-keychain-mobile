@@ -19,7 +19,7 @@ export default () => {
         component={Wallet}
         options={({navigation}) => ({
           headerStyle: {
-            backgroundColor: '#A3112A',
+            backgroundColor: '#4ca2f0',
           },
           headerTitleAlign: 'center',
           title: translate('navigation.wallet'),

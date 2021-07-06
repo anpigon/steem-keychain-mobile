@@ -1,6 +1,6 @@
 import Hbd from 'assets/wallet/icon_hbd.svg';
 import Hive from 'assets/wallet/icon_hive.svg';
-import Hp from 'assets/wallet/icon_hp.svg';
+import Hp from 'assets/wallet/icon_sp.svg';
 import AccountValue from 'components/hive/AccountValue';
 import TokenDisplay from 'components/hive/TokenDisplay';
 import Transactions from 'components/hive/Transactions';
@@ -16,11 +16,10 @@ import React from 'react';
 import {StyleSheet, useWindowDimensions, View} from 'react-native';
 import {connect, ConnectedProps} from 'react-redux';
 import {RootState} from 'store';
-import {toHP} from 'utils/format';
+import {toSP} from 'utils/format';
 
 const Primary = ({user, bittrex, properties}: PropsFromRedux) => {
   const {width} = useWindowDimensions();
-
   return (
     <View style={styles.container}>
       <Separator height={20} />
@@ -31,46 +30,46 @@ const Primary = ({user, bittrex, properties}: PropsFromRedux) => {
       />
       <Separator height={20} />
       <TokenDisplay
-        color="#A3112A"
-        name="HIVE"
-        currency="HIVE"
+        color="#4ca2f0"
+        name="STEEM"
+        currency="STEEM"
         value={parseFloat(user.account.balance as string)}
         logo={<Hive width={width / 15} />}
-        price={bittrex.hive}
+        price={bittrex.steem}
         buttons={[
-          <Send key="send_hive" currency="HIVE" />,
+          <Send key="send_steem" currency="STEEM" />,
           <SendPowerUp key="pu" />,
         ]}
       />
       <Separator height={20} />
       <TokenDisplay
         color="#005C09"
-        name="HIVE DOLLARS"
-        currency="HBD"
-        value={parseFloat(user.account.hbd_balance as string)}
+        name="STEEM DOLLARS"
+        currency="SBD"
+        value={parseFloat(user.account.sbd_balance as string)}
         logo={<Hbd width={width / 15} />}
-        price={bittrex.hbd}
+        price={bittrex.sbd}
         buttons={[
-          <Send key="send_hbd" currency="HBD" />,
+          <Send key="send_sbd" currency="SBD" />,
           <SendConversion key="conversion" />,
         ]}
       />
       <Separator height={20} />
       <TokenDisplay
         color="#AC4F00"
-        name="HIVE POWER"
-        currency="HP"
-        value={toHP(user.account.vesting_shares as string, properties.globals)}
-        incoming={toHP(
+        name="STEEM POWER"
+        currency="SP"
+        value={toSP(user.account.vesting_shares as string, properties.globals)}
+        incoming={toSP(
           user.account.received_vesting_shares as string,
           properties.globals,
         )}
-        outgoing={toHP(
+        outgoing={toSP(
           user.account.delegated_vesting_shares as string,
           properties.globals,
         )}
         logo={<Hp width={width / 15} />}
-        price={bittrex.hbd}
+        price={bittrex.sbd}
         buttons={[<SendDelegation key="del" />, <SendPowerDown key="pd" />]}
       />
       <Separator height={20} />

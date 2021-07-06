@@ -1,10 +1,10 @@
-import {ExtendedAccount} from '@hiveio/dhive';
+import {ExtendedAccount} from 'dsteem';
 import {Delegator, GlobalProperties} from 'actions/interfaces';
 import api from 'api/keychain';
-import {getClient} from './hive';
+import {getClient} from './steem';
 
-const HIVE_VOTING_MANA_REGENERATION_SECONDS = 432000;
-const HIVE_100_PERCENT = 10000;
+const STEEM_VOTING_MANA_REGENERATION_SECONDS = 432000;
+const STEEM_100_PERCENT = 10000;
 
 export const getVP = (account: ExtendedAccount) => {
   if (!account.name) {
@@ -21,7 +21,7 @@ export const getVP = (account: ExtendedAccount) => {
   const diff_in_seconds = Math.round(Date.now() / 1000 - last_update_time);
   let estimated_mana =
     current_mana +
-    (diff_in_seconds * estimated_max) / HIVE_VOTING_MANA_REGENERATION_SECONDS;
+    (diff_in_seconds * estimated_max) / STEEM_VOTING_MANA_REGENERATION_SECONDS;
   if (estimated_mana > estimated_max) {
     estimated_mana = estimated_max;
   }
@@ -64,12 +64,12 @@ export const getVotingDollarsPerAccount = (
     const weight = voteWeight * 100;
 
     const max_vote_denom =
-      (votePowerReserveRate * HIVE_VOTING_MANA_REGENERATION_SECONDS) /
+      (votePowerReserveRate * STEEM_VOTING_MANA_REGENERATION_SECONDS) /
       (60 * 60 * 24);
-    let used_power = Math.round((current_power * weight) / HIVE_100_PERCENT);
+    let used_power = Math.round((current_power * weight) / STEEM_100_PERCENT);
     used_power = Math.round((used_power + max_vote_denom - 1) / max_vote_denom);
     const rshares = Math.round(
-      (effective_vesting_shares * used_power) / HIVE_100_PERCENT,
+      (effective_vesting_shares * used_power) / STEEM_100_PERCENT,
     );
     const voteValue = ((rshares * rewardBalance) / recentClaims) * hivePrice;
     return isNaN(voteValue) ? '0' : voteValue.toFixed(2);
@@ -121,20 +121,23 @@ export const getConversionRequests = async (name: string) => {
   return await getClient().database.call('get_conversion_requests', [name]);
 };
 
+// ref: https://steemyy.com/node-status.php
 export const rpcList = [
   'DEFAULT',
-  'https://api.hive.blog/',
-  'https://api.openhive.network/',
-  'https://api.hivekings.com/',
-  'https://anyx.io/',
-  'https://api.pharesim.me/',
-  'https://hived.hive-engine.com/',
-  'https://hived.privex.io/',
-  'https://hive.roelandp.nl',
-  'https://rpc.ausbit.dev',
-  'https://rpc.ecency.com',
-  'https://techcoderx.com',
-  'https://hive-api.arcange.eu/',
+  'https://api.steemit.com',
+  'https://api.steemitdev.com',
+  'https://api.justyy.com',
+  'https://e51ewpb9dk.execute-api',
+  'https://api.steemyy.com',
+  'https://api.steemzzang.com',
+  'https://x68bp3mesd.execute-api',
+  'https://cn.steems.top',
+  'https://justyy.azurewebsites.net',
+  'https://steem.justyy.workers',
+  'https://steem.ecosynthesizer.com',
+  'https://steem.61bts.com',
+  'https://api.steem.buzz',
+  'https://api.steem.fans',
   'TESTNET',
 ];
 

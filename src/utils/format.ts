@@ -1,4 +1,4 @@
-import {DynamicGlobalProperties} from '@hiveio/dhive';
+import {DynamicGlobalProperties} from 'dsteem';
 import {translate} from 'utils/localize';
 import {HiveErrorMessage} from './keychain.types';
 
@@ -7,14 +7,14 @@ export const withCommas = (nb: string, decimals = 3) =>
     .toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
-export const toHP = (vests: string, props?: DynamicGlobalProperties) =>
+export const toSP = (vests: string, props?: DynamicGlobalProperties) =>
   props
-    ? (parseFloat(vests) * parseFloat(props.total_vesting_fund_hive + '')) /
+    ? (parseFloat(vests) * parseFloat(props.total_vesting_fund_steem + '')) /
       parseFloat(props.total_vesting_shares + '')
     : 0;
 
-export const fromHP = (hp: string, props: DynamicGlobalProperties) =>
-  (parseFloat(hp) / parseFloat(props.total_vesting_fund_hive + '')) *
+export const fromSP = (hp: string, props: DynamicGlobalProperties) =>
+  (parseFloat(hp) / parseFloat(props.total_vesting_fund_steem + '')) *
   parseFloat(props.total_vesting_shares + '');
 
 export const chunkArray = (myArray: any[], chunk_size: number) => {

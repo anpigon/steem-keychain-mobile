@@ -1,4 +1,4 @@
-import hsc from 'api/hiveEngine';
+import hsc from 'api/steemEngine';
 type sscjsResult = {logs: string};
 
 export const tryConfirmTransaction = async (trxId: string) => {

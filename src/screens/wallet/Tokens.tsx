@@ -1,6 +1,6 @@
 import {loadTokens, loadTokensMarket, loadUserTokens} from 'actions/index';
 import EngineTokenDisplay from 'components/hive/EngineTokenDisplay';
-import HiveEngineAccountValue from 'components/hive/HiveEngineAccountValue';
+import SteemEngineAccountValue from 'components/hive/SteemEngineAccountValue';
 import Loader from 'components/ui/Loader';
 import Separator from 'components/ui/Separator';
 import React, {useEffect} from 'react';
@@ -58,7 +58,7 @@ const Tokens = ({
   return (
     <View style={styles.container}>
       <Separator />
-      <HiveEngineAccountValue
+      <SteemEngineAccountValue
         bittrex={bittrex}
         tokens={userTokens.list}
         tokensMarket={tokensMarket}

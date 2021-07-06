@@ -1,4 +1,4 @@
-import KeychainLogo from 'assets/kc_hive.svg';
+import KeychainLogo from 'assets/kc_steem.svg';
 import EllipticButton from 'components/form/EllipticButton';
 import Background from 'components/ui/Background';
 import GradientEllipse from 'components/ui/GradientEllipse';
