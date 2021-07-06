@@ -53,10 +53,10 @@ export const getVotingDollarsPerAccount = (
   const vp = getVP(account)! * 100;
   const rewardBalance = getRewardBalance(properties);
   const recentClaims = getRecentClaims(properties);
-  const hivePrice = getHivePrice(properties);
+  const steemPrice = getSteemPrice(properties);
   const votePowerReserveRate = getVotePowerReserveRate(properties);
 
-  if (rewardBalance && recentClaims && hivePrice && votePowerReserveRate) {
+  if (rewardBalance && recentClaims && steemPrice && votePowerReserveRate) {
     const effective_vesting_shares = Math.round(
       getEffectiveVestingSharesPerAccount(account) * 1000000,
     );
@@ -71,7 +71,7 @@ export const getVotingDollarsPerAccount = (
     const rshares = Math.round(
       (effective_vesting_shares * used_power) / STEEM_100_PERCENT,
     );
-    const voteValue = ((rshares * rewardBalance) / recentClaims) * hivePrice;
+    const voteValue = ((rshares * rewardBalance) / recentClaims) * steemPrice;
     return isNaN(voteValue) ? '0' : voteValue.toFixed(2);
   } else {
     return;
@@ -91,7 +91,7 @@ const getRecentClaims = (properties: GlobalProperties) => {
   return parseInt(properties.rewardFund!.recent_claims, 10);
 };
 
-const getHivePrice = (properties: GlobalProperties) => {
+const getSteemPrice = (properties: GlobalProperties) => {
   return (
     parseFloat(properties.price!.base + '') /
     parseFloat(properties.price!.quote + '')

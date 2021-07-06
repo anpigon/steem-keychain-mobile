@@ -10,7 +10,7 @@ type Props = {
 export default ({username, style}: Props) => (
   <Image
     style={style}
-    source={{uri: `https://images.hive.blog/u/${username}/avatar`}}
+    source={{uri: `https://steemitimages.com/u/${username}/avatar`}}
     onError={() => {
       console.log('error');
     }}

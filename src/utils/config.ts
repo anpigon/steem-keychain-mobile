@@ -1,8 +1,8 @@
-export const hiveEngine = {
-  CHAIN_ID: 'ssc-mainnet-hive',
+export const steemEngine = {
+  CHAIN_ID: 'ssc-mainnet-steem',
 };
 
-export const hiveConfig = {
+export const steemConfig = {
   CREATE_ACCOUNT_URL: 'https://signup.steemit.com',
 };
 export const BrowserConfig = {

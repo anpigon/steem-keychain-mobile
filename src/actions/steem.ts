@@ -1,6 +1,6 @@
 import {decodeMemo} from 'components/bridge';
 import {AppThunk} from 'src/hooks/redux';
-import dhive, {getClient} from 'utils/steem';
+import dsteem, {getClient} from 'utils/steem';
 import {
   getConversionRequests,
   getDelegatees,
@@ -120,8 +120,8 @@ const getAccountTransactions = async (
   memoKey?: string,
 ): Promise<Transaction[]> => {
   try {
-    const op = dhive.utils.operationOrders;
-    const operationsBitmask = dhive.utils.makeBitMaskFilter([op.transfer]);
+    const op = dsteem.utils.operationOrders;
+    const operationsBitmask = dsteem.utils.makeBitMaskFilter([op.transfer]);
     console.log('operationsBitmask: ' + operationsBitmask);
     const transactions = await getClient().database.call('get_account_history', [
       accountName,

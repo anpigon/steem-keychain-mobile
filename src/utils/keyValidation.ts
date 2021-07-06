@@ -1,6 +1,6 @@
 import {ExtendedAccount,Authority} from 'dsteem';
 import {AccountKeys} from 'actions/interfaces';
-import hive, {getClient} from 'utils/steem';
+import dsteem, {getClient} from 'utils/steem';
 
 const isMemoWif = (publicKey: string, memo: string) => {
   return publicKey === memo;
@@ -42,9 +42,9 @@ const derivateFromMasterPassword = (
   account: ExtendedAccount,
   pwd: string,
 ) => {
-  const posting = hive.PrivateKey.fromLogin(username, pwd, 'posting');
-  const active = hive.PrivateKey.fromLogin(username, pwd, 'active');
-  const memo = hive.PrivateKey.fromLogin(username, pwd, 'memo');
+  const posting = dsteem.PrivateKey.fromLogin(username, pwd, 'posting');
+  const active = dsteem.PrivateKey.fromLogin(username, pwd, 'active');
+  const memo = dsteem.PrivateKey.fromLogin(username, pwd, 'memo');
   const keys = {
     posting: posting.toString(),
     active: active.toString(),
@@ -78,7 +78,7 @@ const derivateFromMasterPassword = (
 
 export const getPublicKeyFromPrivateKeyString = (pwd: string) => {
   try {
-    const privateKey = hive.PrivateKey.fromString(pwd);
+    const privateKey = dsteem.PrivateKey.fromString(pwd);
     const publicKey = privateKey.createPublic();
     return publicKey.toString();
   } catch (e) {
