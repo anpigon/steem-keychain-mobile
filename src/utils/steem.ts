@@ -1,4 +1,4 @@
-const steem = require('dsteem');
+const dsteem = require('dsteem');
 import {
   AccountWitnessProxyOperation,
   AccountWitnessVoteOperation,
@@ -13,7 +13,7 @@ import {
 } from 'dsteem';
 import api from 'api/keychain';
 import hiveTx from 'hive-tx';
-import {hiveEngine} from 'utils/config';
+import {steemEngine} from 'utils/config';
 import {RequestPost} from './keychain.types';
 
 type BroadcastResult = {id: string};
@@ -69,7 +69,7 @@ export const sendToken = async (key: string, username: string, obj: object) => {
   const result = (await broadcastJson(
     key,
     username,
-    hiveEngine.CHAIN_ID,
+    steemEngine.CHAIN_ID,
     true,
     {
       contractName: 'tokens',
@@ -180,4 +180,4 @@ export const broadcast = async (key: string, arr: Operation[]) => {
     throw e;
   }
 };
-export default steem;
+export default dsteem;

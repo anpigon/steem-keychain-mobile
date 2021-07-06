@@ -7,7 +7,7 @@ import {IntroductionNavProp} from 'navigators/Signup.types';
 import React from 'react';
 import {Linking, StyleSheet, Text, useWindowDimensions} from 'react-native';
 import {Dimensions} from 'utils/common.types';
-import {hiveConfig} from 'utils/config';
+import {steemConfig} from 'utils/config';
 import {translate} from 'utils/localize';
 
 const Introduction = ({navigation}: IntroductionNavProp) => {
@@ -36,10 +36,10 @@ const Introduction = ({navigation}: IntroductionNavProp) => {
         <EllipticButton
           title={translate('intro.createAccount')}
           onPress={() => {
-            Linking.canOpenURL(hiveConfig.CREATE_ACCOUNT_URL).then(
+            Linking.canOpenURL(steemConfig.CREATE_ACCOUNT_URL).then(
               (supported) => {
                 if (supported) {
-                  Linking.openURL(hiveConfig.CREATE_ACCOUNT_URL);
+                  Linking.openURL(steemConfig.CREATE_ACCOUNT_URL);
                 }
               },
             );

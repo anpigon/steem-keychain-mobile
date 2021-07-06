@@ -1,4 +1,4 @@
-import hsc, {hiveEngineAPI} from 'api/steemEngine';
+import ssc, {hiveEngineAPI} from 'api/steemEngine';
 import {AppThunk} from 'src/hooks/redux';
 import {
   ActionPayload,
@@ -18,7 +18,7 @@ import {
 export const loadTokens = (): AppThunk => async (dispatch) => {
   const action: ActionPayload<Token[]> = {
     type: LOAD_TOKENS,
-    payload: await hsc.find('tokens', 'tokens', {}, 1000, 0, []),
+    payload: await ssc.find('tokens', 'tokens', {}, 1000, 0, []),
   };
   dispatch(action);
 };
@@ -26,7 +26,7 @@ export const loadTokens = (): AppThunk => async (dispatch) => {
 export const loadTokensMarket = (): AppThunk => async (dispatch) => {
   const action: ActionPayload<TokenMarket[]> = {
     type: LOAD_TOKENS_MARKET,
-    payload: await hsc.find('market', 'metrics', {}, 1000, 0, []),
+    payload: await ssc.find('market', 'metrics', {}, 1000, 0, []),
   };
   dispatch(action);
 };
@@ -38,7 +38,7 @@ export const loadUserTokens = (account: string): AppThunk => async (
     dispatch({
       type: CLEAR_USER_TOKENS,
     });
-    let tokensBalance: TokenBalance[] = await hsc.find('tokens', 'balances', {
+    let tokensBalance: TokenBalance[] = await ssc.find('tokens', 'balances', {
       account,
     });
     tokensBalance = tokensBalance

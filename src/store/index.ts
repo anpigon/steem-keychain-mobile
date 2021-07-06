@@ -3,7 +3,7 @@ import reducers from 'reducers/index';
 import {applyMiddleware, createStore} from 'redux';
 import {persistReducer, persistStore} from 'redux-persist';
 import thunk from 'redux-thunk';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { composeWithDevTools } from 'remote-redux-devtools';
 
 const persistConfig = {
   key: 'root',
