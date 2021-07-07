@@ -10,7 +10,7 @@ import {
   TransferOperation,
   UpdateProposalVotesOperation,
   VoteOperation,
-} from 'dsteem';
+} from 'dsteem/lib';
 import api from 'api/keychain';
 import hiveTx from 'hive-tx';
 import {steemEngine} from 'utils/config';
