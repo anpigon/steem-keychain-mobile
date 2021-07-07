@@ -120,23 +120,12 @@ const getAccountTransactions = async (
   memoKey?: string,
 ): Promise<Transaction[]> => {
   try {
-    const op = dsteem.utils.operationOrders;
-    const operationsBitmask = dsteem.utils.makeBitMaskFilter([op.transfer]);
-    console.log('operationsBitmask: ' + operationsBitmask);
     const transactions = await getClient().database.call('get_account_history', [
       accountName,
       start || -1,
       start ? Math.min(10, start) : 1000,
-      operationsBitmask,
     ]);
-    // .getAccountHistory(
-    //   accountName,
-    //   start || -1,
-    //   start ? Math.min(10, start) : 1000,
-    //   //@ts-ignore
-    //   operationsBitmask,
-    // );
-
+   
     const transfers = transactions
       .filter((e) => e[1].op[0] === 'transfer')
       .map((e) => {

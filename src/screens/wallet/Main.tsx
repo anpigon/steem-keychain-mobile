@@ -31,7 +31,7 @@ const Main = ({
   const styles = getDimensionedStyles(useWindowDimensions());
 
   useEffect(() => {
-    loadAccount(lastAccount || accounts[0].name);
+    loadAccount(lastAccount || accounts[0].name, true);
     loadProperties();
     loadBittrex();
     fetchPhishingAccounts();
