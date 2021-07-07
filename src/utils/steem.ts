@@ -2,7 +2,7 @@ const dsteem = require('dsteem');
 import {
   AccountWitnessProxyOperation,
   AccountWitnessVoteOperation,
-  // Client,
+  Client,
   CommentOptionsOperation,
   ConvertOperation,
   DelegateVestingSharesOperation,
@@ -15,7 +15,6 @@ import api from 'api/keychain';
 import hiveTx from 'hive-tx';
 import {steemEngine} from 'utils/config';
 import {RequestPost} from './keychain.types';
-const Client = require('dsteem/lib/client').Client;
 
 type BroadcastResult = {id: string};
 
