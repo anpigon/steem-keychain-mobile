@@ -1,5 +1,5 @@
 import {loadAccount} from 'actions/index';
-import Hp from 'assets/wallet/icon_sp_dark.svg';
+import Sp from 'assets/wallet/icon_power.svg';
 import ActiveOperationButton from 'components/form/ActiveOperationButton';
 import OperationInput from 'components/form/OperationInput';
 import Separator from 'components/ui/Separator';
@@ -74,7 +74,7 @@ const PowerDown = ({currency = 'SP', user, loadAccount, properties}: Props) => {
   const styles = getDimensionedStyles(color);
   return (
     <Operation
-      logo={<Hp />}
+      logo={<Sp fill="#000"/>}
       title={translate('wallet.operations.powerdown.title')}>
       <>
         <Separator />

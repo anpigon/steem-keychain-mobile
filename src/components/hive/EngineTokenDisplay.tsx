@@ -1,5 +1,5 @@
 import {Token, TokenBalance, TokenMarket} from 'actions/interfaces';
-import HiveEngine from 'assets/wallet/hive_engine.png';
+import SteemEngine from 'assets/wallet/steem_engine.png';
 import {Send, ShowHistory} from 'components/operations/OperationsButtons';
 import React from 'react';
 import {Image as Img, StyleSheet, useWindowDimensions} from 'react-native';
@@ -25,7 +25,7 @@ const EngineTokenDisplay = ({token, tokensList, market}: Props) => {
     <Image
       style={styles.icon}
       source={{
-        uri: metadata.icon || Img.resolveAssetSource(HiveEngine).uri,
+        uri: metadata.icon || Img.resolveAssetSource(SteemEngine).uri,
       }}
     />
   );

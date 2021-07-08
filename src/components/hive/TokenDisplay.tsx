@@ -83,9 +83,9 @@ const renderLeftBottom = (
   if (currency !== 'SP') {
     return (
       <View style={[styles.row, styles.halfLine]}>
-        <Text style={styles.price}>{`$ ${price?.Usd || 0.0}`}</Text>
+        <Text style={styles.price}>{`$ ${Number(price?.Usd)?.toFixed(2) || 0.0}`}</Text>
         <Text style={styles.change}>{`${signedNumber(
-          +price?.DailyUsd || 0.0
+          +Number(price?.DailyUsd)?.toFixed(2) || 0.0
         )}%`}</Text>
       </View>
     );
@@ -101,7 +101,7 @@ const renderLeftBottom = (
             }}>
             <Text style={styles.green}>{`+ ${formatBalance(
               incoming!,
-            )} HP`}</Text>
+            )} SP`}</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.row}>

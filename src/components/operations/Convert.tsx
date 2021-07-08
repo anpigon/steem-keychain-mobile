@@ -1,5 +1,5 @@
 import {fetchConversionRequests, loadAccount} from 'actions/index';
-import Hive from 'assets/wallet/icon_hive.svg';
+import Steem from 'assets/wallet/icon_steem.svg';
 import ActiveOperationButton from 'components/form/ActiveOperationButton';
 import OperationInput from 'components/form/OperationInput';
 import Separator from 'components/ui/Separator';
@@ -59,7 +59,7 @@ const Convert = ({
   const styles = getDimensionedStyles(color);
   return (
     <Operation
-      logo={<Hive />}
+      logo={<Steem fill="#4ca2f0" />}
       title={translate('wallet.operations.convert.title')}>
       <>
         <Separator />
