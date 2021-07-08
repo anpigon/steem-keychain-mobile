@@ -1,6 +1,6 @@
 import {loadAccount} from 'actions/index';
-import Hp from 'assets/wallet/icon_sp.svg';
-import AccountLogoDark from 'assets/wallet/icon_username_dark.svg';
+import Sp from 'assets/wallet/icon_power.svg';
+import AccountLogo from 'assets/addAccount/icon_username.svg';
 import ActiveOperationButton from 'components/form/ActiveOperationButton';
 import OperationInput from 'components/form/OperationInput';
 import Separator from 'components/ui/Separator';
@@ -47,7 +47,7 @@ const PowerUp = ({currency = 'STEEM', user, loadAccount}: Props) => {
   const styles = getDimensionedStyles(color);
   return (
     <Operation
-      logo={<Hp />}
+      logo={<Sp fill="#e59d15" />}
       title={translate('wallet.operations.powerup.title')}>
       <>
         <Separator />
@@ -56,7 +56,7 @@ const PowerUp = ({currency = 'STEEM', user, loadAccount}: Props) => {
         <Separator />
         <OperationInput
           placeholder={translate('common.username').toUpperCase()}
-          leftIcon={<AccountLogoDark />}
+          leftIcon={<AccountLogo fill="#7e8c9a" />}
           autoCapitalize="none"
           value={to}
           onChangeText={setTo}
