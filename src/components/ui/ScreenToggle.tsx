@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   },
   headerText: {textAlign: 'center', fontSize: 16, paddingBottom: 10},
   headerActiveElt: {
-    borderColor: '#E31337',
+    borderColor: '#4ca2f0',
     borderBottomWidth: 3,
   },
   pane: {
