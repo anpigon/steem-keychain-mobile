@@ -277,7 +277,7 @@ const isFilledAmtSBD = (amt: string) => {
     amt.split(' ').length === 2 &&
     !isNaN(parseFloat(amt.split(' ')[0])) &&
     countDecimals(amt.split(' ')[0]) === 3 &&
-    amt.split(' ')[1] === 'HBD'
+    amt.split(' ')[1] === 'SBD'
   );
 };
 
