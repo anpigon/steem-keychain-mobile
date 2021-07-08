@@ -25,11 +25,11 @@ hiveTx.config.rebranded_api = true;
 hiveTx.updateOperations();
 
 const getDefault: () => Promise<string> = async () => {
-  // try {
-  //   return (await api.get('/hive/rpc')).data.rpc;
-  // } catch (e) {
+    try {
+      return (await api.get('rpc_default.json')).data.url;
+    } catch (e) {
   return DEFAULT_RPC;
-  // }
+  }
 };
 
 export const setRpc = async (rpc: string) => {
