@@ -270,7 +270,7 @@
   },
   "browser": {"history": {"clear": "Clear History"}},
   "drawerFooter": {
-    "madeBy": "Made with ❤ by @stoodkev",
+    "madeBy": "Made with ❤ by @anpigon\nThanks @stoodkev.",
     "vote": "Vote for Witness",
     "thanks": "Thanks for your support ❤",
     "error30": "You already vote for 30 witnesses. You will need to unvote one to vote for a new one.",

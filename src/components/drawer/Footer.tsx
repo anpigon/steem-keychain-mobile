@@ -45,7 +45,7 @@ export default ({user}: {user: ActiveAccount}) => {
   return (
     <View style={styles.footer}>
       <Text style={styles.footerText}>{translate('drawerFooter.madeBy')}</Text>
-      {showVoteForWitness()}
+      {/* {showVoteForWitness()} */}
     </View>
   );
 };
