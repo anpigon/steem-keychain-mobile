@@ -67,7 +67,7 @@ const Primary = ({user, bittrex, properties}: PropsFromRedux) => {
           user.account.delegated_vesting_shares as string,
           properties.globals,
         )}
-        logo={<Sp width={width / 15} />}
+        logo={<Sp width={width / 15} fill="#e59d15" />}
         price={bittrex.sbd}
         buttons={[<SendDelegation key="del" />, <SendPowerDown key="pd" />]}
       />
