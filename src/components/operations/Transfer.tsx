@@ -112,9 +112,9 @@ const Transfer = ({
     }
   };
   const {color} = getCurrencyProperties(currency);
-  const {height} = useWindowDimensions();
+  const {width} = useWindowDimensions();
 
-  const styles = getDimensionedStyles(color, height);
+  const styles = getDimensionedStyles(color, width);
   if (step === 1) {
     return (
       <Operation
@@ -181,7 +181,7 @@ const Transfer = ({
   } else {
     return (
       <Operation
-        logo={<SendArrowBlue />}
+        logo={<SendArrow fill="#77b9d1" />}
         title={translate('wallet.operations.transfer.title')}>
         <>
           <Separator height={30} />
