@@ -57,5 +57,5 @@ export const getTransferWarning = (
 };
 
 export const getPhishingAccounts = async () => {
-  return (await api.get('/hive/phishingAccounts')).data;
+  return (await api.get('/phishing_accounts.json')).data;
 };
