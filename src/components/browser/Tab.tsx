@@ -144,6 +144,7 @@ export default ({
   const onMessage = ({nativeEvent}: WebViewMessageEvent) => {
     const {name, request_id, data} = JSON.parse(nativeEvent.data);
     const {current} = tabRef;
+    // console.log('onMessage', {name, request_id, data});
     switch (name) {
       case 'swHandshake_steem':
         current.injectJavaScript(
@@ -242,10 +243,12 @@ export default ({
           ref={tabRef}
           source={{uri: url}}
           sharedCookiesEnabled
-          injectedJavaScriptBeforeContentLoaded={steem_keychain}
+          injectedJavaScriptForMainFrameOnly
+          injectedJavaScript={steem_keychain}
           onMessage={onMessage}
           bounces={false}
           javaScriptEnabled
+          cacheEnabled
           allowsInlineMediaPlayback
           onLoadEnd={onLoadEnd}
           onLoadStart={onLoadStart}
