@@ -303,10 +303,10 @@ export type RequestId = {request_id: number};
 
 export type KeychainRequest = KeychainRequestData & RequestId;
 
-export type HiveErrorMessage = {
+export type SteemErrorMessage = {
   message: string;
-  code: number;
-  data?: any;
+  name: number;
+  jse_info?: any;
 };
 
 export type RequestSuccess = {

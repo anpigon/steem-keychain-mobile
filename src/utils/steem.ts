@@ -170,7 +170,7 @@ export const broadcast = async (key: string, arr: Operation[]) => {
     );
     return result;
   } catch (e) {
-    console.log(e);
+    console.error(e);
     throw e;
   }
 };

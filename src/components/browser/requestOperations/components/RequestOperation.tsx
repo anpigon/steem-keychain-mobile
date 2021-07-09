@@ -8,7 +8,7 @@ import {connect, ConnectedProps} from 'react-redux';
 import {urlTransformer} from 'utils/browser';
 import {beautifyErrorMessage} from 'utils/keychain';
 import {
-  HiveErrorMessage,
+  SteemErrorMessage,
   KeychainRequest,
   KeychainRequestTypes,
   RequestError,
@@ -30,7 +30,7 @@ type Props = {
   errorMessage?:
     | string
     | ((
-        msg: HiveErrorMessage,
+        msg: SteemErrorMessage,
         data: {currency?: string; username?: string; to?: string},
       ) => string);
   performOperation: () => void;

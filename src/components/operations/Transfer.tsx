@@ -108,6 +108,7 @@ const Transfer = ({
         beautifyTransferError(e, {to, currency, username: user.account.name}),
         Toast.LONG,
       );
+    } finally {
       setLoading(false);
     }
   };
