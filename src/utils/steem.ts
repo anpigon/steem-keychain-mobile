@@ -10,6 +10,7 @@ import {
   TransferOperation,
   UpdateProposalVotesOperation,
   VoteOperation,
+  PrivateKey,
 } from 'dsteem/lib';
 import api from 'api/keychain';
 import hiveTx from 'hive-tx';
@@ -25,10 +26,10 @@ hiveTx.config.rebranded_api = true;
 hiveTx.updateOperations();
 
 const getDefault: () => Promise<string> = async () => {
-    try {
-      return (await api.get('rpc_default.json')).data.url;
-    } catch (e) {
-  return DEFAULT_RPC;
+  try {
+    return (await api.get('rpc_default.json')).data.url;
+  } catch (e) {
+    return DEFAULT_RPC;
   }
 };
 
@@ -162,20 +163,12 @@ export const updateProposalVote = async (
 };
 
 export const broadcast = async (key: string, arr: Operation[]) => {
-  const tx = new hiveTx.Transaction();
-  await tx.create(arr);
-  tx.sign(hiveTx.PrivateKey.from(key));
   try {
-    const {error, result} = (await tx.broadcast()) as {
-      error: Error;
-      result: object;
-    };
-    if (error) {
-      console.log(error);
-      throw error;
-    } else {
-      return result;
-    }
+    const result = await client.broadcast.sendOperations(
+      arr,
+      PrivateKey.from(key),
+    );
+    return result;
   } catch (e) {
     console.log(e);
     throw e;
