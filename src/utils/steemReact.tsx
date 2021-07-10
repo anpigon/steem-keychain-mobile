@@ -1,7 +1,6 @@
 import {ExtendedAccount} from 'dsteem';
-import Hbd from 'assets/wallet/icon_hbd.svg';
-import Hive from 'assets/wallet/icon_hive.svg';
-import Hp from 'assets/wallet/icon_sp.svg';
+import Steem from 'assets/wallet/icon_steem.svg';
+import Sp from 'assets/wallet/icon_power.svg';
 import React from 'react';
 
 export const getCurrencyProperties = (
@@ -12,18 +11,18 @@ export const getCurrencyProperties = (
   switch (currency) {
     case 'STEEM':
       color = '#4ca2f0';
-      logo = <Hive />;
+      logo = <Steem fill="#4ca2f0" />;
       value = account ? account.balance : null;
       break;
     case 'SBD':
       color = '#005C09';
       value = account ? account.sbd_balance : null;
-      logo = <Hbd />;
+      logo = <Steem fill="#005C09" />;
       break;
     default:
       color = '#AC4F00';
       value = account ? account.vesting_shares : null;
-      logo = <Hp />;
+      logo = <Sp fill="#e59d15" />;
       break;
   }
   return {currency, color, value, logo};

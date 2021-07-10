@@ -2,7 +2,7 @@ const dsteem = require('dsteem');
 import {
   AccountWitnessProxyOperation,
   AccountWitnessVoteOperation,
-  // Client,
+  Client,
   CommentOptionsOperation,
   ConvertOperation,
   DelegateVestingSharesOperation,
@@ -10,12 +10,12 @@ import {
   TransferOperation,
   UpdateProposalVotesOperation,
   VoteOperation,
-} from 'dsteem';
+  PrivateKey,
+} from 'dsteem/lib';
 import api from 'api/keychain';
 import hiveTx from 'hive-tx';
 import {steemEngine} from 'utils/config';
 import {RequestPost} from './keychain.types';
-const Client = require('dsteem/lib/client').Client;
 
 type BroadcastResult = {id: string};
 
@@ -26,11 +26,11 @@ hiveTx.config.rebranded_api = true;
 hiveTx.updateOperations();
 
 const getDefault: () => Promise<string> = async () => {
-  // try {
-  //   return (await api.get('/hive/rpc')).data.rpc;
-  // } catch (e) {
-  return DEFAULT_RPC;
-  // }
+  try {
+    return (await api.get('rpc_default.json')).data.url;
+  } catch (e) {
+    return DEFAULT_RPC;
+  }
 };
 
 export const setRpc = async (rpc: string) => {
@@ -163,22 +163,14 @@ export const updateProposalVote = async (
 };
 
 export const broadcast = async (key: string, arr: Operation[]) => {
-  const tx = new hiveTx.Transaction();
-  await tx.create(arr);
-  tx.sign(hiveTx.PrivateKey.from(key));
   try {
-    const {error, result} = (await tx.broadcast()) as {
-      error: Error;
-      result: object;
-    };
-    if (error) {
-      console.log(error);
-      throw error;
-    } else {
-      return result;
-    }
+    const result = await client.broadcast.sendOperations(
+      arr,
+      PrivateKey.from(key),
+    );
+    return result;
   } catch (e) {
-    console.log(e);
+    console.error(e);
     throw e;
   }
 };

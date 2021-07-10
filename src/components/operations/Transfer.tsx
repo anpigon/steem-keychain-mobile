@@ -1,6 +1,6 @@
 import {loadAccount} from 'actions/index';
-import SendArrowBlue from 'assets/wallet/icon_send_blue.svg';
-import AccountLogoDark from 'assets/wallet/icon_username_dark.svg';
+import SendArrow from 'assets/wallet/icon_send.svg';
+import AccountLogo from 'assets/addAccount/icon_username.svg';
 import {encodeMemo} from 'components/bridge';
 import ActiveOperationButton from 'components/form/ActiveOperationButton';
 import CustomRadioGroup from 'components/form/CustomRadioGroup';
@@ -108,17 +108,18 @@ const Transfer = ({
         beautifyTransferError(e, {to, currency, username: user.account.name}),
         Toast.LONG,
       );
+    } finally {
       setLoading(false);
     }
   };
   const {color} = getCurrencyProperties(currency);
-  const {height} = useWindowDimensions();
+  const {width} = useWindowDimensions();
 
-  const styles = getDimensionedStyles(color, height);
+  const styles = getDimensionedStyles(color, width);
   if (step === 1) {
     return (
       <Operation
-        logo={<SendArrowBlue />}
+        logo={<SendArrow fill="#77b9d1" />}
         title={translate('wallet.operations.transfer.title')}>
         <>
           <Separator />
@@ -133,7 +134,7 @@ const Transfer = ({
           <Separator />
           <OperationInput
             placeholder={translate('common.username').toUpperCase()}
-            leftIcon={<AccountLogoDark />}
+            leftIcon={<AccountLogo fill="#7e8c9a" />}
             autoCapitalize="none"
             value={to}
             onChangeText={setTo}
@@ -181,7 +182,7 @@ const Transfer = ({
   } else {
     return (
       <Operation
-        logo={<SendArrowBlue />}
+        logo={<SendArrow fill="#77b9d1" />}
         title={translate('wallet.operations.transfer.title')}>
         <>
           <Separator height={30} />

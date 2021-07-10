@@ -41,6 +41,10 @@
     "no_transaction": "No recent transaction.",
     "add_memo": "Please add your memo key to decrypt this message.",
     "add_active": "Please add your active key to perform this operation.",
+    "tab_menus": {
+      "primary": "Primary", 
+      "tokens": "Tokens"
+    },
     "operations": {
       "history": "History",
       "transfer": {
@@ -60,18 +64,19 @@
         }
       },
       "powerup": {"title": "Power up!"},
-      "powerdown": {"title": "Power down"},
+      "powerdown": {"title": "Power down", "current_power_down": "Current power down"},
       "delegation": {
         "title": "Delegate Steem Power",
         "incoming": "Incoming Delegations",
         "outgoing": "Outgoing Delegations"
       },
-      "convert": {"title": "Convert to STEEM", "button": "Convert"}
+      "convert": {"title": "Convert to STEEM", "button": "Convert", "conversions": "conversions"}
     }
   },
   "settings": {
     "keys": {
       "add": "ADD KEY",
+      "forget_account": "FORGET ACCOUNT",
       "disclaimer": [
         {
           "text": "To receive funds, simply share your account name (displayed above) with the sender.",
@@ -99,7 +104,8 @@
         "You can chose which RPC node is used to read information and broadcast transactions from/to the Steem Blockchain.",
         "Use 'DEFAULT' RPC to let Steem Keychain chose the best RPC node at a given time."
       ],
-      "user": "User settings"
+      "user": "User settings",
+      "nothing_to_show": "Nothing to show"
     }
   },
   "components": {
@@ -265,9 +271,9 @@
     "confirm": "Confirm",
     "keep": "Do not prompt again to send {{type}} transactions from the account @{{username}} on {{domain}}."
   },
-  "browser": {"history": {"clear": "Clear History"}},
+  "browser": {"history": {"clear": "Clear History"}, "please_enter_the_url": "Please enter the url"},
   "drawerFooter": {
-    "madeBy": "Made with ❤ by @stoodkev",
+    "madeBy": "Made with ❤ by @anpigon\nThanks @stoodkev.",
     "vote": "Vote for Witness",
     "thanks": "Thanks for your support ❤",
     "error30": "You already vote for 30 witnesses. You will need to unvote one to vote for a new one.",

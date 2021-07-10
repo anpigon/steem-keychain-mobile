@@ -1,5 +1,5 @@
 import {createStackNavigator} from '@react-navigation/stack';
-import Hive from 'assets/wallet/hive.svg';
+import Steem from 'assets/wallet/steem.svg';
 import DrawerButton from 'components/ui/DrawerButton';
 import React from 'react';
 import {StyleSheet, useWindowDimensions} from 'react-native';
@@ -27,7 +27,7 @@ export default () => {
           headerRight: () => <DrawerButton navigation={navigation} />,
 
           headerLeft: () => {
-            return <Hive style={styles({width}).left} />;
+            return <Steem style={styles({width}).left} />;
           },
         })}
       />

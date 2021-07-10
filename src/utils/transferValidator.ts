@@ -8,7 +8,7 @@ const getExchanges = () => [
   {account: 'ionomy', tokens: ['STEEM', 'SBD']},
   {account: 'huobi-pro', tokens: ['STEEM']},
   {account: 'huobi-withdrawal', tokens: []},
-  {account: 'blocktrades', tokens: ['STEEM', 'HBD']},
+  {account: 'blocktrades', tokens: ['STEEM', 'SBD']},
   {account: 'mxchive', tokens: ['STEEM']},
   {account: 'hot.dunamu', tokens: []},
   {account: 'probithive', tokens: ['STEEM']},
@@ -57,5 +57,5 @@ export const getTransferWarning = (
 };
 
 export const getPhishingAccounts = async () => {
-  return (await api.get('/hive/phishingAccounts')).data;
+  return (await api.get('/phishing_accounts.json')).data;
 };

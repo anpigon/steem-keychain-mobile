@@ -103,9 +103,10 @@ const getVotePowerReserveRate = (properties: GlobalProperties) => {
 };
 
 export const getDelegators = async (name: string) => {
-  return ((await api.get(`/hive/delegators/${name}`)).data as Delegator[])
-    .filter((e) => e.vesting_shares !== 0)
-    .sort((a, b) => b.vesting_shares - a.vesting_shares);
+  // return ((await api.get(`/hive/delegators/${name}`)).data as Delegator[])
+  //   .filter((e) => e.vesting_shares !== 0)
+  //   .sort((a, b) => b.vesting_shares - a.vesting_shares);
+  return [] as Delegator[];
 };
 
 export const getDelegatees = async (name: string) => {
@@ -127,13 +128,13 @@ export const rpcList = [
   'https://api.steemit.com',
   'https://api.steemitdev.com',
   'https://api.justyy.com',
-  'https://e51ewpb9dk.execute-api',
+  'https://e51ewpb9dk.execute-api.us-east-1.amazonaws.com/release',
   'https://api.steemyy.com',
   'https://api.steemzzang.com',
-  'https://x68bp3mesd.execute-api',
+  'https://x68bp3mesd.execute-api.ap-northeast-1.amazonaws.com/release',
   'https://cn.steems.top',
-  'https://justyy.azurewebsites.net',
-  'https://steem.justyy.workers',
+  'https://justyy.azurewebsites.net/api/steem',
+  'https://steem.justyy.workers.dev',
   'https://steem.ecosynthesizer.com',
   'https://steem.61bts.com',
   'https://api.steem.buzz',

@@ -1,6 +1,6 @@
 import {loadDelegatees, loadDelegators} from 'actions/index';
 import Edit from 'assets/wallet/edit.svg';
-import Delegate from 'assets/wallet/icon_delegate_dark.svg';
+import Delegate from 'assets/wallet/icon_delegate.svg';
 import Delegation from 'components/operations/Delegation';
 import Separator from 'components/ui/Separator';
 import React, {useEffect} from 'react';
@@ -84,7 +84,7 @@ const DelegationsList = ({
   };
   return (
     <Operation
-      logo={<Delegate />}
+      logo={<Delegate fill="#B084C4"/>}
       title={translate(`wallet.operations.delegation.${type}`)}>
       <>
         <Separator height={40} />

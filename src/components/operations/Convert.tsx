@@ -1,5 +1,5 @@
 import {fetchConversionRequests, loadAccount} from 'actions/index';
-import Hive from 'assets/wallet/icon_hive.svg';
+import Steem from 'assets/wallet/icon_steem.svg';
 import ActiveOperationButton from 'components/form/ActiveOperationButton';
 import OperationInput from 'components/form/OperationInput';
 import Separator from 'components/ui/Separator';
@@ -43,7 +43,7 @@ const Convert = ({
     try {
       await convert(user.keys.active!, {
         owner: user.account.name,
-        amount: sanitizeAmount(amount, 'HBD'),
+        amount: sanitizeAmount(amount, 'SBD'),
         requestid: Math.max(...conversions.map((e) => e.requestid), 0) + 1,
       });
       loadAccount(user.account.name, true);
@@ -55,20 +55,20 @@ const Convert = ({
       setLoading(false);
     }
   };
-  const {color} = getCurrencyProperties('HBD');
+  const {color} = getCurrencyProperties('SBD');
   const styles = getDimensionedStyles(color);
   return (
     <Operation
-      logo={<Hive />}
+      logo={<Steem fill="#4ca2f0" />}
       title={translate('wallet.operations.convert.title')}>
       <>
         <Separator />
-        <Balance currency="HBD" account={user.account} />
+        <Balance currency="SBD" account={user.account} />
         <Separator />
         <OperationInput
           placeholder={'0.000'}
           keyboardType="numeric"
-          rightIcon={<Text style={styles.currency}>HBD</Text>}
+          rightIcon={<Text style={styles.currency}>SBD</Text>}
           textAlign="right"
           value={amount}
           onChangeText={setAmount}
@@ -81,7 +81,7 @@ const Convert = ({
           <Text
             style={
               styles.conversions
-            }>{`${conversions.length} conversions`}</Text>
+            }>{`${conversions.length} ${translate('wallet.operations.convert.conversions')}`}</Text>
         </TouchableOpacity>
         <Separator />
         {showConversionsList ? (

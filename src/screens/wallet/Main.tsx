@@ -31,7 +31,7 @@ const Main = ({
   const styles = getDimensionedStyles(useWindowDimensions());
 
   useEffect(() => {
-    loadAccount(lastAccount || accounts[0].name);
+    loadAccount(lastAccount || accounts[0].name, true);
     loadProperties();
     loadBittrex();
     fetchPhishingAccounts();
@@ -80,7 +80,10 @@ const Main = ({
         </View>
         <ScreenToggle
           style={styles.toggle}
-          menu={['Primary', 'Tokens']}
+          menu={[
+            translate('wallet.tab_menus.primary'),
+            translate('wallet.tab_menus.tokens'),
+          ]}
           toUpperCase
           components={[<Primary />, <Tokens />]}
         />

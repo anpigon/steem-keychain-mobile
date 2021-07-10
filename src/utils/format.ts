@@ -1,6 +1,6 @@
 import {DynamicGlobalProperties} from 'dsteem';
 import {translate} from 'utils/localize';
-import {HiveErrorMessage} from './keychain.types';
+import {SteemErrorMessage} from './keychain.types';
 
 export const withCommas = (nb: string, decimals = 3) =>
   parseFloat(parseFloat(nb).toFixed(decimals))
@@ -40,13 +40,13 @@ export const capitalize = (string: string) =>
   string.charAt(0).toUpperCase() + string.slice(1);
 
 export const beautifyTransferError = (
-  err: HiveErrorMessage,
+  err: SteemErrorMessage,
   {currency, username, to}: {currency?: string; username?: string; to?: string},
 ) => {
-  if (!err.data && err.message.includes('Unable to serialize')) {
+  if (!err.jse_info && err.message.includes('Unable to serialize')) {
     return translate('request.error.transfer.encrypt');
   }
-  switch (err.data.stack[0].context.method) {
+  switch (err.jse_info.stack[0].context.method) {
     case 'adjust_balance':
       return translate('request.error.transfer.adjust_balance', {
         currency,

@@ -15,20 +15,38 @@ export default () => {
             Keychain Mobile v{VersionInfo.appVersion} (Beta)
           </Text>
           <Text style={styles.text}>
-            Keychain for mobile is developed by{' '}
+            This application was developed by{' '}
             <Text
               style={styles.link}
               onPress={() => {
-                Linking.openURL('https://peakd.com/@stoodkev');
+                Linking.openURL('https://steemit.com/@anpigon');
               }}>
+              @anpigon
+            </Text>{' '}
+            by forking{' '}
+            <Text
+              style={styles.link}
+              onPress={() => {
+                Linking.openURL(
+                  'https://github.com/stoodkev/hive-keychain-mobile',
+                );
+              }}>
+              Hive Keychain Mobile.
+            </Text>
+            .
+          </Text>
+          <Separator height={20} />
+          <Text style={styles.text}>
+            Keychain for mobile is developed by{' '}
+            <Text
+              style={styles.link}
+              onPress={() => Linking.openURL('https://peakd.com/@stoodkev')}>
               @stoodkev
             </Text>{' '}
             and designed by{' '}
             <Text
               style={styles.link}
-              onPress={() => {
-                Linking.openURL('https://peakd.com/@nateaguila');
-              }}>
+              onPress={() => Linking.openURL('https://peakd.com/@nateaguila')}>
               @nateaguila
             </Text>
             .
@@ -39,17 +57,13 @@ export default () => {
             the Splinterlands' funders{' '}
             <Text
               style={styles.link}
-              onPress={() => {
-                Linking.openURL('https://peakd.com/@yabapmatt');
-              }}>
+              onPress={() => Linking.openURL('https://peakd.com/@yabapmatt')}>
               @yabapmatt
             </Text>{' '}
             and{' '}
             <Text
               style={styles.link}
-              onPress={() => {
-                Linking.openURL('https://peakd.com/@aggroed');
-              }}>
+              onPress={() => Linking.openURL('https://peakd.com/@aggroed')}>
               @aggroed
             </Text>
             .
@@ -60,11 +74,11 @@ export default () => {
             bugs, layout issues and improvement ideas on our{' '}
             <Text
               style={styles.link}
-              onPress={() => {
+              onPress={() =>
                 Linking.openURL(
-                  'https://github.com/stoodkev/hive-keychain-mobile',
-                );
-              }}>
+                  'https://github.com/anpigon/steem-keychain-mobile',
+                )
+              }>
               Github.
             </Text>
           </Text>

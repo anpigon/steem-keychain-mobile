@@ -1,6 +1,5 @@
-import Hbd from 'assets/wallet/icon_hbd.svg';
-import Hive from 'assets/wallet/icon_hive.svg';
-import Hp from 'assets/wallet/icon_sp.svg';
+import Steem from 'assets/wallet/icon_steem.svg';
+import Sp from 'assets/wallet/icon_power.svg';
 import AccountValue from 'components/hive/AccountValue';
 import TokenDisplay from 'components/hive/TokenDisplay';
 import Transactions from 'components/hive/Transactions';
@@ -34,7 +33,7 @@ const Primary = ({user, bittrex, properties}: PropsFromRedux) => {
         name="STEEM"
         currency="STEEM"
         value={parseFloat(user.account.balance as string)}
-        logo={<Hive width={width / 15} />}
+        logo={<Steem width={width / 15} fill="#4ca2f0" />}
         price={bittrex.steem}
         buttons={[
           <Send key="send_steem" currency="STEEM" />,
@@ -47,7 +46,7 @@ const Primary = ({user, bittrex, properties}: PropsFromRedux) => {
         name="STEEM DOLLARS"
         currency="SBD"
         value={parseFloat(user.account.sbd_balance as string)}
-        logo={<Hbd width={width / 15} />}
+        logo={<Steem width={width / 15} fill="#005C09" />}
         price={bittrex.sbd}
         buttons={[
           <Send key="send_sbd" currency="SBD" />,
@@ -68,7 +67,7 @@ const Primary = ({user, bittrex, properties}: PropsFromRedux) => {
           user.account.delegated_vesting_shares as string,
           properties.globals,
         )}
-        logo={<Hp width={width / 15} />}
+        logo={<Sp width={width / 15} fill="#e59d15" />}
         price={bittrex.sbd}
         buttons={[<SendDelegation key="del" />, <SendPowerDown key="pd" />]}
       />

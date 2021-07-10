@@ -5,7 +5,7 @@ import WebView from 'react-native-webview';
 import {KeychainConfig} from 'utils/config';
 import {translate} from 'utils/localize';
 import {
-  HiveErrorMessage,
+  SteemErrorMessage,
   KeychainRequest,
   RequestAddAccountKeys,
   RequestDelegation,
@@ -277,7 +277,7 @@ const isFilledAmtSBD = (amt: string) => {
     amt.split(' ').length === 2 &&
     !isNaN(parseFloat(amt.split(' ')[0])) &&
     countDecimals(amt.split(' ')[0]) === 3 &&
-    amt.split(' ')[1] === 'HBD'
+    amt.split(' ')[1] === 'SBD'
   );
 };
 
@@ -347,7 +347,7 @@ const countDecimals = (nb: string) => {
     : nb.toString().split('.')[1].length || 0;
 };
 
-export const beautifyErrorMessage = (err: HiveErrorMessage) => {
+export const beautifyErrorMessage = (err: SteemErrorMessage) => {
   if (!err) {
     return null;
   }

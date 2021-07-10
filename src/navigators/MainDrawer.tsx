@@ -26,7 +26,13 @@ export default () => {
         itemStyle: {marginHorizontal: 0, borderRadius: 0, paddingLeft: 10},
       }}
       drawerContent={(props) => <DrawerContent {...props} />}>
-      <Drawer.Screen name="WALLET" component={WalletStack} />
+      <Drawer.Screen
+        name="WALLET"
+        options={{
+          title: translate('navigation.wallet'),
+        }}
+        component={WalletStack}
+      />
       <Drawer.Screen
         name="BrowserScreen"
         options={{

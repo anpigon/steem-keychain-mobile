@@ -1,5 +1,5 @@
 import {loadTokenHistory} from 'actions/index';
-import HistoryIcon from 'assets/wallet/icon_history_green.svg';
+import HistoryIcon from 'assets/wallet/icon_history.svg';
 import Transfer from 'components/hive/Transfer';
 import Separator from 'components/ui/Separator';
 import React, {useEffect} from 'react';
@@ -32,7 +32,7 @@ const History = ({
 
   return (
     <Operation
-      logo={<HistoryIcon />}
+      logo={<HistoryIcon fill="#69C1B3"/>}
       title={translate('wallet.operations.history')}>
       <>
         <Separator height={40} />

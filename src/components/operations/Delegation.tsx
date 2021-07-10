@@ -1,6 +1,6 @@
 import {loadAccount} from 'actions/index';
-import Delegate from 'assets/wallet/icon_delegate_dark.svg';
-import AccountLogoDark from 'assets/wallet/icon_username_dark.svg';
+import Delegate from 'assets/wallet/icon_delegate.svg';
+import AccountLogo from 'assets/addAccount/icon_username.svg';
 import ActiveOperationButton from 'components/form/ActiveOperationButton';
 import OperationInput from 'components/form/OperationInput';
 import Separator from 'components/ui/Separator';
@@ -9,7 +9,7 @@ import {Keyboard, StyleSheet, Text} from 'react-native';
 import Toast from 'react-native-simple-toast';
 import {connect, ConnectedProps} from 'react-redux';
 import {RootState} from 'store';
-import {fromHP} from 'utils/format';
+import {fromSP} from 'utils/format';
 import {delegate} from 'utils/steem';
 import {getCurrencyProperties} from 'utils/steemReact';
 import {sanitizeAmount, sanitizeUsername} from 'utils/steemUtils';
@@ -38,7 +38,7 @@ const Delegation = ({
     try {
       const delegation = await delegate(user.keys.active, {
         vesting_shares: sanitizeAmount(
-          fromHP(sanitizeAmount(amount), properties.globals).toString(),
+          fromSP(sanitizeAmount(amount), properties.globals).toString(),
           'VESTS',
           6,
         ),
@@ -62,7 +62,7 @@ const Delegation = ({
   const styles = getDimensionedStyles(color);
   return (
     <Operation
-      logo={<Delegate />}
+      logo={<Delegate fill="#B084C4" />}
       title={translate('wallet.operations.delegation.title')}>
       <>
         <Separator />
@@ -76,7 +76,7 @@ const Delegation = ({
         <Separator />
         <OperationInput
           placeholder={translate('common.username').toUpperCase()}
-          leftIcon={<AccountLogoDark />}
+          leftIcon={<AccountLogo fill="#7e8c9a" />}
           autoCapitalize="none"
           value={to}
           onChangeText={setTo}
