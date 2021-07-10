@@ -26,7 +26,9 @@ const PowerDown = ({currency = 'SP', user, loadAccount, properties}: Props) => {
     if (parseFloat(user.account.to_withdraw as string) !== 0) {
       return (
         <Text>
-          <Text style={styles.bold}>Current power down : </Text>
+          <Text style={styles.bold}>
+            {translate('wallet.operations.powerdown.current_power_down')} :{' '}
+          </Text>
           {`${withCommas(
             toSP(user.account.withdrawn as string, properties.globals) /
               1000000 +
@@ -37,7 +39,7 @@ const PowerDown = ({currency = 'SP', user, loadAccount, properties}: Props) => {
               1000000 +
               '',
             1,
-          )} HP`}
+          )} SP`}
         </Text>
       );
     } else {
@@ -74,7 +76,7 @@ const PowerDown = ({currency = 'SP', user, loadAccount, properties}: Props) => {
   const styles = getDimensionedStyles(color);
   return (
     <Operation
-      logo={<Sp fill="#000"/>}
+      logo={<Sp fill="#000" />}
       title={translate('wallet.operations.powerdown.title')}>
       <>
         <Separator />

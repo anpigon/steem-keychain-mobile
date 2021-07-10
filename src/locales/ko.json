@@ -1,13 +1,5 @@
 {
-  "unlock": {"enterPIN": "Enter your PIN", "authenticate": "Authenticate"},
-  "signup": {"confirm": "Confirm your PIN", "choose": "Choose your PIN"},
-  "intro": {
-    "text": "STEEM powers a growing ecosystem of Web 3.0 websites and applications.",
-    "manage": "Safely manage your funds and connect to STEEM based services with KEYCHAIN.",
-    "existingAccount": "Existing Account",
-    "createAccount": "New Account"
-  },
-  "addAccountByKey": {"text": "Add your existing STEEM account to Keychain"},
+  "addAccountByKey": {"text": "키체인에 기존 STEEM 계정을 추가하세요."},
   "keys": {
     "posting": "Posting",
     "active": "Active",
@@ -15,19 +7,19 @@
     "key_type": "{{type}} key"
   },
   "common": {
-    "import": "Import",
+    "import": "가져오기",
     "username": "username",
-    "confirm": "Confirm",
-    "privateKey": "Private Key",
-    "private": "Private",
-    "public": "Public",
-    "amount": "amount",
-    "memo": "memo",
-    "send": "Send",
-    "save": "Save",
-    "balance": "Balance",
-    "available": "Available",
-    "back": "Back",
+    "confirm": "확인",
+    "privateKey": "개인 키",
+    "private": "비밀",
+    "public": "공개",
+    "amount": "수량",
+    "memo": "메모",
+    "send": "전송",
+    "save": "저장",
+    "balance": "잔액",
+    "available": "가능한 수량",
+    "back": "취소",
     "encrypted": "encrypted",
     "vote": "Vote",
     "unvote": "Unvote",
@@ -36,21 +28,21 @@
   "wallet": {
     "rc": "Resources:",
     "vp": "Voting:",
-    "balance": "balance",
-    "no_tokens": "No Steem Engine token found.",
-    "no_transaction": "No recent transaction.",
-    "add_memo": "Please add your memo key to decrypt this message.",
-    "add_active": "Please add your active key to perform this operation.",
+    "balance": "잔액",
+    "no_tokens": "스팀 엔진 토큰을 찾을 수 없습니다.",
+    "no_transaction": "최근 거래가 없습니다.",
+    "add_memo": "이 메시지를 해독하려면 메모 키를 추가하세요.",
+    "add_active": "이 작업을 수행하려면 액티브 키를 추가하십시오.",
     "operations": {
       "history": "History",
       "transfer": {
-        "title": "Transfer funds",
-        "memo": "MEMO (optional)",
+        "title": "토큰 전송",
+        "memo": "메모 (옵션)",
         "confirm": {
-          "from": "From",
-          "to": "To",
-          "amount": "Amount",
-          "memo": "Memo"
+          "from": "보내는이",
+          "to": "받는분",
+          "amount": "수량",
+          "memo": "메모"
         },
         "warning": {
           "phishing": "This account has been listed as a potential phishing account, check the spelling and make sure it is the account you want to transfer to.",
@@ -59,10 +51,10 @@
           "missing_info": "Please fill the username and amount to proceed"
         }
       },
-      "powerup": {"title": "Power up!"},
-      "powerdown": {"title": "Power down"},
+      "powerup": {"title": "파워 업!"},
+      "powerdown": {"title": "파워 다운", "current_power_down": "현재 파워다운 상태"},
       "delegation": {
-        "title": "Delegate Steem Power",
+        "title": "스팀 파워 임대",
         "incoming": "Incoming Delegations",
         "outgoing": "Outgoing Delegations"
       },
@@ -71,35 +63,37 @@
   },
   "settings": {
     "keys": {
-      "add": "ADD KEY",
+      "add": "개인키 추가하기",
+      "forget_account": "계정 삭제하기",
       "disclaimer": [
         {
-          "text": "To receive funds, simply share your account name (displayed above) with the sender.",
+          "text": "자금을 받으려면 스팀 계정을 알려주기만 하면 됩니다.",
           "style_do_not_translate": "disclaimer"
         },
         {
-          "text": "However, many applications will require a PRIVATE KEY to prove ownership or to conduct transactions on your behalf.",
+          "text": "그러나 애플리케이션에서는 지갑의 소유권을 증명하거나 귀하를 대신하여 거래를 수행하기 위해 개인키(PRIVATE KEY)가 필요합니다.",
           "style_do_not_translate": "disclaimer"
         },
         {
-          "text": "ONLY SHARE PRIVATE KEYS WITH PARTIES THAT YOU TRUST!",
+          "text": "신뢰할 수 있는 사람에게만 개인 키를 공유하십시오!",
           "style_do_not_translate": "important"
         },
         {
-          "text": "In the future, Steem Keychain for mobile will enable App to App transactions, removing the need to use your private keys directly in third-party Apps.",
+          "text": "향후 모바일 Steem Keychain은 앱 간 거래를 가능하게 하여 타사 앱에서 개인 키를 직접 사용할 필요가 없을 것입니다.",
           "style_do_not_translate": "disclaimer"
         }
       ]
     },
     "settings": {
-      "rpc": "RPC Nodes",
-      "global": "Global Settings",
-      "whitelisted": "Whitelisted operations",
+      "rpc": "RPC 노드",
+      "global": "앱 설정",
+      "whitelisted": "허용된 작업(Operations)",
       "disclaimer": [
-        "You can chose which RPC node is used to read information and broadcast transactions from/to the Steem Blockchain.",
-        "Use 'DEFAULT' RPC to let Steem Keychain chose the best RPC node at a given time."
+        "스팀 블록체인에서 정보를 읽고 트랜잭션을 브로드캐스트하는 데 사용할 RPC 노드를 선택할 수 있습니다.",
+        "스팀 키체인이 잘 동작하기 위해서는 'DEFAULT' RPC 노드를 선택하는 것을 권장합니다."
       ],
-      "user": "User settings"
+      "user": "사용자 설정",
+      "nothing_to_show": "표시할 항목이 없습니다."
     }
   },
   "components": {
@@ -160,13 +154,13 @@
     "error_add_account": "Something went wrong! Please verify your keys and your connection."
   },
   "navigation": {
-    "log_out": "LOG OUT",
-    "add_account": "ADD ACCOUNT",
-    "manage": "MANAGE KEYS",
-    "settings": "SETTINGS",
-    "about": "ABOUT",
-    "wallet": "WALLET",
-    "browser": "BROWSER"
+    "log_out": "로그아웃",
+    "add_account": "계정 추가",
+    "manage": "개인키 관리",
+    "settings": "설정",
+    "about": "앱 소개",
+    "wallet": "지갑",
+    "browser": "브라우저"
   },
   "request": {
     "title": {
@@ -186,8 +180,8 @@
       "witnessVote": "Witness Vote",
       "proxy": "Chose Proxy",
       "sendToken": "Send Tokens",
-      "powerUp": "Power Up",
-      "powerDown": "Power Down",
+      "powerUp": "파워 업",
+      "powerDown": "파워 다운",
       "createClaimedAccount": "Create Claimed Account",
       "createProposal": "Create Worker Proposal",
       "removeProposal": "Remove Worker Proposal",
