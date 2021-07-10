@@ -5,7 +5,7 @@ import {toSP} from 'utils/format';
 
 export const getBittrexPrices = async () => {
   try {
-    return (await api.get('price.json')).data as Bittrex;
+    return (await api.get('bittrex_price.json')).data as Bittrex;
   } catch (e) {}
 };
 

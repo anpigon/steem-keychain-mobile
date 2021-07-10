@@ -103,9 +103,10 @@ const getVotePowerReserveRate = (properties: GlobalProperties) => {
 };
 
 export const getDelegators = async (name: string) => {
-  return ((await api.get(`/hive/delegators/${name}`)).data as Delegator[])
-    .filter((e) => e.vesting_shares !== 0)
-    .sort((a, b) => b.vesting_shares - a.vesting_shares);
+  // return ((await api.get(`/hive/delegators/${name}`)).data as Delegator[])
+  //   .filter((e) => e.vesting_shares !== 0)
+  //   .sort((a, b) => b.vesting_shares - a.vesting_shares);
+  return [] as Delegator[];
 };
 
 export const getDelegatees = async (name: string) => {

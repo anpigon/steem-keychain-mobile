@@ -22,7 +22,7 @@ export const getCurrencyProperties = (
     default:
       color = '#AC4F00';
       value = account ? account.vesting_shares : null;
-      logo = <Sp />;
+      logo = <Sp fill="#e59d15" />;
       break;
   }
   return {currency, color, value, logo};
