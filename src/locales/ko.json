@@ -11,7 +11,7 @@
     "import": "가져오기",
     "username": "username",
     "confirm": "확인",
-    "privateKey": "개인 키",
+    "privateKey": "개인키",
     "private": "비밀",
     "public": "공개",
     "amount": "수량",
@@ -35,11 +35,11 @@
     "add_memo": "이 메시지를 해독하려면 메모 키를 추가하세요.",
     "add_active": "이 작업을 수행하려면 액티브 키를 추가하십시오.",
     "tab_menus": {
-      "primary": "메인", 
+      "primary": "메인",
       "tokens": "토큰"
     },
     "operations": {
-      "history": "History",
+      "history": "거래 내역",
       "transfer": {
         "title": "토큰 전송",
         "memo": "메모 (옵션)",
@@ -57,13 +57,18 @@
         }
       },
       "powerup": {"title": "파워 업!"},
-      "powerdown": {"title": "파워 다운", "current_power_down": "현재 파워다운 상태"},
-      "delegation": {
-        "title": "스팀 파워 임대",
-        "incoming": "Incoming Delegations",
-        "outgoing": "Outgoing Delegations"
+      "powerdown": {
+        "title": "파워 다운",
+        "current_power_down": "현재 파워다운 상태"
       },
-      "convert": {"title": "STEEM으로 전환", "button": "전환", "conversions": "conversions"}
+      "delegation": {
+        "title": "스팀 파워 임대"
+      },
+      "convert": {
+        "title": "STEEM으로 전환",
+        "button": "전환",
+        "conversions": "conversions"
+      }
     }
   },
   "settings": {
@@ -80,11 +85,11 @@
           "style_do_not_translate": "disclaimer"
         },
         {
-          "text": "신뢰할 수 있는 사람에게만 개인 키를 공유하십시오!",
+          "text": "신뢰할 수 있는 사람에게만 개인키를 공유하십시오!",
           "style_do_not_translate": "important"
         },
         {
-          "text": "향후 모바일 Steem Keychain은 앱 간 거래를 가능하게 하여 타사 앱에서 개인 키를 직접 사용할 필요가 없을 것입니다.",
+          "text": "향후 모바일 Steem Keychain은 앱 간 거래를 가능하게 하여 타사 앱에서 개인키를 직접 사용할 필요가 없을 것입니다.",
           "style_do_not_translate": "disclaimer"
         }
       ]
@@ -104,7 +109,7 @@
   "components": {
     "moreInformation": {
       "title": "개인키 (STEEM 비밀번호)",
-      "text1": "각각의 작업에는 해당 개인키(비밀키)를 사용해야 합니다. 이 개인키는 스팀 계정이 생성될 때 생성됩니다.",
+      "text1": "각각의 작업에는 해당 개인키를 사용해야 합니다. 이 개인키는 스팀 계정이 생성될 때 생성됩니다.",
       "text2": "포스팅, 액티브 또는 마스터 키를 사용하여 여러분의 계정을 지갑으로 가져올 수 있습니다.",
       "text3": "(마스터 키를 사용하여 모든 앱 기능을 잠금 해제하십시오).",
       "text4": "마스터 키는 앱에 저장되지 않습니다. 마스터 키는 포스팅/액티브/메모 키를 생성하는 데만 사용됩니다. 그리고 계정 또는 키는 언제든지 추가하고 삭제할 수 있습니다."
@@ -148,15 +153,15 @@
     "powerup_success": "파워업에 성공했습니다!",
     "powerdown_success": "파워다운에 성공했습니다!",
     "stop_powerdown_success": "파워다운을 성공적으로 중지했습니다!",
-    "delegation_success": "Your delegation was successful!",
-    "stop_delegation_success": "You successfully stopped your delegation!",
-    "convert_success": "Your SBD conversion was successful!",
+    "delegation_success": "임대에 성공했습니다!",
+    "stop_delegation_success": "임대를 성공적으로 중지했습니다!",
+    "convert_success": "SBD 전환에 성공했습니다!",
     "keys": {
-      "not_wanted_key": "This is not your {{type}} key!",
-      "not_a_key": "This is not one of your private keys!",
-      "copied": "The key was copied to the clipboard!"
+      "not_wanted_key": "이것은 {{type}} 키가 아닙니다!",
+      "not_a_key": "이것은 당신의 개인키가 아닙니다!",
+      "copied": "키가 클립보드에 복사되었습니다!"
     },
-    "error_add_account": "Something went wrong! Please verify your keys and your connection."
+    "error_add_account": "문제가 발생했습니다! 개인키 또는 네트워크 연결을 확인해주세요."
   },
   "navigation": {
     "log_out": "로그아웃",
@@ -179,26 +184,26 @@
       "signTx": "Sign Transaction",
       "signedCall": "Signed Call",
       "post": "Post",
-      "vote": "Vote",
+      "vote": "투표",
       "transfer": "Transfer",
       "delegation": "Delegation",
-      "witnessVote": "Witness Vote",
+      "witnessVote": "증인 투표",
       "proxy": "Chose Proxy",
-      "sendToken": "Send Tokens",
+      "sendToken": "토큰 전송",
       "powerUp": "파워 업",
       "powerDown": "파워 다운",
       "createClaimedAccount": "Create Claimed Account",
       "createProposal": "Create Worker Proposal",
       "removeProposal": "Remove Worker Proposal",
-      "updateProposalVote": "Vote for Proposal",
-      "addKeyAuthority": "Add Key",
-      "removeKeyAuthority": "Remove Key",
-      "addAccount": "Add Account"
+      "updateProposalVote": "제안에 투표",
+      "addKeyAuthority": "키 추가",
+      "removeKeyAuthority": "키 삭제",
+      "addAccount": "계정 추가"
     },
     "message": {
-      "decode": "The website {{domain}} would like to verify that you have access to the private {{method}} key for the account: @{{username}}",
-      "signBuffer": "The website {{domain}} would like to sign a message using the {{method}} key for the account: @{{username}}",
-      "signBufferNoUsername": "The website {{domain}} would like to sign a message using the {{method}} key."
+      "decode": "{{domain}} 웹사이트에서 @{{username}} 계정의 개인 {{method}} 키에 대한 액세스 권한이 있는지 확인하려고 합니다.",
+      "signBuffer": "{{domain}} 웹사이트에서 @{{username}} 계정의 {{method}} 키를 사용하여 메시지에 서명하려고 합니다.",
+      "signBufferNoUsername": "{{domain}} 웹사이트에서 {{method}} 키를 사용하여 메시지에 서명하려고 합니다."
     },
     "item": {
       "username": "Username",
@@ -208,7 +213,7 @@
       "permlink": "Permlink",
       "weight": "Weight",
       "data": "Data",
-      "hidden_data": "Click to show",
+      "hidden_data": "클릭하여 표시",
       "to": "To",
       "amount": "Amount",
       "memo": "Memo",
@@ -226,43 +231,46 @@
       "ids": "Proposal IDs"
     },
     "error": {
-      "decode": "Could not verify key.",
-      "encode": "Could not encode the message.",
-      "signBuffer": "Could not sign.",
-      "signTx": "The transaction could not be signed successfully.",
-      "ops": "There was an error broadcasting this transaction",
-      "unknown": "Something went wrong! Please try again!",
-      "broadcasting": "There was an error broadcasting this transaction, please try again.",
+      "decode": "키를 확인할 수 없습니다.",
+      "encode": "메모를 암호화할 수 없습니다.",
+      "signBuffer": "서명할 수 없습니다.",
+      "signTx": "트랜잭션에 서명할 수 없습니다.",
+      "ops": "이 트랜잭션을 브로드캐스팅하는 동안 오류가 발생했습니다.",
+      "unknown": "문제가 발생했습니다! 다시 시도하십시오!",
+      "broadcasting": "이 트랜잭션을 브로드캐스팅하는 동안 오류가 발생했습니다. 다시 시도하십시오.",
       "transfer": {
-        "adjust_balance": "Insufficient {{currency}} balance on account @{{username}}.",
-        "get_account": "Cannot find account @{{to}}",
-        "encrypt": "Please add your memo key to encrypt memos."
+        "adjust_balance": "계정 @{{username}}의 {{currency}} 잔액이 부족합니다.",
+        "get_account": "@{{to}} 계정을 찾을 수 없습니다.",
+        "encrypt": "메모를 암호화하려면 메모키를 추가하세요."
       }
     },
     "success": {
-      "decode": "Memo decoded successfully.",
-      "encode": "Message encoded succesfully.",
-      "signBuffer": "Message signed succesfully.",
-      "signTx": "The transaction has been signed successfully.",
-      "vote": "Successfully voted for @{{author}}'s post {{permlink}} at {{weight}}%.",
-      "broadcast": "The transaction has been broadcasted successfully.",
-      "transfer": "Successfully transfered {{amount}} {{currency}} from @{{username}} to @{{to}}.",
-      "post": "The post was submitted succesfully.",
-      "witness_vote": "Successfully voted @{{witness}} for witness.",
-      "witness_unvote": "Successfully unvoted @{{witness}} for witness.",
-      "proxy": "Succesfully chose @{{proxy}} for proxy.",
-      "remove_proxy": "Succesfully removed the proxy.",
-      "power_up": "Powered up {{steem}} STEEM on @{{to}}.",
-      "power_down": "Started a {{sp}} SP power down on @{{username}}.",
-      "approveProposal": "Successfully voted for proposal(s) {{ids}}.",
-      "unApproveProposal": "Successfully unvoted proposal(s) {{ids}}.",
-      "stop_power_down": "Stopped Power Down on @{{username}}.",
-      "delegate": "Succesfully delegated {{amount}} {{unit}} from @{{username}} to @{{delegatee}}.",
-      "undelegate": "Succesfully stopped the delegation to @{{delegatee}} from account @{{username}}.",
-      "sendToken": "The transaction has been broadcasted successfully. Please check your balance to confirm that it was processed succesfully."
+      "decode": "메모가 성공적으로 복호화되었습니다.",
+      "encode": "메모가 성공적으로 암호화되었습니다.",
+      "signBuffer": "메시지가 성공적으로 서명되었습니다.",
+      "signTx": "거래가 성공적으로 서명되었습니다.",
+      "vote": "@{{author}}님의 게시물 {{permlink}}에 {{weight}}%로 투표했습니다.",
+      "broadcast": "트랜잭션이 성공적으로 브로드캐스트되었습니다.",
+      "transfer": "@{{username}}에서 @{{to}}(으)로 {{amount}} {{currency}}를 성공적으로 전송했습니다.",
+      "post": "게시물이 성공적으로 포스팅되었습니다.",
+      "witness_vote": "증인으로 @{{witness}}님에게 투표했습니다.",
+      "witness_unvote": "증인으로 @{{witness}}의 투표를 성공적으로 취소했습니다.",
+      "proxy": "프록시로 @{{proxy}}을(를) 성공적으로 선택했습니다.",
+      "remove_proxy": "프록시를 성공적으로 제거했습니다.",
+      "power_up": "@{{to}}에서 {{steem}} STEEM을 파워업했습니다.",
+      "power_down": "@{{username}}에서 {{sp}} SP 파워다운을 시작했습니다.",
+      "approveProposal": "{{ids}} 제안에 성공적으로 투표했습니다.",
+      "unApproveProposal": "{{ids}} 제안을 성공적으로 취소했습니다.",
+      "stop_power_down": "@{{username}}에서 파워다운을 중지했습니다.",
+      "delegate": "@{{username}}에서 @{{delegatee}}에게 {{amount}} {{unit}}을(를) 성공적으로 임대했습니다.",
+      "undelegate": "@{{username}} 계정에서 @{{delegatee}}에 대한 임대를 성공적으로 중지했습니다.",
+      "sendToken": "트랜잭션이 성공적으로 브로드캐스트되었습니다. 잔액을 확인하여 성공적으로 처리되었는지 확인하십시오."
     },
-    "confirm": "Confirm",
-    "keep": "Do not prompt again to send {{type}} transactions from the account @{{username}} on {{domain}}."
+    "confirm": "확인",
+    "keep": "{{domain}}의 @{{username}} 계정에서 {{type}} 트랜잭션을 보내라는 메시지를 다시 표시하지 마십시오."
   },
-  "browser": {"history": {"clear": "기록 지우기"}, "please_enter_the_url": "URL을 입력하세요."}
+  "browser": {
+    "history": {"clear": "기록 지우기"},
+    "please_enter_the_url": "URL을 입력하세요."
+  }
 }
