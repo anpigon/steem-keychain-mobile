@@ -80,7 +80,10 @@ const Main = ({
         </View>
         <ScreenToggle
           style={styles.toggle}
-          menu={['Primary', 'Tokens']}
+          menu={[
+            translate('wallet.tab_menus.primary'),
+            translate('wallet.tab_menus.tokens'),
+          ]}
           toUpperCase
           components={[<Primary />, <Tokens />]}
         />
