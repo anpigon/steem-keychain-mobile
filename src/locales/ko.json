@@ -26,13 +26,17 @@
     "none": "None"
   },
   "wallet": {
-    "rc": "Resources:",
-    "vp": "Voting:",
+    "rc": "리소스 크레딧:",
+    "vp": "보팅 파워:",
     "balance": "잔액",
     "no_tokens": "스팀 엔진 토큰을 찾을 수 없습니다.",
     "no_transaction": "최근 거래가 없습니다.",
     "add_memo": "이 메시지를 해독하려면 메모 키를 추가하세요.",
     "add_active": "이 작업을 수행하려면 액티브 키를 추가하십시오.",
+    "tab_menus": {
+      "primary": "메인", 
+      "tokens": "토큰"
+    },
     "operations": {
       "history": "History",
       "transfer": {
@@ -58,7 +62,7 @@
         "incoming": "Incoming Delegations",
         "outgoing": "Outgoing Delegations"
       },
-      "convert": {"title": "Convert to STEEM", "button": "Convert"}
+      "convert": {"title": "STEEM으로 변환", "button": "Convert"}
     }
   },
   "settings": {
@@ -98,51 +102,51 @@
   },
   "components": {
     "moreInformation": {
-      "title": "KEYS (STEEM PASSWORDS)",
-      "text1": "Different actions require the use of different KEYS. These KEYS are generated when a new STEEM account is created.",
-      "text2": "You may use your Posting, Active, or Master Key to import your account.",
-      "text3": "(Use your Master Key to unlock all app features).",
-      "text4": "If you use a Master Key, it will NOT be saved and will only be used to generate your other Keys. You may add/edit Accounts or Keys at any time."
+      "title": "개인키 (STEEM 비밀번호)",
+      "text1": "각각의 작업에는 해당 개인키(비밀키)를 사용해야 합니다. 이 개인키는 스팀 계정이 생성될 때 생성됩니다.",
+      "text2": "포스팅, 액티브 또는 마스터 키를 사용하여 여러분의 계정을 지갑으로 가져올 수 있습니다.",
+      "text3": "(마스터 키를 사용하여 모든 앱 기능을 잠금 해제하십시오).",
+      "text4": "마스터 키는 앱에 저장되지 않습니다. 마스터 키는 포스팅/액티브/메모 키를 생성하는 데만 사용됩니다. 그리고 계정 또는 키는 언제든지 추가하고 삭제할 수 있습니다."
     },
     "infoQR": {
-      "title": "Import via QR Code",
-      "text1": "You can import an account instantly by scanning its corresponding QR Code.",
-      "text2": "To import from Steem Keychain browser extension, navigate to",
-      "text3": "Settings",
-      "text4": " then click on",
-      "text5": "Manage Accounts",
-      "text6": "and",
-      "text7": "Show QR Code"
+      "title": "QR 코드를 통해 가져오기",
+      "text1": "해당 QR 코드를 스캔하면 계정을 쉽게 가져올 수 있습니다.",
+      "text2": "",
+      "text3": "",
+      "text4": "",
+      "text5": "",
+      "text6": "",
+      "text7": ""
     },
     "forgotPIN": {
-      "title": "Forgot PIN?",
-      "text": "If you forgot your PIN, you can reset Keychain and clear your data but will have to enter all your keys again.",
-      "button": "Reset Keychain"
+      "title": "PIN을 잊으셨나요?",
+      "text": "PIN을 잊어버린 경우 키체인을 초기화하고 데이터를 지울 수 있습니다. 하지만 모든 키를 다시 입력해야 합니다.",
+      "button": "키체인 초기화"
     },
     "pinCode": {
       "unsupportedBiometrics": {
-        "title": "Unsupported biometrics",
-        "text1": "Your preferred biometrics is considered as unsafe on this device.",
-        "text2": "Please change it to Fingerprints.",
-        "button": "Go to Settings"
+        "title": "지원되지 않는 생체 인증",
+        "text1": "선호하는 생체 인증은 이 기기에서 안전하지 않은 것으로 간주됩니다.",
+        "text2": "지문 인증으로 바꿔주세요.",
+        "button": "설정으로 바로 가기"
       }
     },
     "picker": {
-      "prompt_user": "Select an account",
-      "prompt_rpc": "Select an RPC node",
-      "add_account": "+ ADD NEW ACCOUNT"
+      "prompt_user": "계정 선택",
+      "prompt_rpc": "RPC 노드 선택",
+      "add_account": "+ 새 계정 추가"
     }
   },
   "toast": {
-    "noMatch": "PIN codes do not match",
-    "authFailed": "Authentication failed",
-    "account_already": "You already registered this account",
-    "transfer_success": "Your transfer was successful!",
-    "transfer_token_confirmed": "Your transfer was successfully broadcasted to Steem. Your balance might take a little while to update.",
-    "transfer_token_unconfirmed": "Your transfer was successfully broadcasted to Steem. However, we couldn't confirm that it was processed by Steem Engine. Please check your balance in a little while before trying again.",
-    "powerup_success": "Your Power up was successful!",
-    "powerdown_success": "Your Power down was successful!",
-    "stop_powerdown_success": "You successfully stopped your Power down!",
+    "noMatch": "PIN 코드가 일치하지 않습니다",
+    "authFailed": "인증 실패",
+    "account_already": "이미 이 계정을 등록했습니다.",
+    "transfer_success": "전송이 완료되었습니다!",
+    "transfer_token_confirmed": "스팀이 성공적으로 전송되었습니다. 잔액을 업데이트하는 데 약간의 시간이 걸릴 수 있습니다.",
+    "transfer_token_unconfirmed": "스팀이 성공적으로 전송되었습니다. 하지만 스팀엔진에서 처리 완료되었는지 확인할 수 없습니다. 다시 시도하기 전에 잠시 후에 잔액을 확인하십시오.",
+    "powerup_success": "파워업에 성공했습니다!",
+    "powerdown_success": "파워다운에 성공했습니다!",
+    "stop_powerdown_success": "파워다운을 성공적으로 중지했습니다!",
     "delegation_success": "Your delegation was successful!",
     "stop_delegation_success": "You successfully stopped your delegation!",
     "convert_success": "Your SBD conversion was successful!",
