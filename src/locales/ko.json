@@ -1,4 +1,5 @@
 {
+  "unlock": {"enterPIN": "PIN 입력", "authenticate": "Authenticate"},
   "addAccountByKey": {"text": "키체인에 기존 STEEM 계정을 추가하세요."},
   "keys": {
     "posting": "Posting",
@@ -49,10 +50,10 @@
           "memo": "메모"
         },
         "warning": {
-          "phishing": "This account has been listed as a potential phishing account, check the spelling and make sure it is the account you want to transfer to.",
-          "exchange_currency": "This exchange account does not accept {{currency}} deposits.",
-          "exchange_memo": "Make sure you add a memo when transfering to an exchange account.",
-          "missing_info": "Please fill the username and amount to proceed"
+          "phishing": "이 계정은 잠재적인 피싱 계정으로 등록되었습니다. 맞춤법을 확인하고 전송하려는 계정인지 확인하세요.",
+          "exchange_currency": "이 계정은 {{currency}} 입금을 허용하지 않습니다.",
+          "exchange_memo": "거래소 계정으로 전송 시에는 반드시 메모를 추가해주세요.",
+          "missing_info": "계속하려면 사용자 이름과 수량을 입력하세요."
         }
       },
       "powerup": {"title": "파워 업!"},
@@ -62,7 +63,7 @@
         "incoming": "Incoming Delegations",
         "outgoing": "Outgoing Delegations"
       },
-      "convert": {"title": "STEEM으로 변환", "button": "Convert"}
+      "convert": {"title": "STEEM으로 전환", "button": "전환", "conversions": "conversions"}
     }
   },
   "settings": {
@@ -263,5 +264,5 @@
     "confirm": "Confirm",
     "keep": "Do not prompt again to send {{type}} transactions from the account @{{username}} on {{domain}}."
   },
-  "browser": {"history": {"clear": "Clear History"}}
+  "browser": {"history": {"clear": "기록 지우기"}, "please_enter_the_url": "URL을 입력하세요."}
 }

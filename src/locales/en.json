@@ -70,7 +70,7 @@
         "incoming": "Incoming Delegations",
         "outgoing": "Outgoing Delegations"
       },
-      "convert": {"title": "Convert to STEEM", "button": "Convert"}
+      "convert": {"title": "Convert to STEEM", "button": "Convert", "conversions": "conversions"}
     }
   },
   "settings": {
@@ -271,7 +271,7 @@
     "confirm": "Confirm",
     "keep": "Do not prompt again to send {{type}} transactions from the account @{{username}} on {{domain}}."
   },
-  "browser": {"history": {"clear": "Clear History"}},
+  "browser": {"history": {"clear": "Clear History"}, "please_enter_the_url": "Please enter the url"},
   "drawerFooter": {
     "madeBy": "Made with ❤ by @anpigon\nThanks @stoodkev.",
     "vote": "Vote for Witness",

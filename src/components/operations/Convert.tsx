@@ -81,7 +81,7 @@ const Convert = ({
           <Text
             style={
               styles.conversions
-            }>{`${conversions.length} conversions`}</Text>
+            }>{`${conversions.length} ${translate('wallet.operations.convert.conversions')}`}</Text>
         </TouchableOpacity>
         <Separator />
         {showConversionsList ? (
