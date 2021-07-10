@@ -26,7 +26,7 @@ const AccountManagement = ({
   const showPreferencesHandler = () => {
     const userPreference = preferences.find((e) => e.username === active.name);
     if (!userPreference || !userPreference.domains.length)
-      return <Text>Nothing to show</Text>;
+      return <Text>{translate('settings.settings.nothing_to_show')}</Text>;
     return userPreference.domains.map((e, i) => (
       <CollaspibleSettings
         username={active.name}

@@ -73,7 +73,7 @@ const AccountManagement = ({
         <Separator height={20} />
         <EllipticButton
           style={styles.button}
-          title="FORGET ACCOUNT"
+          title={translate('settings.keys.forget_account')}
           onPress={() => {
             if (username) forgetAccount(username);
           }}

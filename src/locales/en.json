@@ -60,7 +60,7 @@
         }
       },
       "powerup": {"title": "Power up!"},
-      "powerdown": {"title": "Power down"},
+      "powerdown": {"title": "Power down", "current_power_down": "Current power down"},
       "delegation": {
         "title": "Delegate Steem Power",
         "incoming": "Incoming Delegations",
@@ -72,6 +72,7 @@
   "settings": {
     "keys": {
       "add": "ADD KEY",
+      "forget_account": "FORGET ACCOUNT",
       "disclaimer": [
         {
           "text": "To receive funds, simply share your account name (displayed above) with the sender.",
@@ -99,7 +100,8 @@
         "You can chose which RPC node is used to read information and broadcast transactions from/to the Steem Blockchain.",
         "Use 'DEFAULT' RPC to let Steem Keychain chose the best RPC node at a given time."
       ],
-      "user": "User settings"
+      "user": "User settings",
+      "nothing_to_show": "Nothing to show"
     }
   },
   "components": {
