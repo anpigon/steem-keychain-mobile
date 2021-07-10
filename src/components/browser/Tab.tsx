@@ -34,6 +34,7 @@ import {requestWithoutConfirmation} from 'utils/requestWithoutConfirmation';
 import {steem_keychain} from './bridges/SteemKeychainBridge';
 import {BRIDGE_WV_INFO} from './bridges/WebviewInfo';
 import Footer from './Footer';
+import NotFound from './NotFound';
 import ProgressBar from './ProgressBar';
 import RequestModalContent from './RequestModalContent';
 import UrlModal from './urlModal';
@@ -174,6 +175,7 @@ export default ({
         break;
       case 'WV_INFO':
         const {icon, name, url} = data as TabFields;
+        if ('about:blank' === url || url.startsWith('chrome-error://')) return;
         navigation.setParams({icon});
         if (name && url && url !== 'chromewebdata') {
           addToHistory({icon, name, url});
@@ -253,6 +255,13 @@ export default ({
           onLoadEnd={onLoadEnd}
           onLoadStart={onLoadStart}
           onLoadProgress={onLoadProgress}
+          renderError={(errorDomain, errorCode, errorDesc) => (
+            <NotFound
+              errorDomain={errorDomain || url}
+              errorCode={errorCode}
+              errorDesc={errorDesc}
+            />
+          )}
         />
       </View>
       {active && (
