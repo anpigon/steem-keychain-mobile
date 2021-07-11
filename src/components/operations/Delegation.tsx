@@ -10,7 +10,7 @@ import Toast from 'react-native-simple-toast';
 import {connect, ConnectedProps} from 'react-redux';
 import {RootState} from 'store';
 import {fromSP} from 'utils/format';
-import {delegate} from 'utils/steem';
+import dsteem, {delegate} from 'utils/steem';
 import {getCurrencyProperties} from 'utils/steemReact';
 import {sanitizeAmount, sanitizeUsername} from 'utils/steemUtils';
 import {translate} from 'utils/localize';
@@ -45,6 +45,7 @@ const Delegation = ({
         delegatee: sanitizeUsername(to),
         delegator: user.account.name,
       });
+      console.log(delegation);
       loadAccount(user.account.name, true);
       goBack();
       if (parseFloat(amount.replace(',', '.')) !== 0) {
@@ -53,7 +54,19 @@ const Delegation = ({
         Toast.show(translate('toast.stop_delegation_success'), Toast.LONG);
       }
     } catch (e) {
-      Toast.show(`Error : ${e.message}`, Toast.LONG);
+      console.log(typeof e);
+      if (e instanceof Error) {
+        if (e.message.startsWith('unknown key:')) {
+          Toast.show(
+            translate('request.error.transfer.get_account', { to }),
+            Toast.LONG,
+          );
+        } else {
+          Toast.show(`Error : ${e.message}`, Toast.LONG);
+        }
+      } else {
+        Toast.show(`Error : ${e.toString()}`, Toast.LONG);
+      }
     } finally {
       setLoading(false);
     }

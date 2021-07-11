@@ -8,8 +8,7 @@
     "createAccount": "새로운 계정 생성하기"
   },
   "addAccountByKey": {
-    "text": "키체인에 기존 STEEM 계정을 추가하세요.",
-    "account_not_found": "계정을 찾지 못했습니다."
+    "text": "키체인에 기존 STEEM 계정을 추가하세요."
   },
   "keys": {
     "posting": "Posting",
