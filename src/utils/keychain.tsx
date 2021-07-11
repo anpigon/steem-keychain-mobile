@@ -45,7 +45,6 @@ export const sendError = (
   tabRef: MutableRefObject<WebView>,
   error: RequestError,
 ) => {
-  console.log(tabRef, error);
   tabRef.current.injectJavaScript(
     `window.steem_keychain.onAnswerReceived("steem_keychain_response",${JSON.stringify(
       {success: false, result: null, ...error},

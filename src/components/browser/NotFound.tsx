@@ -9,7 +9,6 @@ type Props = {
 };
 
 const NotFound = ({errorDomain, errorCode, errorDesc}: Props) => {
-  console.log({errorDomain, errorCode, errorDesc})
   const styles = getStyles();
   return (
     <View style={styles.container}>

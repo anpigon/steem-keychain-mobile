@@ -54,7 +54,6 @@ const Delegation = ({
         Toast.show(translate('toast.stop_delegation_success'), Toast.LONG);
       }
     } catch (e) {
-      console.log(typeof e);
       if (e instanceof Error) {
         if (e.message.startsWith('unknown key:')) {
           Toast.show(
