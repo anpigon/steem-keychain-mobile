@@ -1,6 +1,6 @@
 import {loadTokenHistory} from 'actions/index';
 import HistoryIcon from 'assets/wallet/icon_history.svg';
-import Transfer from 'components/hive/Transfer';
+import Transfer from 'components/steem/Transfer';
 import Separator from 'components/ui/Separator';
 import React, {useEffect} from 'react';
 import {FlatList} from 'react-native';

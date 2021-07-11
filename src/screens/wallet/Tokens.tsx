@@ -1,6 +1,6 @@
 import {loadTokens, loadTokensMarket, loadUserTokens} from 'actions/index';
-import EngineTokenDisplay from 'components/hive/EngineTokenDisplay';
-import SteemEngineAccountValue from 'components/hive/SteemEngineAccountValue';
+import EngineTokenDisplay from 'components/steem/EngineTokenDisplay';
+import SteemEngineAccountValue from 'components/steem/SteemEngineAccountValue';
 import Loader from 'components/ui/Loader';
 import Separator from 'components/ui/Separator';
 import React, {useEffect} from 'react';
