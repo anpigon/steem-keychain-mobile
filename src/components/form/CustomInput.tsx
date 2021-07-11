@@ -13,6 +13,7 @@ type Props = InputProps & {
   containerStyle?: StyleProp<ViewStyle>;
   backgroundColor?: string;
   inputColor?: string;
+  secureTextEntry?: boolean;
 };
 
 export default ({
@@ -20,6 +21,7 @@ export default ({
   inputColor,
   textAlign,
   containerStyle,
+  secureTextEntry,
   ...props
 }: Props) => {
   const styles = getDimensionedStyles({
@@ -36,6 +38,7 @@ export default ({
       leftIconContainerStyle={styles.leftIcon}
       rightIconContainerStyle={styles.rightIcon}
       inputContainerStyle={styles.inputContainer}
+      secureTextEntry={secureTextEntry}
       {...props}
     />
   );

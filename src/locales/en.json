@@ -7,7 +7,10 @@
     "existingAccount": "Existing Account",
     "createAccount": "New Account"
   },
-  "addAccountByKey": {"text": "Add your existing STEEM account to Keychain"},
+  "addAccountByKey": {
+    "text": "Add your existing STEEM account to Keychain",
+    "account_not_found": "Account not found."
+  },
   "keys": {
     "posting": "Posting",
     "active": "Active",
@@ -42,7 +45,7 @@
     "add_memo": "Please add your memo key to decrypt this message.",
     "add_active": "Please add your active key to perform this operation.",
     "tab_menus": {
-      "primary": "Primary", 
+      "primary": "Primary",
       "tokens": "Tokens"
     },
     "operations": {
@@ -64,13 +67,20 @@
         }
       },
       "powerup": {"title": "Power up!"},
-      "powerdown": {"title": "Power down", "current_power_down": "Current power down"},
+      "powerdown": {
+        "title": "Power down",
+        "current_power_down": "Current power down"
+      },
       "delegation": {
         "title": "Delegate Steem Power",
         "incoming": "Incoming Delegations",
         "outgoing": "Outgoing Delegations"
       },
-      "convert": {"title": "Convert to STEEM", "button": "Convert", "conversions": "conversions"}
+      "convert": {
+        "title": "Convert to STEEM",
+        "button": "Convert",
+        "conversions": "conversions"
+      }
     }
   },
   "settings": {
@@ -271,7 +281,10 @@
     "confirm": "Confirm",
     "keep": "Do not prompt again to send {{type}} transactions from the account @{{username}} on {{domain}}."
   },
-  "browser": {"history": {"clear": "Clear History"}, "please_enter_the_url": "Please enter the url"},
+  "browser": {
+    "history": {"clear": "Clear History"},
+    "please_enter_the_url": "Please enter the url"
+  },
   "drawerFooter": {
     "madeBy": "Made with ❤ by @anpigon\nThanks @stoodkev.",
     "vote": "Vote for Witness",
