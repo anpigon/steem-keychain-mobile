@@ -1,0 +1,2 @@
+json_key_file("./pc-api-9046507507079963121-970-dd6c2718437e.json") # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
+package_name("com.mobilekeychain.steem") # e.g. com.krausefx.app
