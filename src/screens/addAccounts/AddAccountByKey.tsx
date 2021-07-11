@@ -12,7 +12,7 @@ import {
   AddAccFromWalletNavigationProps,
 } from 'navigators/mainDrawerStacks/AddAccount.types';
 import {AddAccNavigationProps} from 'navigators/Signup.types';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StatusBar,
   StyleSheet,
@@ -38,26 +38,32 @@ const AddAccountByKey = ({
   const [account, setAccount] = useState('');
   const [key, setKey] = useState('');
   const onImportKeys = async () => {
-    if(!account || !key) return;
+    if (!account || !key) return;
 
     setIsLoading(true);
     try {
-      const keys = await validateNewAccount(account, key);
+      const _account = account.trim();
+      const _key = key.trim();
+      const keys = await validateNewAccount(_account, _key);
       if (keys) {
         const wallet = route.params ? route.params.wallet : false;
-        addAccount(account, keys, wallet, false);
+        addAccount(_account, keys, wallet, false);
       } else {
         Toast.show(translate('toast.error_add_account'));
       }
     } catch (e) {
       console.error(e);
-      Toast.show(e.message);
+      if (e instanceof Error) {
+        Toast.show(e.message);
+      } else {
+        Toast.show(e.toString());
+      }
     } finally {
       setIsLoading(false);
     }
   };
-  const {height} = useWindowDimensions();
-
+  const { height } = useWindowDimensions();
+  
   return (
     <Background>
       <>
@@ -80,6 +86,7 @@ const AddAccountByKey = ({
           <CustomInput
             placeholder={translate('common.privateKey').toUpperCase()}
             autoCapitalize="characters"
+            secureTextEntry
             leftIcon={<KeyLogo />}
             rightIcon={
               <TouchableOpacity

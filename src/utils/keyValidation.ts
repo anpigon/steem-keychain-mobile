@@ -1,6 +1,7 @@
-import {ExtendedAccount,Authority} from 'dsteem';
+import {ExtendedAccount, Authority} from 'dsteem';
 import {AccountKeys} from 'actions/interfaces';
 import dsteem, {getClient} from 'utils/steem';
+import {translate} from './localize';
 
 const isMemoWif = (publicKey: string, memo: string) => {
   return publicKey === memo;
@@ -130,6 +131,9 @@ export default async (
 ): Promise<AccountKeys | null> => {
   try {
     const account = (await getClient().database.getAccounts([username]))[0];
+    if (!account)
+      throw new Error(translate('addAccountByKey.account_not_found'));
+
     const publicKey = getPublicKeyFromPrivateKeyString(pwd);
     if (pwd.startsWith('STM')) {
       throw 'This is a public key! Please enter a private key or your master key.';
@@ -138,7 +142,10 @@ export default async (
       return validatePrivateKey(account, pwd, publicKey);
     }
     return derivateFromMasterPassword(username, account, pwd);
-  } catch (e) {
-    throw new Error(e);
+  } catch (error) {
+    if (typeof error === 'string') {
+      throw new Error(error);
+    }
+    throw error;
   }
 };
