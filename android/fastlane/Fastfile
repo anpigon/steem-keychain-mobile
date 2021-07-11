@@ -119,4 +119,21 @@ platform :android do
       track: 'production'
     )
   end
+
+  desc 'GitHub actions release'
+  lane :version do |options|
+    updateVersion(options)
+  end
+
+  lane :github do |_options|
+    gradle(task: 'clean bundleRelease')
+    upload_to_play_store(
+      skip_upload_metadata: true,
+      skip_upload_changelogs: true,
+      skip_upload_screenshots: true,
+      skip_upload_images: true,
+      skip_upload_apk: true
+      track: 'production'
+    )
+  end
 end
