@@ -110,7 +110,7 @@ export interface TokenMarket {
   lastDayPriceExpiration: number;
   lastPrice: string;
   lowestAsk: string;
-  priceChangeHive: string;
+  priceChangeSteem: string;
   priceChangePercent: string;
   symbol: string;
   volume: string;
@@ -135,7 +135,7 @@ export interface UserTokens {
   list: TokenBalance[];
 }
 
-export enum OperationsHiveEngine {
+export enum OperationsSteemEngine {
   'mining_lottery',
   'tokens_transfer',
   'tokens_stake',
@@ -144,7 +144,7 @@ export interface TokenTransaction {
   account: string;
   amount: string;
   blockNumber: number;
-  operation: OperationsHiveEngine;
+  operation: OperationsSteemEngine;
   poolId?: string;
   from?: string;
   to?: string;
