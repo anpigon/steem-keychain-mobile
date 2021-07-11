@@ -1,5 +1,12 @@
 {
-  "unlock": {"enterPIN": "PIN 입력", "authenticate": "Authenticate"},
+  "unlock": {"enterPIN": "PIN 입력", "authenticate": "인증"},
+  "signup": {"confirm": "PIN 확인", "choose": "PIN을 입력하세요."},
+  "intro": {
+    "text": "스팀은 Web 3.0 웹 사이트 및 애플리케이션의 성장하는 에코시스템을 지원합니다.",
+    "manage": "키체인으로 코인을 안전하게 관리하고 스팀 기반 서비스에 연결하세요.",
+    "existingAccount": "기존 계정이 있습니다",
+    "createAccount": "새로운 계정 생성하기"
+  },
   "addAccountByKey": {"text": "키체인에 기존 STEEM 계정을 추가하세요."},
   "keys": {
     "posting": "Posting",

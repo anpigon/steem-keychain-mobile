@@ -1,7 +1,7 @@
 ## Privacy Policy
 ## Effective date: December 1, 2020
 
-Quentin Correa (@stoodkev) ("us", "we", or "our") provides and operates the Steem Keychain Mobile App (the "Service").
+Pigon Coperation (@anpigon) ("us", "we", or "our") provides and operates the Steem Keychain Mobile App (the "Service").
 
 This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use our Service and the choices you have associated with that data.
 
@@ -30,4 +30,4 @@ You are advised to review this Privacy Policy periodically for any changes. Chan
 ### Contact Us
 If you have any questions about this Privacy Policy, please contact us:
 
-By email: stoodkev@Steem-keychain.com
+By email: markan82@gmail.com
