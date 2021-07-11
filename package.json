@@ -37,10 +37,11 @@
     "clean": "watchman watch-del-all &&npm run dep-clean && npm run android-clean && npm run start -- --reset-cache",
     "debug": "open 'rndebugger://set-debugger-loc?host=localhost&port=8081’",
     "postinstall": "rndebugger-open",
-    "beta:android": "npm run android-bundle && cd ./android && bundle exec fastlane beta version:patch",
+    "prebuild-android": "npx jetify && react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle",
+    "beta:android": "npm run prebuild-android && cd ./android && bundle exec fastlane beta version:patch",
     "beta:ios": "cd ./ios && bundle exec fastlane beta version:patch",
     "beta": "npm run beta:android && npm run beta:ios",
-    "release:android": "npm run android-bundle && cd ./android && bundle exec fastlane release version:patch",
+    "release:android": "npm run prebuild-android && cd ./android && bundle exec fastlane release version:patch",
     "release:ios": "cd ./ios && bundle exec fastlane release version:patch",
     "release": "npm run release:android && npm run release:ios"
   },
