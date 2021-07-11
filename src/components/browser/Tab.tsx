@@ -186,7 +186,11 @@ export default ({
   };
 
   const showOperationRequestModal = (request_id: number, data: any) => {
-    const {username, domain, type} = data;
+    const { username, domain, type } = data;
+    for (let op of data.operations) {
+      // fix bug: I don't know why this happens.
+      delete op[1]['__config'];
+    }
     if (
       getRequiredWifType(data) !== KeyTypes.active &&
       hasPreference(
