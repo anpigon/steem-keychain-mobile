@@ -132,7 +132,9 @@ export default async (
   try {
     const account = (await getClient().database.getAccounts([username]))[0];
     if (!account)
-      throw new Error(translate('addAccountByKey.account_not_found'));
+      throw new Error(
+        translate('request.error.transfer.get_account', {to: username}),
+      );
 
     const publicKey = getPublicKeyFromPrivateKeyString(pwd);
     if (pwd.startsWith('STM')) {

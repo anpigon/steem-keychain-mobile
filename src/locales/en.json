@@ -8,8 +8,7 @@
     "createAccount": "New Account"
   },
   "addAccountByKey": {
-    "text": "Add your existing STEEM account to Keychain",
-    "account_not_found": "Account not found."
+    "text": "Add your existing STEEM account to Keychain"
   },
   "keys": {
     "posting": "Posting",
