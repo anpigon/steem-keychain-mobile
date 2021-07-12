@@ -28,13 +28,14 @@ const AddKey = ({addKey, name, type}: Props) => {
           autoCapitalize="none"
           value={key}
           onChangeText={setKey}
+          secureTextEntry
         />
 
         <Separator height={40} />
         <EllipticButton
           title={translate('common.save')}
           onPress={() => {
-            addKey(name, type, key);
+            addKey(name, type, key.trim());
             Keyboard.dismiss();
             goBack();
           }}
