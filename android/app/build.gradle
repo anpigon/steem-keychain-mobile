@@ -137,8 +137,8 @@ android {
         applicationId "com.mobilekeychain.steem"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 27
-        versionName "1.3.5"
+        versionCode 28
+        versionName "1.3.6"
         multiDexEnabled true
         missingDimensionStrategy 'react-native-camera', 'general'
     }
