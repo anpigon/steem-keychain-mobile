@@ -77,7 +77,7 @@ const derivateFromMasterPassword = (
   }
 };
 
-const getPublicKeyFromPrivateKeyString = (pwd: string) => {
+export const getPublicKeyFromPrivateKeyString = (pwd: string) => {
   try {
     const privateKey = dsteem.PrivateKey.fromString(pwd);
     const publicKey = privateKey.createPublic();
