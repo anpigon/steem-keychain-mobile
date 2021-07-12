@@ -116,7 +116,7 @@ platform :android do
       skip_upload_screenshots: true,
       skip_upload_images: true,
       skip_upload_apk: true,
-      track: 'production'
+      track: 'beta'
     )
   end
 
@@ -133,7 +133,7 @@ platform :android do
       skip_upload_screenshots: true,
       skip_upload_images: true,
       skip_upload_apk: true,
-      track: 'production'
+      track: 'beta'
     )
   end
 end
