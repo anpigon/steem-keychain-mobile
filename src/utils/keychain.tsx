@@ -24,10 +24,12 @@ export const validateAuthority = (
   if (username) {
     const account = accounts.find((e) => e.name === username);
     if (!account || !account.keys[wifType]) {
+      // TODO: not found user
       return false;
     }
   } else if (KeychainConfig.NO_USERNAME_TYPES.includes(type)) {
     if (!accounts.filter((e) => !!e.keys[wifType]).length) {
+      // TODO: not found key
       return false;
     }
   }
