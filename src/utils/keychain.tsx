@@ -7,6 +7,7 @@ import {translate} from 'utils/localize';
 import {
   SteemErrorMessage,
   KeychainRequest,
+  KeychainRequestTypes,
   RequestAddAccountKeys,
   RequestDelegation,
   RequestError,
@@ -20,14 +21,17 @@ export const validateAuthority = (
   req: KeychainRequest,
 ) => {
   const {type, username} = req;
+  if (type === KeychainRequestTypes.addAccount) return true;
   const wifType = getRequiredWifType(req);
   if (username) {
     const account = accounts.find((e) => e.name === username);
     if (!account || !account.keys[wifType]) {
+      // TODO: not found user
       return false;
     }
   } else if (KeychainConfig.NO_USERNAME_TYPES.includes(type)) {
     if (!accounts.filter((e) => !!e.keys[wifType]).length) {
+      // TODO: not found key
       return false;
     }
   }
