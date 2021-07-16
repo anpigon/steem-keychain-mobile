@@ -35,7 +35,13 @@ const BrowserHeader = ({
     <View style={styles.container}>
       <View style={styles.textContainer}>
         {route.params && route.params.icon && (
-          <Image style={styles.icon} source={{uri: route.params.icon}} />
+          <View style={styles.iconContainer}>
+            <Image
+              resizeMode="contain"
+              style={styles.icon}
+              source={{uri: route.params.icon}}
+            />
+          </View>
         )}
         {renderText()}
       </View>
@@ -59,7 +65,14 @@ const getStyles = (height: number, insets: EdgeInsets) =>
     textContainer: {width: '60%', flexDirection: 'row'},
     url: {color: 'white', fontSize: 18},
     browser: {color: 'white', fontSize: 18, fontWeight: 'bold'},
-    icon: {width: 20, height: 20, marginRight: 20},
+    iconContainer: {
+      justifyContent: 'center',
+    },
+    icon: {
+      width: 20,
+      height: 20,
+      marginRight: 20,
+    },
   });
 
 const mapStateToProps = (state: RootState) => ({browser: state.browser});
