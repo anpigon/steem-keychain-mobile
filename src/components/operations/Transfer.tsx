@@ -185,7 +185,7 @@ const Transfer = ({
             onSelect={setPrivacy}
           />
           <Separator height={20} />
-          <OptionsToggle
+          {/* <OptionsToggle
             title="Recurrent transfers"
             toggled={isRecurrent}
             callback={(toggled: boolean) => {
@@ -208,7 +208,7 @@ const Transfer = ({
               keyboardType={'number-pad'}
               rightIcon={<Text>times</Text>}
             />
-          </OptionsToggle>
+          </OptionsToggle> */}
           <Separator height={20} />
           <ActiveOperationButton
             title={translate('common.send')}
