@@ -291,6 +291,7 @@ const Transfer = ({
                 setStep(1);
               }}
             />
+            <View style={{width: 10}} />
             <ActiveOperationButton
               title={translate('common.confirm')}
               onPress={onSend}
@@ -304,16 +305,20 @@ const Transfer = ({
   }
 };
 
-const getDimensionedStyles = (color: string, width: number) =>
-  StyleSheet.create({
+const getDimensionedStyles = (color: string, width: number) => {
+  return StyleSheet.create({
     send: {backgroundColor: '#68A0B4'},
     confirm: {
       backgroundColor: '#68A0B4',
-      width: width / 5,
+      flex: 1,
       marginHorizontal: 0,
     },
     warning: {color: 'red', fontWeight: 'bold'},
-    back: {backgroundColor: '#7E8C9A', width: width / 5, marginHorizontal: 0},
+    back: {
+      backgroundColor: '#7E8C9A',
+      flex: 1,
+      marginHorizontal: 0,
+    },
     currency: {fontWeight: 'bold', fontSize: 18, color},
     title: {fontWeight: 'bold', fontSize: 16},
     buttonsContainer: {
@@ -322,6 +327,8 @@ const getDimensionedStyles = (color: string, width: number) =>
       justifyContent: 'space-around',
     },
   });
+};
+
 const connector = connect(
   (state: RootState) => {
     return {
