@@ -165,9 +165,9 @@ const getDimensionedStyles = ({
       marginTop: width * 0.03,
     },
     price: {fontSize: 15, color: '#7E8C9A', fontWeight: 'bold'},
-    change: {color: +change > 0 ? '#3BB26E' : '#B9122F'},
+    change: {color: +change > 0 ? '#3BB26E' : '#4ca2f0'},
     green: {color: '#3BB26E'},
-    red: {color: '#B9122F'},
+    red: {color: '#4ca2f0'},
     halfLine: {width: '40%'},
     rowReverse: {flexDirection: 'row-reverse'},
   });

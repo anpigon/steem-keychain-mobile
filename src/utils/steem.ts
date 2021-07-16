@@ -8,6 +8,7 @@ import {
   ConvertOperation,
   DelegateVestingSharesOperation,
   Operation,
+  RecurrentTransferOperation,
   TransferOperation,
   UpdateProposalVotesOperation,
   VoteOperation,
@@ -45,6 +46,13 @@ export const getClient = () => client;
 
 export const transfer = async (key: string, obj: TransferOperation[1]) => {
   return await broadcast(key, [['transfer', obj]]);
+};
+
+export const recurrentTransfer = async (
+  key: string,
+  obj: RecurrentTransferOperation[1],
+) => {
+  return await broadcast(key, [['recurrent_transfer', obj]]);
 };
 
 export const broadcastJson = async (

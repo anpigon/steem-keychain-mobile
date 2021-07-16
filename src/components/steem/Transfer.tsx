@@ -21,7 +21,7 @@ const Transfer = ({transaction, user, token = false}: Props) => {
   const {timestamp, from, to, amount, memo} = transaction;
   const other = from === username ? to : from;
   const direction = from === username ? '-' : '+';
-  const color = direction === '+' ? '#3BB26E' : '#B9122F';
+  const color = direction === '+' ? '#3BB26E' : '#4ca2f0';
   const date = new Date(
     token ? (timestamp as number) * 1000 : timestamp,
   ).toLocaleString([], {
