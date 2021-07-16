@@ -8,6 +8,7 @@ import React, {useEffect} from 'react';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {connect, ConnectedProps} from 'react-redux';
 import {RootState} from 'store';
+import {logScreenView} from 'utils/analytics';
 import {translate} from 'utils/localize';
 
 const Tokens = ({
@@ -23,18 +24,12 @@ const Tokens = ({
   useEffect(() => {
     loadTokens();
     loadTokensMarket();
-    analytics().logScreenView({
-      screen_class: 'EngineWalletScreen',
-      screen_name: 'EngineWalletScreen',
-    });
   }, [loadTokens, loadTokensMarket]);
+  
   useEffect(() => {
-    console.debug('logging engine');
-    analytics().logScreenView({
-      screen_class: 'EngineWalletScreen',
-      screen_name: 'EngineWalletScreen',
-    });
+    logScreenView('EngineWalletScreen');
   }, []);
+
   useEffect(() => {
     if (user.name) {
       loadUserTokens(user.name);

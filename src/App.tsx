@@ -13,6 +13,7 @@ import React, {useEffect, useRef} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import Modal from 'screens/Modal';
 import {RootState} from 'store';
+import {logScreenView} from 'utils/analytics';
 import {setRpc} from 'utils/steem';
 import setupLinking, {clearLinkingListeners} from 'utils/linking';
 import {modalOptions, noHeader, setNavigator} from 'utils/navigation';
@@ -21,7 +22,6 @@ import {ModalNavigationRoute, RootStackParam} from './navigators/Root.types';
 const Root = createStackNavigator<RootStackParam>();
 
 const App = ({hasAccounts, auth, rpc, addTabFromLinking}: PropsFromRedux) => {
-  let routeNameRef: React.MutableRefObject<string> = useRef();
   let navigationRef: React.MutableRefObject<NavigationContainerRef> = useRef();
 
   useEffect(() => {
@@ -69,27 +69,17 @@ const App = ({hasAccounts, auth, rpc, addTabFromLinking}: PropsFromRedux) => {
       onReady={() => {
         const currentRouteName = navigationRef.current.getCurrentRoute().name;
         console.debug(currentRouteName);
+        logScreenView(currentRouteName);
       }}
       onStateChange={async (state) => {
-        const previousRouteName = routeNameRef.current;
         let currentRouteName = navigationRef.current.getCurrentRoute().name;
         const p = navigationRef.current.getCurrentRoute().params;
-        console.debug('params', p);
 
         if (currentRouteName === 'ModalScreen' && !!p) {
           currentRouteName = 'ModalScreen_' + (p as ModalNavigationRoute).name;
         }
-        if (previousRouteName !== currentRouteName) {
-          console.debug('routeName', currentRouteName);
 
-          await analytics().logScreenView({
-            screen_name: currentRouteName,
-            screen_class: currentRouteName,
-          });
-        }
-
-        // Save the current route name for later comparison
-        routeNameRef.current = currentRouteName;
+        logScreenView(currentRouteName);
       }}>
       {renderRootNavigator()}
       <Bridge />
