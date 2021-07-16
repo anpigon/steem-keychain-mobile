@@ -24,7 +24,7 @@ const Primary = ({user, bittrex, properties}: PropsFromRedux) => {
   useEffect(() => {
     logScreenView('WalletScreen');
   }, []);
-  
+
   return (
     <View style={styles.container}>
       <Separator height={20} />
@@ -44,6 +44,7 @@ const Primary = ({user, bittrex, properties}: PropsFromRedux) => {
         buttons={[
           <Send key="send_steem" currency="STEEM" />,
           <SendPowerUp key="pu" />,
+          <SendConversion key="conversion" currency="STEEM" />,
         ]}
       />
       <Separator height={20} />
@@ -56,7 +57,7 @@ const Primary = ({user, bittrex, properties}: PropsFromRedux) => {
         price={bittrex.sbd}
         buttons={[
           <Send key="send_sbd" currency="SBD" />,
-          <SendConversion key="conversion" />,
+          <SendConversion key="conversion" currency="SBD" />,
         ]}
       />
       <Separator height={20} />

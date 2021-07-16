@@ -74,7 +74,7 @@
         "title": "스팀 파워 임대"
       },
       "convert": {
-        "title": "STEEM으로 전환",
+        "title": "{{to}}(으)로 전환",
         "button": "전환",
         "conversions": "conversions"
       }

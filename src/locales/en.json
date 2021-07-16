@@ -76,7 +76,7 @@
         "outgoing": "Outgoing Delegations"
       },
       "convert": {
-        "title": "Convert to STEEM",
+        "title": "Convert to {{to}}",
         "button": "Convert",
         "conversions": "conversions"
       }
