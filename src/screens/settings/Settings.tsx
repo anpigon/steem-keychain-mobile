@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   disclaimer: {color: '#404950', marginVertical: 2},
-  button: {backgroundColor: '#B9122F'},
+  button: {backgroundColor: '#4ca2f0'},
   userSettings: {marginBottom: 0},
 });
 

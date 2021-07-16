@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     marginVertical: 2,
     paddingHorizontal: 20,
   },
-  button: {backgroundColor: '#B9122F'},
+  button: {backgroundColor: '#4ca2f0'},
   keyOdd: {backgroundColor: '#E5EEF7', padding: 20},
   keyEven: {backgroundColor: '#FFFFFF', padding: 20},
   safeArea: {backgroundColor: 'white'},

@@ -6,6 +6,7 @@ import ActiveOperationButton from 'components/form/ActiveOperationButton';
 import CustomRadioGroup from 'components/form/CustomRadioGroup';
 import EllipticButton from 'components/form/EllipticButton';
 import OperationInput from 'components/form/OperationInput';
+import OptionsToggle from 'components/ui/OptionsToggle';
 import Separator from 'components/ui/Separator';
 import React, {useState} from 'react';
 import {
@@ -19,7 +20,8 @@ import Toast from 'react-native-simple-toast';
 import {connect, ConnectedProps} from 'react-redux';
 import {RootState} from 'store';
 import {beautifyTransferError} from 'utils/format';
-import {sendToken, transfer} from 'utils/steem';
+import {ScrollView} from 'react-native-gesture-handler';
+import {recurrentTransfer, sendToken, transfer} from 'utils/steem';
 import {tryConfirmTransaction} from 'utils/steemEngine';
 import {getCurrencyProperties} from 'utils/steemReact';
 import {
@@ -55,9 +57,12 @@ const Transfer = ({
   const [to, setTo] = useState('');
   const [amount, setAmount] = useState('');
   const [memo, setMemo] = useState('');
+  const [recurrence, setRecurrence] = useState('');
+  const [exec, setExec] = useState('');
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(1);
   const [privacy, setPrivacy] = useState(PUBLIC);
+  const [isRecurrent, setRecurrent] = useState(false);
 
   const sendTransfer = async () => {
     setLoading(true);
@@ -66,12 +71,24 @@ const Transfer = ({
       const receiverMemoKey = (await getAccountKeys(to.toLowerCase())).memo;
       finalMemo = await encodeMemo(user.keys.memo, receiverMemoKey, `#${memo}`);
     }
-    await transfer(user.keys.active, {
-      amount: sanitizeAmount(amount, currency),
-      memo: finalMemo,
-      to: sanitizeUsername(to),
-      from: user.account.name,
-    });
+    if (!isRecurrent) {
+      await transfer(user.keys.active, {
+        amount: sanitizeAmount(amount, currency),
+        memo: finalMemo,
+        to: sanitizeUsername(to),
+        from: user.account.name,
+      });
+    } else {
+      await recurrentTransfer(user.keys.active, {
+        amount: sanitizeAmount(amount, currency),
+        memo: finalMemo,
+        to: sanitizeUsername(to),
+        from: user.account.name,
+        recurrence: +recurrence,
+        executions: +exec,
+        extensions: [],
+      });
+    }
   };
 
   const transferToken = async () => {
@@ -90,7 +107,14 @@ const Transfer = ({
     try {
       if (!engine) {
         await sendTransfer();
-        Toast.show(translate('toast.transfer_success'), Toast.LONG);
+        Toast.show(
+          translate(
+            isRecurrent
+              ? 'toast.recurrent_transfer_success'
+              : 'toast.transfer_success',
+          ),
+          Toast.LONG,
+        );
       } else {
         const {id} = await transferToken();
         const {confirmed} = await tryConfirmTransaction(id);
@@ -121,7 +145,7 @@ const Transfer = ({
       <Operation
         logo={<SendArrow fill="#77b9d1" />}
         title={translate('wallet.operations.transfer.title')}>
-        <>
+        <ScrollView>
           <Separator />
           <Balance
             currency={currency}
@@ -161,7 +185,31 @@ const Transfer = ({
             onSelect={setPrivacy}
           />
           <Separator height={20} />
-
+          <OptionsToggle
+            title="Recurrent transfers"
+            toggled={isRecurrent}
+            callback={(toggled: boolean) => {
+              setRecurrent(toggled);
+            }}>
+            <Separator />
+            <OperationInput
+              placeholder={translate('wallet.operations.transfer.recurrence')}
+              value={recurrence}
+              onChangeText={setRecurrence}
+              keyboardType={'number-pad'}
+              rightIcon={<Text>Hours</Text>}
+              leftIcon={<Text>Every</Text>}
+            />
+            <Separator />
+            <OperationInput
+              placeholder={translate('wallet.operations.transfer.executions')}
+              value={exec}
+              onChangeText={setExec}
+              keyboardType={'number-pad'}
+              rightIcon={<Text>times</Text>}
+            />
+          </OptionsToggle>
+          <Separator height={20} />
           <ActiveOperationButton
             title={translate('common.send')}
             onPress={() => {
@@ -176,7 +224,7 @@ const Transfer = ({
             style={styles.send}
             isLoading={loading}
           />
-        </>
+        </ScrollView>
       </Operation>
     );
   } else {
@@ -184,7 +232,7 @@ const Transfer = ({
       <Operation
         logo={<SendArrow fill="#77b9d1" />}
         title={translate('wallet.operations.transfer.title')}>
-        <>
+        <ScrollView>
           <Separator height={30} />
           <Text style={styles.warning}>
             {getTransferWarning(phishingAccounts, to, currency, !!memo).warning}
@@ -208,15 +256,30 @@ const Transfer = ({
             {translate('wallet.operations.transfer.confirm.amount')}
           </Text>
           <Text>{`${amount} ${currency}`}</Text>
-          <Separator />
+
           {memo.length ? (
             <>
+              <Separator />
               <Text style={styles.title}>
                 {translate('wallet.operations.transfer.confirm.memo')}
               </Text>
               <Text>{`${memo} ${
                 privacy === PRIVATE ? '(encrypted)' : ''
               }`}</Text>
+            </>
+          ) : null}
+          <Separator />
+          {isRecurrent ? (
+            <>
+              <Text style={styles.title}>
+                {translate('wallet.operations.transfer.confirm.recurrence')}
+              </Text>
+              <Text>
+                {translate(
+                  'wallet.operations.transfer.confirm.recurrenceData',
+                  {exec, recurrence},
+                )}
+              </Text>
             </>
           ) : null}
           <Separator height={40} />
@@ -235,7 +298,7 @@ const Transfer = ({
               isLoading={loading}
             />
           </View>
-        </>
+        </ScrollView>
       </Operation>
     );
   }
@@ -246,11 +309,11 @@ const getDimensionedStyles = (color: string, width: number) =>
     send: {backgroundColor: '#68A0B4'},
     confirm: {
       backgroundColor: '#68A0B4',
-      width: width / 3,
+      width: width / 5,
       marginHorizontal: 0,
     },
     warning: {color: 'red', fontWeight: 'bold'},
-    back: {backgroundColor: '#7E8C9A', width: width / 3, marginHorizontal: 0},
+    back: {backgroundColor: '#7E8C9A', width: width / 5, marginHorizontal: 0},
     currency: {fontWeight: 'bold', fontSize: 18, color},
     title: {fontWeight: 'bold', fontSize: 16},
     buttonsContainer: {
