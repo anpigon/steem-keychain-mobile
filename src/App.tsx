@@ -1,3 +1,4 @@
+import analytics from '@react-native-firebase/analytics';
 import {
   NavigationContainer,
   NavigationContainerRef,
@@ -80,6 +81,11 @@ const App = ({hasAccounts, auth, rpc, addTabFromLinking}: PropsFromRedux) => {
         }
         if (previousRouteName !== currentRouteName) {
           console.debug('routeName', currentRouteName);
+
+          await analytics().logScreenView({
+            screen_name: currentRouteName,
+            screen_class: currentRouteName,
+          });
         }
 
         // Save the current route name for later comparison
