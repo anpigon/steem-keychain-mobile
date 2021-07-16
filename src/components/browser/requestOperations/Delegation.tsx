@@ -3,7 +3,7 @@ import usePotentiallyAnonymousRequest from 'hooks/usePotentiallyAnonymousRequest
 import React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {RootState} from 'store';
-import {beautifyTransferError, fromHP} from 'utils/format';
+import {beautifyTransferError, fromSP} from 'utils/format';
 import {delegate} from 'utils/steem';
 import {sanitizeAmount} from 'utils/steemUtils';
 import {RequestDelegation, RequestId} from 'utils/keychain.types';
@@ -58,7 +58,7 @@ const Delegation = ({
           vesting_shares = `${amount} ${unit}`;
         } else {
           vesting_shares = sanitizeAmount(
-            fromHP(sanitizeAmount(amount), properties.globals).toString(),
+            fromSP(sanitizeAmount(amount), properties.globals).toString(),
             'VESTS',
             6,
           );
