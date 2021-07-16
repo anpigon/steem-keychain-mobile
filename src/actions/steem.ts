@@ -90,7 +90,6 @@ export const loadBittrex = (): AppThunk => async (dispatch) => {
 export const initAccountTransactions = (
   accountName: string,
 ): AppThunk => async (dispatch, getState) => {
-  console.debug('call initAccountTransactions');
   const memoKey = getState().accounts.find((a) => a.name === accountName)!.keys
     .memo;
   const transfers = await getAccountTransactions(accountName, null, memoKey);
