@@ -21,7 +21,11 @@ const BrowserHeader = ({
 
   const renderText = () => {
     if (activeTab && tabs.find((e) => e.id === activeTab)) {
-      const activeUrl = tabs.find((e) => e.id === activeTab).url;
+      const currentActiveTab = tabs.find((e) => e.id === activeTab);
+      const activeUrl = currentActiveTab.url;
+      if (activeUrl === BrowserConfig.HOMEPAGE_URL) {
+        return <Text style={styles.url}>{currentActiveTab.name}</Text>;
+      }
       return (
         <Text style={styles.url}>{urlTransformer(activeUrl).hostname}</Text>
       );
