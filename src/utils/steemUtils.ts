@@ -1,5 +1,9 @@
-import {ExtendedAccount} from 'dsteem';
-import {Delegator, GlobalProperties} from 'actions/interfaces';
+import { ExtendedAccount } from 'dsteem';
+import {
+  CollateralizedConversion,
+  Delegator,
+  GlobalProperties,
+} from 'actions/interfaces';
 import api from 'api/keychain';
 import {getClient} from './steem';
 
@@ -119,7 +123,26 @@ export const getDelegatees = async (name: string) => {
 };
 
 export const getConversionRequests = async (name: string) => {
-  return await getClient().database.call('get_conversion_requests', [name]);
+  const [sbdConversions, steemConversions] = await Promise.all([
+    getClient().database.call('get_conversion_requests', [name]),
+    getClient().database.call('get_collateralized_conversion_requests', [name]),
+  ]);
+
+  return [
+    ...steemConversions.map((e: CollateralizedConversion) => ({
+      amount: e.collateral_amount,
+      conversion_date: e.conversion_date,
+      id: e.id,
+      owner: e.owner,
+      requestid: e.requestid,
+      collaterized: true,
+    })),
+    ...steemConversions,
+  ].sort(
+    (a, b) =>
+      new Date(a.conversion_date).getTime() -
+      new Date(b.conversion_date).getTime(),
+  );
 };
 
 // ref: https://steemyy.com/node-status.php
