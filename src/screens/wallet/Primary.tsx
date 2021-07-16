@@ -44,7 +44,7 @@ const Primary = ({user, bittrex, properties}: PropsFromRedux) => {
         buttons={[
           <Send key="send_steem" currency="STEEM" />,
           <SendPowerUp key="pu" />,
-          <SendConversion key="conversion" currency="STEEM" />,
+          // <SendConversion key="conversion" currency="STEEM" />,
         ]}
       />
       <Separator height={20} />
