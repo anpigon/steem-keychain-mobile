@@ -11,7 +11,7 @@ import {
   SendPowerUp,
 } from 'components/operations/OperationsButtons';
 import Separator from 'components/ui/Separator';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet, useWindowDimensions, View} from 'react-native';
 import {connect, ConnectedProps} from 'react-redux';
 import {RootState} from 'store';
@@ -19,6 +19,7 @@ import {toSP} from 'utils/format';
 
 const Primary = ({user, bittrex, properties}: PropsFromRedux) => {
   const {width} = useWindowDimensions();
+  
   return (
     <View style={styles.container}>
       <Separator height={20} />
