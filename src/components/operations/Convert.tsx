@@ -23,12 +23,14 @@ import {goBack} from 'utils/navigation';
 import Balance from './Balance';
 import Operation from './Operation';
 
+type Props = PropsFromRedux & {currency: string};
 const Convert = ({
   user,
   loadAccount,
   fetchConversionRequests,
   conversions,
-}: PropsFromRedux) => {
+  currency,
+}: Props) => {
   const [amount, setAmount] = useState('');
   const [loading, setLoading] = useState(false);
   const [showConversionsList, setShowConversionsList] = useState(false);
@@ -50,25 +52,27 @@ const Convert = ({
       goBack();
       Toast.show(translate('toast.convert_success'), Toast.LONG);
     } catch (e) {
-      Toast.show(`Error : ${e.message}`, Toast.LONG);
+      Toast.show(`Error : ${(e as Error).message}`, Toast.LONG);
     } finally {
       setLoading(false);
     }
   };
-  const {color} = getCurrencyProperties('SBD');
+  const {color} = getCurrencyProperties(currency);
   const styles = getDimensionedStyles(color);
   return (
     <Operation
       logo={<Steem fill="#4ca2f0" />}
-      title={translate('wallet.operations.convert.title')}>
+      title={translate('wallet.operations.convert.title', {
+        to: currency === 'STEEM' ? 'SBD' : 'STEEM',
+      })}>
       <>
         <Separator />
-        <Balance currency="SBD" account={user.account} />
+        <Balance currency={currency} account={user.account} />
         <Separator />
         <OperationInput
           placeholder={'0.000'}
           keyboardType="numeric"
-          rightIcon={<Text style={styles.currency}>SBD</Text>}
+          rightIcon={<Text style={styles.currency}>{currency}</Text>}
           textAlign="right"
           value={amount}
           onChangeText={setAmount}
@@ -78,10 +82,9 @@ const Convert = ({
           onPress={() => {
             setShowConversionsList(!showConversionsList);
           }}>
-          <Text
-            style={
-              styles.conversions
-            }>{`${conversions.length} ${translate('wallet.operations.convert.conversions')}`}</Text>
+          <Text style={styles.conversions}>{`${conversions.length} ${translate(
+            'wallet.operations.convert.conversions',
+          )}`}</Text>
         </TouchableOpacity>
         <Separator />
         {showConversionsList ? (
