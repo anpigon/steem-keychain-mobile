@@ -145,7 +145,6 @@ export default ({
   const onMessage = ({nativeEvent}: WebViewMessageEvent) => {
     const {name, request_id, data} = JSON.parse(nativeEvent.data);
     const {current} = tabRef;
-    // console.log('onMessage', {name, request_id, data});
     switch (name) {
       case 'swHandshake_steem':
         current.injectJavaScript(
@@ -185,8 +184,19 @@ export default ({
     }
   };
 
+  function skipConfirmation(data: any) {
+    if (
+      data.type === 'signBuffer' &&
+      data.message?.includes('"type":"Buffer"')
+    ) {
+      // image type
+      return true;
+    }
+    return false;
+  }
+
   const showOperationRequestModal = (request_id: number, data: any) => {
-    const { username, domain, type } = data;
+    const {username, domain, type} = data;
     if (data.hasOwnProperty('operations')) {
       for (let op of data.operations) {
         // fix bug: I don't know why this happens.
@@ -195,12 +205,13 @@ export default ({
     }
     if (
       getRequiredWifType(data) !== KeyTypes.active &&
-      hasPreference(
+      (hasPreference(
         preferences,
         username,
         urlTransformer(domain).hostname,
         type,
-      ) &&
+      ) ||
+        skipConfirmation(data)) && // image type
       username
     ) {
       requestWithoutConfirmation(
@@ -224,6 +235,7 @@ export default ({
         });
       };
       navigate('ModalScreen', {
+        name: `Operation_${data.type}`,
         modalContent: (
           <RequestModalContent
             request={{...data, request_id}}

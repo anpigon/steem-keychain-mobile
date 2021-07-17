@@ -90,7 +90,6 @@ export const loadBittrex = (): AppThunk => async (dispatch) => {
 export const initAccountTransactions = (
   accountName: string,
 ): AppThunk => async (dispatch, getState) => {
-  console.debug('call initAccountTransactions');
   const memoKey = getState().accounts.find((a) => a.name === accountName)!.keys
     .memo;
   const transfers = await getAccountTransactions(accountName, null, memoKey);
@@ -212,8 +211,10 @@ export const fetchPhishingAccounts = (): AppThunk => async (dispatch) => {
 export const fetchConversionRequests = (name: string): AppThunk => async (
   dispatch,
 ) => {
+  const conversions = await getConversionRequests(name);
+  console.debug('conversions', conversions);
   dispatch({
     type: FETCH_CONVERSION_REQUESTS,
-    payload: await getConversionRequests(name),
+    payload: conversions,
   });
 };

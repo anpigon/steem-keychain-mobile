@@ -2,7 +2,7 @@ import {KeyTypes} from 'actions/interfaces';
 import React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {RootState} from 'store';
-import {fromHP} from 'utils/format';
+import {fromSP} from 'utils/format';
 import {powerDown} from 'utils/steem';
 import {sanitizeAmount} from 'utils/steemUtils';
 import {RequestId, RequestPowerDown} from 'utils/keychain.types';
@@ -25,7 +25,7 @@ const PowerDown = ({
   properties,
 }: Props) => {
   const {request_id, ...data} = request;
-  const {username, steem_power: hp} = data;
+  const {username, steem_power: sp} = data;
 
   return (
     <RequestOperation
@@ -33,11 +33,11 @@ const PowerDown = ({
       sendError={sendError}
       successMessage={translate(
         `request.success.${
-          parseFloat(hp) === 0 ? 'stop_power_down' : 'power_down'
+          parseFloat(sp) === 0 ? 'stop_power_down' : 'power_down'
         }`,
         {
           username,
-          hp,
+          sp,
         },
       )}
       beautifyError
@@ -48,7 +48,7 @@ const PowerDown = ({
         const account = accounts.find((e) => e.name === request.username);
         const key = account.keys.active;
         const vesting_shares = sanitizeAmount(
-          fromHP(sanitizeAmount(hp), properties.globals).toString(),
+          fromSP(sanitizeAmount(sp), properties.globals).toString(),
           'VESTS',
           6,
         );
@@ -63,7 +63,7 @@ const PowerDown = ({
       />
       <RequestItem
         title={translate('request.item.amount')}
-        content={`${hp} HP`}
+        content={`${sp} SP`}
       />
     </RequestOperation>
   );

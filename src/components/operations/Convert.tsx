@@ -15,7 +15,7 @@ import {
 import Toast from 'react-native-simple-toast';
 import {connect, ConnectedProps} from 'react-redux';
 import {RootState} from 'store';
-import {convert} from 'utils/steem';
+import {collateralizedConvert, convert} from 'utils/steem';
 import {getCurrencyProperties} from 'utils/steemReact';
 import {sanitizeAmount} from 'utils/steemUtils';
 import {translate} from 'utils/localize';
@@ -23,12 +23,14 @@ import {goBack} from 'utils/navigation';
 import Balance from './Balance';
 import Operation from './Operation';
 
+type Props = PropsFromRedux & {currency: string};
 const Convert = ({
   user,
   loadAccount,
   fetchConversionRequests,
   conversions,
-}: PropsFromRedux) => {
+  currency,
+}: Props) => {
   const [amount, setAmount] = useState('');
   const [loading, setLoading] = useState(false);
   const [showConversionsList, setShowConversionsList] = useState(false);
@@ -41,34 +43,44 @@ const Convert = ({
     Keyboard.dismiss();
     setLoading(true);
     try {
-      await convert(user.keys.active!, {
-        owner: user.account.name,
-        amount: sanitizeAmount(amount, 'SBD'),
-        requestid: Math.max(...conversions.map((e) => e.requestid), 0) + 1,
-      });
+      if (currency === 'SBD') {
+        await convert(user.keys.active!, {
+          owner: user.account.name,
+          amount: sanitizeAmount(amount, 'SBD'),
+          requestid: Math.max(...conversions.map((e) => e.requestid), 0) + 1,
+        });
+      } else {
+        await collateralizedConvert(user.keys.active!, {
+          owner: user.account.name,
+          amount: sanitizeAmount(amount, 'STEEM'),
+          requestid: Math.max(...conversions.map((e) => e.requestid), 0) + 1,
+        });
+      }
       loadAccount(user.account.name, true);
       goBack();
-      Toast.show(translate('toast.convert_success'), Toast.LONG);
+      Toast.show(translate('toast.convert_success', {currency}), Toast.LONG);
     } catch (e) {
-      Toast.show(`Error : ${e.message}`, Toast.LONG);
+      Toast.show(`Error : ${(e as Error).message}`, Toast.LONG);
     } finally {
       setLoading(false);
     }
   };
-  const {color} = getCurrencyProperties('SBD');
+  const {color} = getCurrencyProperties(currency);
   const styles = getDimensionedStyles(color);
   return (
     <Operation
       logo={<Steem fill="#4ca2f0" />}
-      title={translate('wallet.operations.convert.title')}>
+      title={translate('wallet.operations.convert.title', {
+        to: currency === 'STEEM' ? 'SBD' : 'STEEM',
+      })}>
       <>
         <Separator />
-        <Balance currency="SBD" account={user.account} />
+        <Balance currency={currency} account={user.account} />
         <Separator />
         <OperationInput
           placeholder={'0.000'}
           keyboardType="numeric"
-          rightIcon={<Text style={styles.currency}>SBD</Text>}
+          rightIcon={<Text style={styles.currency}>{currency}</Text>}
           textAlign="right"
           value={amount}
           onChangeText={setAmount}
@@ -78,10 +90,9 @@ const Convert = ({
           onPress={() => {
             setShowConversionsList(!showConversionsList);
           }}>
-          <Text
-            style={
-              styles.conversions
-            }>{`${conversions.length} ${translate('wallet.operations.convert.conversions')}`}</Text>
+          <Text style={styles.conversions}>{`${conversions.length} ${translate(
+            'wallet.operations.convert.conversions',
+          )}`}</Text>
         </TouchableOpacity>
         <Separator />
         {showConversionsList ? (
@@ -93,7 +104,11 @@ const Convert = ({
               return (
                 <View style={styles.conversionRow}>
                   <Text>
-                    {amt} <Text style={styles.green}>{currency}</Text>
+                    {amt}{' '}
+                    <Text
+                      style={currency === 'SBD' ? styles.green : styles.blue}>
+                      {currency}
+                    </Text>
                   </Text>
                   <Text>-</Text>
                   <Text>
@@ -140,6 +155,7 @@ const getDimensionedStyles = (color: string) =>
       height: 80,
     },
     green: {color: '#005C09'},
+    blue: {color: '#4ca2f0'},
   });
 const connector = connect(
   (state: RootState) => {

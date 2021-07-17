@@ -6,7 +6,7 @@ export const steemConfig = {
   CREATE_ACCOUNT_URL: 'https://signup.steemit.com',
 };
 export const BrowserConfig = {
-  HOMEPAGE_URL: 'https://steemit.com',
+  HOMEPAGE_URL: 'https://anpigon.github.io/steem-keychain-web/',
   FOOTER_HEIGHT: 40,
   HEADER_HEIGHT: 40,
 };

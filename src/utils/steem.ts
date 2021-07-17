@@ -3,10 +3,12 @@ import {
   AccountWitnessProxyOperation,
   AccountWitnessVoteOperation,
   Client,
+  CollateralizedConvertOperation,
   CommentOptionsOperation,
   ConvertOperation,
   DelegateVestingSharesOperation,
   Operation,
+  RecurrentTransferOperation,
   TransferOperation,
   UpdateProposalVotesOperation,
   VoteOperation,
@@ -22,7 +24,6 @@ type BroadcastResult = {id: string};
 const timeout = 10 * 1000;
 const DEFAULT_RPC = 'https://api.steemit.com';
 let client = new Client(DEFAULT_RPC, {timeout});
-hiveTx.config.rebranded_api = true;
 hiveTx.updateOperations();
 
 const getDefault: () => Promise<string> = async () => {
@@ -45,6 +46,13 @@ export const getClient = () => client;
 
 export const transfer = async (key: string, obj: TransferOperation[1]) => {
   return await broadcast(key, [['transfer', obj]]);
+};
+
+export const recurrentTransfer = async (
+  key: string,
+  obj: RecurrentTransferOperation[1],
+) => {
+  return await broadcast(key, [['recurrent_transfer', obj]]);
 };
 
 export const broadcastJson = async (
@@ -99,6 +107,13 @@ export const delegate = async (
 
 export const convert = async (key: string, obj: ConvertOperation[1]) => {
   return await broadcast(key, [['convert', obj]]);
+};
+
+export const collateralizedConvert = async (
+  key: string,
+  obj: CollateralizedConvertOperation[1],
+) => {
+  return await broadcast(key, [['collateralized_convert', obj]]);
 };
 
 export const vote = async (key: string, obj: VoteOperation[1]) => {

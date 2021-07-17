@@ -11,14 +11,20 @@ import {
   SendPowerUp,
 } from 'components/operations/OperationsButtons';
 import Separator from 'components/ui/Separator';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet, useWindowDimensions, View} from 'react-native';
 import {connect, ConnectedProps} from 'react-redux';
-import {RootState} from 'store';
+import { RootState } from 'store';
+import { logScreenView } from 'utils/analytics';
 import {toSP} from 'utils/format';
 
 const Primary = ({user, bittrex, properties}: PropsFromRedux) => {
-  const {width} = useWindowDimensions();
+  const { width } = useWindowDimensions();
+  
+  useEffect(() => {
+    logScreenView('WalletScreen');
+  }, []);
+
   return (
     <View style={styles.container}>
       <Separator height={20} />
@@ -38,6 +44,7 @@ const Primary = ({user, bittrex, properties}: PropsFromRedux) => {
         buttons={[
           <Send key="send_steem" currency="STEEM" />,
           <SendPowerUp key="pu" />,
+          // <SendConversion key="conversion" currency="STEEM" />,
         ]}
       />
       <Separator height={20} />
@@ -50,7 +57,7 @@ const Primary = ({user, bittrex, properties}: PropsFromRedux) => {
         price={bittrex.sbd}
         buttons={[
           <Send key="send_sbd" currency="SBD" />,
-          <SendConversion key="conversion" />,
+          <SendConversion key="conversion" currency="SBD" />,
         ]}
       />
       <Separator height={20} />

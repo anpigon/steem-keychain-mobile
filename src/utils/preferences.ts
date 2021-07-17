@@ -80,8 +80,8 @@ export const hasPreference = (
   try {
     return preferences
       .find((p) => p.username === username)
-      .domains.find((d) => d.domain === domain)
-      .whitelisted_requests.includes(type);
+      ?.domains.find((d) => d.domain === domain)
+      ?.whitelisted_requests?.includes(type);
   } catch (e) {
     console.log('catching', e);
     return false;

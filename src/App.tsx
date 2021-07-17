@@ -1,22 +1,30 @@
-import {NavigationContainer} from '@react-navigation/native';
+import analytics from '@react-native-firebase/analytics';
+import {
+  NavigationContainer,
+  NavigationContainerRef,
+} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {addTabFromLinking} from 'actions/browser';
 import Bridge from 'components/bridge';
+import {getToggleElement} from 'hooks/toggle';
 import MainDrawer from 'navigators/MainDrawer';
 import SignUpStack from 'navigators/SignUp';
 import UnlockStack from 'navigators/Unlock';
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import Modal from 'screens/Modal';
 import {RootState} from 'store';
+import {logScreenView} from 'utils/analytics';
 import {setRpc} from 'utils/steem';
 import setupLinking, {clearLinkingListeners} from 'utils/linking';
 import {modalOptions, noHeader, setNavigator} from 'utils/navigation';
-import {RootStackParam} from './navigators/Root.types';
+import {ModalNavigationRoute, RootStackParam} from './navigators/Root.types';
 
 const Root = createStackNavigator<RootStackParam>();
 
 const App = ({hasAccounts, auth, rpc, addTabFromLinking}: PropsFromRedux) => {
+  let navigationRef: React.MutableRefObject<NavigationContainerRef> = useRef();
+
   useEffect(() => {
     setupLinking(addTabFromLinking);
     return () => {
@@ -54,7 +62,30 @@ const App = ({hasAccounts, auth, rpc, addTabFromLinking}: PropsFromRedux) => {
   };
 
   return (
-    <NavigationContainer ref={(navigator) => setNavigator(navigator)}>
+    <NavigationContainer
+      ref={(navigator) => {
+        setNavigator(navigator);
+        navigationRef.current = navigator;
+      }}
+      onReady={() => {
+        const currentRouteName = navigationRef.current.getCurrentRoute().name;
+        console.debug(currentRouteName);
+        logScreenView(currentRouteName);
+      }}
+      onStateChange={async (state) => {
+        let currentRouteName = navigationRef.current.getCurrentRoute().name;
+        const p = navigationRef.current.getCurrentRoute().params;
+        
+        if (currentRouteName === 'WalletScreen') {
+          currentRouteName = getToggleElement() || 'WalletScreen';
+        }
+
+        if (currentRouteName === 'ModalScreen' && !!p) {
+          currentRouteName = 'ModalScreen_' + (p as ModalNavigationRoute).name;
+        }
+
+        logScreenView(currentRouteName);
+      }}>
       {renderRootNavigator()}
       <Bridge />
     </NavigationContainer>

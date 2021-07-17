@@ -1,3 +1,4 @@
+import analytics from '@react-native-firebase/analytics';
 import {loadTokens, loadTokensMarket, loadUserTokens} from 'actions/index';
 import EngineTokenDisplay from 'components/steem/EngineTokenDisplay';
 import SteemEngineAccountValue from 'components/steem/SteemEngineAccountValue';
@@ -7,6 +8,7 @@ import React, {useEffect} from 'react';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {connect, ConnectedProps} from 'react-redux';
 import {RootState} from 'store';
+import {logScreenView} from 'utils/analytics';
 import {translate} from 'utils/localize';
 
 const Tokens = ({
@@ -23,6 +25,10 @@ const Tokens = ({
     loadTokens();
     loadTokensMarket();
   }, [loadTokens, loadTokensMarket]);
+  
+  useEffect(() => {
+    logScreenView('EngineWalletScreen');
+  }, []);
 
   useEffect(() => {
     if (user.name) {

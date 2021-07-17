@@ -74,7 +74,7 @@
         "title": "스팀 파워 임대"
       },
       "convert": {
-        "title": "STEEM으로 전환",
+        "title": "{{to}}(으)로 전환",
         "button": "전환",
         "conversions": "conversions"
       }
@@ -164,7 +164,7 @@
     "stop_powerdown_success": "파워다운을 성공적으로 중지했습니다!",
     "delegation_success": "임대에 성공했습니다!",
     "stop_delegation_success": "임대를 성공적으로 중지했습니다!",
-    "convert_success": "SBD 전환에 성공했습니다!",
+    "convert_success": "{{currency}} 전환에 성공했습니다!",
     "keys": {
       "not_wanted_key": "이것은 {{type}} 키가 아닙니다!",
       "not_a_key": "이것은 당신의 개인키가 아닙니다!",
