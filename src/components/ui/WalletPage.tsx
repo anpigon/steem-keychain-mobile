@@ -10,7 +10,7 @@ type Props = {
 export default ({children}: Props) => {
   return (
     <SafeArea style={styles.bgd}>
-      <FocusAwareStatusBar barStyle="light-content" backgroundColor="#4ca2f0" />
+      <FocusAwareStatusBar barStyle="light-content" backgroundColor="#4CA2F0" />
       {children}
     </SafeArea>
   );

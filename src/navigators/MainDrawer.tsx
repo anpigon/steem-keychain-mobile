@@ -22,7 +22,7 @@ export default () => {
       drawerContentOptions={{
         activeTintColor: '#FFFFFF',
         inactiveTintColor: '#FFFFFF',
-        activeBackgroundColor: '#4ca2f0',
+        activeBackgroundColor: '#4CA2F0',
         itemStyle: {marginHorizontal: 0, borderRadius: 0, paddingLeft: 10},
       }}
       drawerContent={(props) => <DrawerContent {...props} />}>

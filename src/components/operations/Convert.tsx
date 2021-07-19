@@ -69,7 +69,7 @@ const Convert = ({
   const styles = getDimensionedStyles(color);
   return (
     <Operation
-      logo={<Steem fill="#4ca2f0" />}
+      logo={<Steem fill="#4CA2F0" />}
       title={translate('wallet.operations.convert.title', {
         to: currency === 'STEEM' ? 'SBD' : 'STEEM',
       })}>
@@ -155,7 +155,7 @@ const getDimensionedStyles = (color: string) =>
       height: 80,
     },
     green: {color: '#005C09'},
-    blue: {color: '#4ca2f0'},
+    blue: {color: '#4CA2F0'},
   });
 const connector = connect(
   (state: RootState) => {

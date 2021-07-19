@@ -111,7 +111,7 @@ const renderLeftBottom = (
                 modalContent: <DelegationsList type="outgoing" />,
               });
             }}>
-            <Text style={styles.red}>{`- ${formatBalance(outgoing!)} SP`}</Text>
+            <Text style={styles.red}>{`-${formatBalance(outgoing!)} SP`}</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -165,9 +165,9 @@ const getDimensionedStyles = ({
       marginTop: width * 0.03,
     },
     price: {fontSize: 15, color: '#7E8C9A', fontWeight: 'bold'},
-    change: {color: +change > 0 ? '#3BB26E' : '#4ca2f0'},
+    change: {color: +change > 0 ? '#3BB26E' : '#B9122F'},
     green: {color: '#3BB26E'},
-    red: {color: '#4ca2f0'},
+    red: {color: '#B9122F'},
     halfLine: {width: '40%'},
     rowReverse: {flexDirection: 'row-reverse'},
   });
