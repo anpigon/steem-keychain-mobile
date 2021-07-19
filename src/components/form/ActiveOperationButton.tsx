@@ -19,7 +19,7 @@ const ActiveOperationButton = ({method, ...props}: Props) => {
     <>
       {!props.user.keys[method || KeyTypes.active] && (
         <View style={styles.container}>
-          <Icon fill="#4ca2f0" height={20} />
+          <Icon fill="#4CA2F0" height={20} />
           <Text style={styles.text}>{translate('wallet.add_active')}</Text>
         </View>
       )}
@@ -33,7 +33,7 @@ const ActiveOperationButton = ({method, ...props}: Props) => {
 
 const styles = StyleSheet.create({
   text: {
-    color: '#4ca2f0',
+    color: '#4CA2F0',
     textAlign: 'center',
     fontSize: 13,
   },

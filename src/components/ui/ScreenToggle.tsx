@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   },
   headerText: {textAlign: 'center', fontSize: 16, paddingBottom: 10},
   headerActiveElt: {
-    borderColor: '#4ca2f0',
+    borderColor: '#4CA2F0',
     borderBottomWidth: 3,
   },
   pane: {

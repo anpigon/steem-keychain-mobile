@@ -87,12 +87,12 @@ const AccountManagement = ({
 const styles = StyleSheet.create({
   disclaimer: {color: '#404950', marginVertical: 2, paddingHorizontal: 20},
   important: {
-    color: '#4ca2f0',
+    color: '#4CA2F0',
     fontWeight: 'bold',
     marginVertical: 2,
     paddingHorizontal: 20,
   },
-  button: {backgroundColor: '#4ca2f0'},
+  button: {backgroundColor: '#B9122F'},
   keyOdd: {backgroundColor: '#E5EEF7', padding: 20},
   keyEven: {backgroundColor: '#FFFFFF', padding: 20},
   safeArea: {backgroundColor: 'white'},
