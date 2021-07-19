@@ -111,7 +111,7 @@ const renderLeftBottom = (
                 modalContent: <DelegationsList type="outgoing" />,
               });
             }}>
-            <Text style={styles.red}>{`- ${formatBalance(outgoing!)} HP`}</Text>
+            <Text style={styles.red}>{`- ${formatBalance(outgoing!)} SP`}</Text>
           </TouchableOpacity>
         </View>
       </View>
