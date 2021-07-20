@@ -1,4 +1,4 @@
-import { ExtendedAccount } from 'dsteem';
+import {ExtendedAccount} from 'dsteem';
 import {
   CollateralizedConversion,
   Delegator,
@@ -34,15 +34,20 @@ export const getVP = (account: ExtendedAccount) => {
 };
 
 const getEffectiveVestingSharesPerAccount = (account: ExtendedAccount) => {
-  const effective_vesting_shares =
-    parseFloat((account.vesting_shares as string).replace(' VESTS', '')) +
-    parseFloat(
-      (account.received_vesting_shares as string).replace(' VESTS', ''),
-    ) -
-    parseFloat(
-      (account.delegated_vesting_shares as string).replace(' VESTS', ''),
-    );
-  return effective_vesting_shares;
+  try {
+    const effective_vesting_shares =
+      parseFloat((account.vesting_shares as string).replace(' VESTS', '')) +
+      parseFloat(
+        (account.received_vesting_shares as string).replace(' VESTS', ''),
+      ) -
+      parseFloat(
+        (account.delegated_vesting_shares as string).replace(' VESTS', ''),
+      );
+    return effective_vesting_shares;
+  } catch (e) {
+    console.error('getEffectiveVestingSharesPerAccount', e);
+  }
+  return 0;
 };
 
 export const getVotingDollarsPerAccount = (
@@ -182,14 +187,19 @@ export const sanitizeAmount = (
   currency?: string,
   decimals = 3,
 ) => {
-  if (typeof amount !== 'string') {
-    amount = amount.toString();
+  try {
+    if (typeof amount !== 'string') {
+      amount = amount.toString();
+    }
+    if (currency) {
+      return `${parseFloat(amount.replace(/,/g, '.')).toFixed(
+        decimals,
+      )} ${currency}`;
+    } else {
+      return `${amount.replace(/,/g, '.')}`;
+    }
+  } catch (e) {
+    console.error('sanitizeAmount', e);
   }
-  if (currency) {
-    return `${parseFloat(amount.replace(/,/g, '.')).toFixed(
-      decimals,
-    )} ${currency}`;
-  } else {
-    return `${amount.replace(/,/g, '.')}`;
-  }
+  return amount;
 };

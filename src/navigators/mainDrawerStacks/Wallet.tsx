@@ -25,7 +25,6 @@ export default () => {
           title: translate('navigation.wallet'),
           headerTintColor: 'white',
           headerRight: () => <DrawerButton navigation={navigation} />,
-
           headerLeft: () => {
             return <Steem style={styles({width}).left} />;
           },

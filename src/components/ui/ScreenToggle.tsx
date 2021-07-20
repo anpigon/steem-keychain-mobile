@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {StyleProp, StyleSheet, Text, View, ViewStyle} from 'react-native';
 import {setToggleElement} from 'hooks/toggle';
 
@@ -26,7 +26,7 @@ const ScreenToggle = ({components, menu, toUpperCase, style}: Props) => {
               style={styles.headerText}
               onPress={() => {
                 setActive(i);
-                setToggleElement(menuItem);
+                setToggleElement(String(i));
               }}>
               {toUpperCase ? menuItem.toUpperCase() : menuItem}
             </Text>

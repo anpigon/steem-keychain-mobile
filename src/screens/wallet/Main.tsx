@@ -53,9 +53,6 @@ const Main = ({
         <UserPicker
           accounts={accounts.map((account) => account.name)}
           username={user.name!}
-          // {addAccount={() => {
-          //   navigation.navigate('AddAccountFromWalletScreen', {wallet: true});
-          // }}}
           onAccountSelected={loadAccount}
         />
         <View style={styles.resourcesWrapper}>
