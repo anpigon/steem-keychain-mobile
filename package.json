@@ -38,6 +38,7 @@
     "debug": "open 'rndebugger://set-debugger-loc?host=localhost&port=8081’",
     "postinstall": "rndebugger-open",
     "prebuild-android": "npx jetify && react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle",
+    "appDistribution:android": "cd android && ./gradlew assembleRelease appDistributionUploadRelease",
     "beta:android": "npm run prebuild-android && cd ./android && bundle exec fastlane beta version:patch",
     "beta:ios": "cd ./ios && bundle exec fastlane beta version:patch",
     "beta": "npm run beta:android && npm run beta:ios",
