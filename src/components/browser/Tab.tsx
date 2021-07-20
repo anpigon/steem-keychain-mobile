@@ -8,13 +8,22 @@ import {
   TabFields,
 } from 'actions/interfaces';
 import {BrowserNavigation} from 'navigators/MainDrawer.types';
-import React, {MutableRefObject, useEffect, useRef, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, {
+  MutableRefObject,
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+} from 'react';
+import {BackHandler, Platform, StyleSheet, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {WebView} from 'react-native-webview';
+import {useFocusEffect} from '@react-navigation/native';
 import {
   WebViewMessageEvent,
   WebViewNativeEvent,
+  WebViewNavigation,
+  WebViewNavigationEvent,
   WebViewProgressEvent,
 } from 'react-native-webview/lib/WebViewTypes';
 import {UserPreference} from 'reducers/preferences.types';
@@ -65,7 +74,7 @@ export default ({
   isManagingTab,
   preferences,
 }: Props) => {
-  const tabRef: MutableRefObject<WebView> = useRef(null);
+  const tabRef = useRef<WebView>(null);
   const [searchUrl, setSearchUrl] = useState(url);
   const [canGoBack, setCanGoBack] = useState(false);
   const [canGoForward, setCanGoForward] = useState(false);
@@ -73,6 +82,30 @@ export default ({
   const [isVisible, toggleVisibility] = useState(false);
   const insets = useSafeAreaInsets();
   const FOOTER_HEIGHT = BrowserConfig.FOOTER_HEIGHT + insets.bottom;
+
+  const onAndroidBackPress = () => {
+    if (tabRef.current && canGoBack) {
+      goBack();
+      return true;
+    }
+    return false;
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      if (Platform.OS === 'android') {
+        BackHandler.addEventListener('hardwareBackPress', onAndroidBackPress);
+      }
+      return () => {
+        if (Platform.OS === 'android') {
+          BackHandler.removeEventListener(
+            'hardwareBackPress',
+            onAndroidBackPress,
+          );
+        }
+      };
+    }, [canGoBack]),
+  );
 
   useEffect(() => {
     setSearchUrl(url);
@@ -117,19 +150,20 @@ export default ({
 
   const onLoadEnd = ({
     nativeEvent: {canGoBack, canGoForward, loading},
-  }: {
-    nativeEvent: WebViewNativeEvent;
-  }) => {
+  }: WebViewNavigationEvent) => {
     const {current} = tabRef;
     setProgress(0);
     if (loading) {
       return;
     }
-    setCanGoBack(canGoBack);
-    setCanGoForward(canGoForward);
     if (current) {
       current.injectJavaScript(BRIDGE_WV_INFO);
     }
+  };
+
+  const onNavigationStateChange = (event: WebViewNavigation) => {
+    setCanGoBack(event.canGoBack);
+    setCanGoForward(event.canGoForward);
   };
 
   const onNewSearch = (url: string) => {
@@ -273,6 +307,7 @@ export default ({
           onLoadEnd={onLoadEnd}
           onLoadStart={onLoadStart}
           onLoadProgress={onLoadProgress}
+          onNavigationStateChange={onNavigationStateChange}
           renderError={(errorDomain, errorCode, errorDesc) => (
             <NotFound
               errorDomain={errorDomain || url}
