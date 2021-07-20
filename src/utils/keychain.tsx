@@ -199,9 +199,9 @@ export const getRequiredWifType: (request: KeychainRequest) => KeyTypes = (
     case 'vote':
       return KeyTypes.posting;
     case 'custom':
-      return (!request.method
-        ? 'posting'
-        : request.method.toLowerCase()) as KeyTypes;
+      return (
+        !request.method ? 'posting' : request.method.toLowerCase()
+      ) as KeyTypes;
     case 'signedCall':
       return request.typeWif.toLowerCase() as KeyTypes;
     case 'transfer':
@@ -355,15 +355,19 @@ export const beautifyErrorMessage = (err: SteemErrorMessage) => {
     return null;
   }
   let error = '';
-  if (err.message.indexOf('xception:') !== -1) {
-    error = err.message.split('xception:').pop().replace('.rethrow', '.');
-  } else if (err.message.indexOf(':') !== -1) {
-    error = err.message.split(':').pop();
-  } else {
-    error = err.message;
-  }
-  if (error.replace(' ', '') === '') {
-    return translate('request.error.unknown');
+  try {
+    if (err.message.indexOf('xception:') !== -1) {
+      error = err.message.split('xception:').pop().replace('.rethrow', '.');
+    } else if (err.message.indexOf(':') !== -1) {
+      error = err.message.split(':').pop();
+    } else {
+      error = err.message;
+    }
+    if (error.replace(' ', '') === '') {
+      return translate('request.error.unknown');
+    }
+  } catch (e) {
+    console.error('beautifyErrorMessage', e);
   }
   return `${translate('request.error.ops')} : ${error}`;
 };

@@ -19,13 +19,12 @@ export default () => {
         component={Wallet}
         options={({navigation}) => ({
           headerStyle: {
-            backgroundColor: '#4ca2f0',
+            backgroundColor: '#4CA2F0',
           },
           headerTitleAlign: 'center',
           title: translate('navigation.wallet'),
           headerTintColor: 'white',
           headerRight: () => <DrawerButton navigation={navigation} />,
-
           headerLeft: () => {
             return <Steem style={styles({width}).left} />;
           },

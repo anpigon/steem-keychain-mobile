@@ -125,7 +125,7 @@ export const SendConversion = ({currency}: {currency: string}) => {
         });
       }}
       size={36}
-      backgroundColor={currency === 'SBD' ? '#4ca2f0' : '#005C09'}
+      backgroundColor={currency === 'SBD' ? '#4CA2F0' : '#005C09'}
       content={<Conversion />}
     />
   );

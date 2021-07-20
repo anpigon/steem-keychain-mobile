@@ -35,11 +35,11 @@ const Primary = ({user, bittrex, properties}: PropsFromRedux) => {
       />
       <Separator height={20} />
       <TokenDisplay
-        color="#4ca2f0"
+        color="#4CA2F0"
         name="STEEM"
         currency="STEEM"
         value={parseFloat(user.account.balance as string)}
-        logo={<Steem width={width / 15} fill="#4ca2f0" />}
+        logo={<Steem width={width / 15} fill="#4CA2F0" />}
         price={bittrex.steem}
         buttons={[
           <Send key="send_steem" currency="STEEM" />,

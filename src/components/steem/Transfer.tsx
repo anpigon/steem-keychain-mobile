@@ -1,3 +1,4 @@
+import {format} from 'date-fns';
 import {ActiveAccount, TokenTransaction, Transaction} from 'actions/interfaces';
 import React, {useState} from 'react';
 import {
@@ -21,14 +22,11 @@ const Transfer = ({transaction, user, token = false}: Props) => {
   const {timestamp, from, to, amount, memo} = transaction;
   const other = from === username ? to : from;
   const direction = from === username ? '-' : '+';
-  const color = direction === '+' ? '#3BB26E' : '#4ca2f0';
-  const date = new Date(
-    token ? (timestamp as number) * 1000 : timestamp,
-  ).toLocaleString([], {
-    year: '2-digit',
-    month: '2-digit',
-    day: '2-digit',
-  });
+  const color = direction === '+' ? '#3BB26E' : '#B9122F';
+  const date = format(
+    token ? (timestamp as number) * 1000 : new Date(`${timestamp}Z`),
+    'yy-MM-dd HH:mm',
+  );
 
   const styles = getDimensionedStyles({
     ...useWindowDimensions(),
@@ -46,7 +44,7 @@ const Transfer = ({transaction, user, token = false}: Props) => {
           <Text style={styles.username}>{`@${other}`}</Text>
         </View>
 
-        <Text style={styles.amount}>{`${direction} ${withCommas(amount)} ${
+        <Text style={styles.amount}>{`${direction}${withCommas(amount)} ${
           amount.split(' ')[1]
         }`}</Text>
       </View>
