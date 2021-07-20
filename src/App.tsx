@@ -69,7 +69,6 @@ const App = ({hasAccounts, auth, rpc, addTabFromLinking}: PropsFromRedux) => {
       }}
       onReady={() => {
         const currentRouteName = navigationRef.current.getCurrentRoute().name;
-        console.debug(currentRouteName);
         logScreenView(currentRouteName);
       }}
       onStateChange={async (state) => {
