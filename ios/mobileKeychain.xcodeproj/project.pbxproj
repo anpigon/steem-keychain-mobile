@@ -19,6 +19,7 @@
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* mobileKeychainTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* mobileKeychainTests.m */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		A65DA05926A839150034B8B5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A65DA05826A839150034B8B5 /* GoogleService-Info.plist */; };
 		B75B7BE167205D667B0A5AC7 /* libPods-mobileKeychain.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CEF67AFB31725C3CF48090AB /* libPods-mobileKeychain.a */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +60,7 @@
 		7176131F14B72FCAD8DCE9DB /* Pods-mobileKeychain-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mobileKeychain-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-mobileKeychain-tvOS/Pods-mobileKeychain-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = mobileKeychain/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9F7BAA5985EB380712EC6600 /* Pods-mobileKeychain-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mobileKeychain-tvOS.release.xcconfig"; path = "Target Support Files/Pods-mobileKeychain-tvOS/Pods-mobileKeychain-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		A65DA05826A839150034B8B5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "mobileKeychain/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B3E7BD6E54E2BC54AE57EE5A /* libPods-mobileKeychain-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mobileKeychain-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEE49A3B5B06129FD6160B7A /* Pods-mobileKeychain-mobileKeychainTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mobileKeychain-mobileKeychainTests.debug.xcconfig"; path = "Target Support Files/Pods-mobileKeychain-mobileKeychainTests/Pods-mobileKeychain-mobileKeychainTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CEF67AFB31725C3CF48090AB /* libPods-mobileKeychain.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mobileKeychain.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -129,6 +131,7 @@
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
+				A65DA05826A839150034B8B5 /* GoogleService-Info.plist */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
@@ -345,6 +348,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				A65DA05926A839150034B8B5 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -788,6 +792,7 @@
 				PRODUCT_NAME = mobileKeychain;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -811,6 +816,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mobilekeychain.steem;
 				PRODUCT_NAME = mobileKeychain;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
