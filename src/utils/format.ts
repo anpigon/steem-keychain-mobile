@@ -2,10 +2,16 @@ import {DynamicGlobalProperties} from 'dsteem';
 import {translate} from 'utils/localize';
 import {SteemErrorMessage} from './keychain.types';
 
-export const withCommas = (nb: string, decimals = 3) =>
-  parseFloat(parseFloat(nb).toFixed(decimals))
-    .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+export const withCommas = (nb: string, decimals = 3) => {
+  try {
+    return parseFloat(parseFloat(nb).toFixed(decimals))
+      .toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  } catch (e) {
+    console.error('withCommas', e);
+  }
+  return nb;
+};
 
 export const toSP = (vests: string, props?: DynamicGlobalProperties) =>
   props
@@ -30,8 +36,14 @@ export const chunkArray = (myArray: any[], chunk_size: number) => {
   return tempArray;
 };
 
-export const signedNumber = (nb: number) =>
-  nb > 0 ? `+ ${nb}` : `${nb.toString().replace('-', '- ')}`;
+export const signedNumber = (nb: number) => {
+  try {
+    return nb > 0 ? `+ ${nb}` : `${nb.toString().replace('-', '- ')}`;
+  } catch (e) {
+    console.error('signedNumber', e);
+  }
+  return nb;
+};
 
 export const formatBalance = (balance: number) =>
   balance > 1000 ? withCommas(balance + '', 0) : withCommas(balance + '');

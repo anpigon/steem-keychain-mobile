@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   activeTab: {
-    borderColor: '#4ca2f0',
+    borderColor: '#4CA2F0',
   },
   nameContainer: {flexDirection: 'row', maxWidth: '80%', alignItems: 'center'},
   screenshot: {

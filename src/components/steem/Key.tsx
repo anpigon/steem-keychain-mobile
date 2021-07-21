@@ -138,7 +138,7 @@ const ViewKey = ({toggle, isPKShown}: ViewKeyProps) => {
     <RoundButton
       onPress={toggle}
       size={30}
-      backgroundColor={isPKShown ? '#4ca2f0' : '#7E8C9A'}
+      backgroundColor={isPKShown ? '#B9122F' : '#7E8C9A'}
       content={<ViewIcon />}
     />
   );

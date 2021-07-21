@@ -10,8 +10,8 @@ export const getCurrencyProperties = (
   let color, value, logo;
   switch (currency) {
     case 'STEEM':
-      color = '#4ca2f0';
-      logo = <Steem fill="#4ca2f0" />;
+      color = '#4CA2F0';
+      logo = <Steem fill="#4CA2F0" />;
       value = account ? account.balance : null;
       break;
     case 'SBD':

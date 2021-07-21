@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {StyleProp, StyleSheet, Text, View, ViewStyle} from 'react-native';
 import {setToggleElement} from 'hooks/toggle';
 
@@ -26,7 +26,7 @@ const ScreenToggle = ({components, menu, toUpperCase, style}: Props) => {
               style={styles.headerText}
               onPress={() => {
                 setActive(i);
-                setToggleElement(menuItem);
+                setToggleElement(String(i));
               }}>
               {toUpperCase ? menuItem.toUpperCase() : menuItem}
             </Text>
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   },
   headerText: {textAlign: 'center', fontSize: 16, paddingBottom: 10},
   headerActiveElt: {
-    borderColor: '#4ca2f0',
+    borderColor: '#4CA2F0',
     borderBottomWidth: 3,
   },
   pane: {
