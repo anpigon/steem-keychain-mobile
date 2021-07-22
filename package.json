@@ -26,7 +26,9 @@
   "scripts": {
     "android": "react-native run-android",
     "android-bundle": "rm -f android/app/build/outputs/bundle/release/app-release.aab && cd android && ./gradlew bundleRelease && cd ..",
+    "android-assemble": "rm -f android/app/build/outputs/apk/release/app-release.apk && cd android && ./gradlew assembleRelease && cd ..",
     "android-release": "react-native run-android --variant=release",
+    "android-release:stage": "react-native run-android --variant=releaseStaging",
     "android-clean": "cd android && ./gradlew clean && cd ..",
     "emulator_input": "adb shell input text",
     "ios": "react-native run-ios",
@@ -43,7 +45,9 @@
     "beta": "npm run beta:android && npm run beta:ios",
     "release:android": "npm run prebuild-android && cd ./android && bundle exec fastlane release version:patch",
     "release:ios": "cd ./ios && bundle exec fastlane release version:patch",
-    "release": "npm run release:android && npm run release:ios"
+    "release": "npm run release:android && npm run release:ios",
+    "codepush:android:production": "appcenter codepush release-react -a anpigon/steem-keychain-mobile-android -d Production",
+    "codepush:android:staging": "appcenter codepush release-react -a anpigon/steem-keychain-mobile-android -d Staging"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.5",
