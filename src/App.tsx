@@ -12,6 +12,8 @@ import SignUpStack from 'navigators/SignUp';
 import UnlockStack from 'navigators/Unlock';
 import React, {useEffect, useRef} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
+import codePush from 'react-native-code-push';
+
 import Modal from 'screens/Modal';
 import {RootState} from 'store';
 import {logScreenView} from 'utils/analytics';
@@ -74,7 +76,7 @@ const App = ({hasAccounts, auth, rpc, addTabFromLinking}: PropsFromRedux) => {
       onStateChange={async (state) => {
         let currentRouteName = navigationRef.current.getCurrentRoute().name;
         const p = navigationRef.current.getCurrentRoute().params;
-        
+
         if (currentRouteName === 'WalletScreen') {
           currentRouteName = getToggleElement() || 'WalletScreen';
         }
@@ -102,4 +104,9 @@ const mapStateToProps = (state: RootState) => {
 const connector = connect(mapStateToProps, {addTabFromLinking});
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-export default connector(App);
+const codePushOptions = {
+  checkFrequency: codePush.CheckFrequency.ON_APP_START,
+  installMode: codePush.InstallMode.IMMEDIATE,
+};
+
+export default connector(codePush(codePushOptions)(App));
