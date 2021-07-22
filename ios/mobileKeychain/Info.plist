@@ -30,6 +30,11 @@
 		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
+			<key>codepush.appcenter.ms</key>
+			<dict>
+					<key>NSExceptionAllowsInsecureHTTPLoads</key>
+					<true/>
+			</dict>
 			<key>localhost</key>
 			<dict>
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
@@ -74,5 +79,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>AppSecret</key>
+	<string>1690e501-a5e6-4f50-9cf0-77fcf87905f5</string>
+	<key>CodePushDeploymentKey</key>
+	<string>PUGtM0oqnkRh6yxAbr77AGkvx5yIFZqHl3XGu</string>
 </dict>
 </plist>
