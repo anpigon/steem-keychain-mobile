@@ -1,7 +1,5 @@
 apply plugin: "com.android.application"
 apply plugin: 'com.google.gms.google-services'
-apply from: "../../node_modules/react-native/react.gradle"
-apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
 
 import com.android.build.OutputFile
 
@@ -91,7 +89,7 @@ project.ext.vectoricons = [
 apply from: '../../node_modules/react-native-unimodules/gradle.groovy'
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle" // <- add this line (2/2)
 apply from: "../../node_modules/react-native/react.gradle"
-
+apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
 /**
  * Set this to true to create two separate APKs instead of one:
  *   - An APK that only works on ARM devices
@@ -127,6 +125,8 @@ def jscFlavor = 'org.webkit:android-jsc-intl:+'
  * and the benefits of using Hermes will therefore be sharply reduced.
  */
 def enableHermes = project.ext.react.get("enableHermes", false)
+
+def ndkDebugSymbolLevel = { debugSymbolLevel 'SYMBOL_TABLE' }  
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -171,18 +171,36 @@ android {
     }
     buildTypes {
         debug {
+            debuggable true
+            minifyEnabled false
             signingConfig signingConfigs.debug
+            versionNameSuffix "-debug"
+            manifestPlaceholders = [appName: "@string/app_name_dev"]
+            resValue "string", "CodePushDeploymentKey", '""'
         }
-        release {
-            // Caution! In production, you need to generate your own keystore file.
-            // see https://facebook.github.io/react-native/docs/signed-apk-android.
+        releaseStaging {
             signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             shrinkResources true
+            debuggable false
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-            ndk {
-                debugSymbolLevel 'SYMBOL_TABLE'
-            }
+            versionNameSuffix "-stage"
+            // applicationIdSuffix ".stage"
+            manifestPlaceholders = [appName: "@string/app_name_stage"]
+            resValue "string", "CodePushDeploymentKey", '"8uh_ISvzv9UQH5hDasp8_gqDFz_7Fx6TfMhI5"'
+            matchingFallbacks = ['release']
+        }
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled enableProguardInReleaseBuilds
+            shrinkResources true
+            renderscriptDebuggable false
+            jniDebuggable false
+            debuggable false
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            ndk ndkDebugSymbolLevel
+            manifestPlaceholders = [appName: "@string/app_name"]
+            resValue "string", "CodePushDeploymentKey", '"HuhoDBRhg94PYjll-TlebOCODXzSU1_CaSiIk"'
         }
     }
 
@@ -214,7 +232,7 @@ dependencies {
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
     implementation platform("com.google.firebase:firebase-bom:28.2.1")
     implementation "com.google.firebase:firebase-analytics"
@@ -235,6 +253,7 @@ dependencies {
         def hermesPath = "../../node_modules/hermes-engine/android/"
         debugImplementation files(hermesPath + "hermes-debug.aar")
         releaseImplementation files(hermesPath + "hermes-release.aar")
+        releaseStagingImplementation files(hermesPath + "hermes-release.aar")
     } else {
         implementation jscFlavor
     }
