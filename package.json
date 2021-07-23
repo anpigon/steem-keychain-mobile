@@ -68,7 +68,7 @@
     "axios": "^0.21.1",
     "crypto-js": "^3.3.0",
     "date-fns": "^2.22.1",
-    "dsteem": "github:anpigon/dsteem",
+    "dsteem": "^0.11.3",
     "fuse.js": "^6.4.6",
     "hive-tx": "3.3.2",
     "i18n-js": "^3.8.0",
