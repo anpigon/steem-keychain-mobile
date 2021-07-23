@@ -26,6 +26,7 @@
   "scripts": {
     "android": "react-native run-android",
     "android-bundle": "rm -f android/app/build/outputs/bundle/release/app-release.aab && cd android && ./gradlew bundleRelease && cd ..",
+    "android-bundle:debug": "rm -f android/app/build/outputs/bundle/debug/app-debug.aab && cd android && ./gradlew bundleDebug && cd ..",
     "android-assemble": "rm -f android/app/build/outputs/apk/release/app-release.apk && cd android && ./gradlew assembleRelease && cd ..",
     "android-release": "react-native run-android --variant=release",
     "android-release:stage": "react-native run-android --variant=releaseStaging",
