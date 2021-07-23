@@ -25,8 +25,7 @@
   },
   "scripts": {
     "android": "react-native run-android",
-    "android-bundle": "rm -f android/app/build/outputs/bundle/release/app-release.aab && cd android && ./gradlew bundleRelease && cd ..",
-    "android-assemble": "rm -f android/app/build/outputs/apk/release/app-release.apk && cd android && ./gradlew assembleRelease && cd ..",
+    "android-assemble": "rm -f android/app/build/outputs/apk/release/app-release.apk && cd android && ./gradlew assembleRelease --stacktrace && cd ..",
     "android-release": "react-native run-android --variant=release",
     "android-release:stage": "react-native run-android --variant=releaseStaging",
     "android-clean": "cd android && ./gradlew clean && cd ..",
@@ -40,6 +39,10 @@
     "debug": "open 'rndebugger://set-debugger-loc?host=localhost&port=8081’",
     "postinstall": "patch-package && rndebugger-open",
     "prebuild-android": "npx jetify && react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle",
+<<<<<<< HEAD
+=======
+    "build-android": "rm -f android/app/build/outputs/bundle/release/app-release.aab && cd android && ./gradlew bundleRelease --stacktrace && cd ..",
+>>>>>>> 0b2f50e (android build aab test)
     "beta:android": "npm run prebuild-android && cd ./android && bundle exec fastlane beta version:patch",
     "beta:ios": "cd ./ios && bundle exec fastlane beta version:patch",
     "beta": "npm run beta:android && npm run beta:ios",
