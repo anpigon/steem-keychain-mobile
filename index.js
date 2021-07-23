@@ -33,8 +33,8 @@ const Root = () => {
 };
 
 const codePushOptions = {
-  checkFrequency: codePush.CheckFrequency.ON_APP_RESUME,
-  installMode: codePush.InstallMode.IMMEDIATE
+  checkFrequency: codePush.CheckFrequency.ON_APP_START,
+  installMode: codePush.InstallMode.ON_NEXT_RESTART,
 };
 
 AppRegistry.registerComponent(appName, () => codePush(codePushOptions)(Root));
