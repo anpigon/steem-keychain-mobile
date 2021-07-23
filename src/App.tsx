@@ -12,7 +12,6 @@ import SignUpStack from 'navigators/SignUp';
 import UnlockStack from 'navigators/Unlock';
 import React, {useEffect, useRef} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
-import codePush from 'react-native-code-push';
 
 import Modal from 'screens/Modal';
 import {RootState} from 'store';
@@ -104,9 +103,4 @@ const mapStateToProps = (state: RootState) => {
 const connector = connect(mapStateToProps, {addTabFromLinking});
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-const codePushOptions = {
-  checkFrequency: codePush.CheckFrequency.ON_APP_START,
-  installMode: codePush.InstallMode.IMMEDIATE,
-};
-
-export default connector(codePush(codePushOptions)(App));
+export default connector(App);
