@@ -68,3 +68,4 @@ ios/*.cer
 ios/*.dSYM.zip
 android/fastlane/README.md
 ios/fastlane/README.md
+android/app/src/main/assets/index.android.bundle
