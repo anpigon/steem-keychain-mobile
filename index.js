@@ -9,6 +9,7 @@ import Loading from 'screens/Loading';
 import {name as appName} from './app.json';
 import {store, persistor} from 'store';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import codePush from 'react-native-code-push';
 
 const Root = () => {
   const [gateLifted, setGateLifted] = useState(false);
@@ -31,4 +32,9 @@ const Root = () => {
   );
 };
 
-AppRegistry.registerComponent(appName, () => Root);
+const codePushOptions = {
+  checkFrequency: codePush.CheckFrequency.ON_APP_START,
+  installMode: codePush.InstallMode.ON_NEXT_RESTART,
+};
+
+AppRegistry.registerComponent(appName, () => codePush(codePushOptions)(Root));

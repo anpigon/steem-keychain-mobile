@@ -12,6 +12,7 @@ import SignUpStack from 'navigators/SignUp';
 import UnlockStack from 'navigators/Unlock';
 import React, {useEffect, useRef} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
+
 import Modal from 'screens/Modal';
 import {RootState} from 'store';
 import {logScreenView} from 'utils/analytics';
@@ -74,7 +75,7 @@ const App = ({hasAccounts, auth, rpc, addTabFromLinking}: PropsFromRedux) => {
       onStateChange={async (state) => {
         let currentRouteName = navigationRef.current.getCurrentRoute().name;
         const p = navigationRef.current.getCurrentRoute().params;
-        
+
         if (currentRouteName === 'WalletScreen') {
           currentRouteName = getToggleElement() || 'WalletScreen';
         }
