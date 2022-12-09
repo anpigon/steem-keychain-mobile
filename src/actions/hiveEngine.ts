@@ -1,4 +1,4 @@
-import hsc, {hiveEngineAPI} from 'api/steemEngine';
+import hsc, {hiveEngineAPI} from 'api/hiveEngine';
 import {AppThunk} from 'src/hooks/redux';
 import {
   ActionPayload,
