@@ -199,19 +199,17 @@ export const sanitizeAmount = (
   currency?: string,
   decimals = 3,
 ) => {
+  const result = typeof amount === 'number' ? amount.toString() : amount;
   try {
-    if (typeof amount !== 'string') {
-      amount = amount.toString();
-    }
     if (currency) {
-      return `${parseFloat(amount.replace(/,/g, '.')).toFixed(
+      return `${parseFloat(result.replace(/,/g, '.')).toFixed(
         decimals,
       )} ${currency}`;
     } else {
-      return `${amount.replace(/,/g, '.')}`;
+      return `${result.replace(/,/g, '.')}`;
     }
   } catch (e) {
     console.error('sanitizeAmount', e);
   }
-  return amount;
+  return result;
 };

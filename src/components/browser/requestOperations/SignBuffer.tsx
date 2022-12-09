@@ -29,11 +29,8 @@ export default ({
 }: Props) => {
   const {request_id, ...data} = request;
   const {domain, method, username, message} = data;
-  const {
-    getAccountKey,
-    getAccountPublicKey,
-    RequestUsername,
-  } = usePotentiallyAnonymousRequest(request, accounts);
+  const {getAccountKey, getAccountPublicKey, RequestUsername, getUsername} =
+    usePotentiallyAnonymousRequest(request, accounts);
 
   return (
     <RequestOperation
@@ -59,9 +56,8 @@ export default ({
       additionalData={{
         publicKey: getAccountPublicKey(),
       }}
-      performOperation={async () => {
-        return await signBuffer(getAccountKey(), message);
-      }}>
+      selectedUsername={getUsername()}
+      performOperation={() => signBuffer(getAccountKey(), message)}>
       <RequestUsername />
       <RequestItem title={translate('request.item.method')} content={method} />
       <RequestItem
@@ -72,20 +68,17 @@ export default ({
   );
 };
 
-const performSignBufferOperation = async (key: string, message: string) => {
-  return await signBuffer(key, message);
-};
-
 export const signBufferWithoutConfirmation = (
   accounts: Account[],
   request: RequestSignBuffer & RequestId,
   sendResponse: (msg: RequestSuccess) => void,
   sendError: (msg: RequestError) => void,
+  has?: boolean,
 ) => {
   const {username, message, method} = request;
   processOperationWithoutConfirmation(
     () =>
-      performSignBufferOperation(
+      signBuffer(
         accounts.find((e) => e.name === username).keys[
           method.toLowerCase() as KeyTypes
         ],

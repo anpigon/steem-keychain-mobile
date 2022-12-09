@@ -6,6 +6,7 @@ import {
   RequestId,
   RequestSuccess,
   RequestVote,
+  UsingHAS,
 } from 'utils/keychain.types';
 import {translate} from 'utils/localize';
 import RequestItem from './components/RequestItem';
@@ -15,7 +16,7 @@ import RequestOperation, {
 import {RequestComponentCommonProps} from './requestOperations.types';
 
 type Props = {
-  request: RequestVote & RequestId;
+  request: RequestVote & RequestId & UsingHAS;
 } & RequestComponentCommonProps;
 
 export default ({
@@ -25,17 +26,18 @@ export default ({
   sendResponse,
   sendError,
 }: Props) => {
-  const {request_id, ...data} = request;
+  const {request_id, has,...data} = request;
   const {username, author, permlink, weight} = data;
 
   return (
     <RequestOperation
+      has={has}
       sendResponse={sendResponse}
       sendError={sendError}
       successMessage={translate('request.success.vote', {
         author,
         permlink,
-        weight,
+        weight: +weight / 100,
       })}
       beautifyError
       method={KeyTypes.posting}
@@ -84,6 +86,7 @@ export const voteWithoutConfirmation = (
   request: RequestVote & RequestId,
   sendResponse: (msg: RequestSuccess) => void,
   sendError: (msg: RequestError) => void,
+  has?: boolean,
 ) => {
   processOperationWithoutConfirmation(
     async () => await performVoteOperation(accounts, request),
