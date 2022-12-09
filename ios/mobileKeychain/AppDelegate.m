@@ -1,4 +1,11 @@
 #import "AppDelegate.h"
+#import "Orientation.h"
+#import <React/RCTLinkingManager.h>
+#import "RNBootSplash.h" 
+
+#import <React/RCTBridge.h>
+#import <React/RCTBundleURLProvider.h>
+#import <React/RCTRootView.h>
 #import <Firebase.h>
 #import <CodePush/CodePush.h>
 #import <AppCenterReactNative.h>
@@ -7,10 +14,6 @@
 #import <AppCenterReactNative.h>
 #import <AppCenterReactNativeAnalytics.h>
 #import <AppCenterReactNativeCrashes.h>
-
-#import <React/RCTBridge.h>
-#import <React/RCTBundleURLProvider.h>
-#import <React/RCTRootView.h>
 
 #ifdef FB_SONARKIT_ENABLED
 #import <FlipperKit/FlipperClient.h>
@@ -33,8 +36,13 @@ static void InitializeFlipper(UIApplication *application) {
 
 @implementation AppDelegate
 
+ - (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+  return [Orientation getOrientation];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [FIRApp configure];
 #ifdef FB_SONARKIT_ENABLED
   InitializeFlipper(application);
 #endif
@@ -59,14 +67,22 @@ static void InitializeFlipper(UIApplication *application) {
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+    [RNBootSplash initWithStoryboard:@"BootSplash" rootView:rootView]; // <- initialization using the storyboard file name
+
   return YES;
 }
-
+- (BOOL)application:(UIApplication *)application
+openURL:(NSURL *)url
+options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
+{
+return [RCTLinkingManager application:application openURL:url options:options];
+}
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
 {
 #if DEBUG
-  return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
+  return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index"];
 #else
+  // return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
   return [CodePush bundleURL];
 #endif
 }
