@@ -1,11 +1,11 @@
-import {History, TabFields} from 'actions/interfaces';
+import {Page, TabFields} from 'actions/interfaces';
 import Fuse from 'fuse.js';
 import React, {useEffect, useState} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 type Props = {
   onSubmit: (string: string) => void;
-  history: History[];
+  history: Page[];
   input: string;
 };
 export default ({input, onSubmit, history}: Props) => {

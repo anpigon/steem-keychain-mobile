@@ -1,4 +1,4 @@
-import {loadAccount} from 'actions/steem';
+import {loadAccount} from 'actions/hive';
 import {setRpc} from 'actions/index';
 import {removePreference} from 'actions/preferences';
 import CustomPicker from 'components/form/CustomPicker';

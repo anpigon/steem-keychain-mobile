@@ -1,10 +1,11 @@
 import {decodeMemo} from 'components/bridge';
 import {AppThunk} from 'src/hooks/redux';
-import hive, {getClient} from 'utils/hive';
+import dhive, {getClient} from 'utils/hive';
 import {
   getConversionRequests,
   getDelegatees,
   getDelegators,
+  getSavingsRequests,
 } from 'utils/hiveUtils';
 import {translate} from 'utils/localize';
 import {getPrices} from 'utils/price';
@@ -23,7 +24,8 @@ import {
   FETCH_DELEGATEES,
   FETCH_DELEGATORS,
   FETCH_PHISHING_ACCOUNTS,
-  GET_BITTREX_PRICE,
+  FETCH_SAVINGS_REQUESTS,
+  GET_CURRENCY_PRICES,
   GLOBAL_PROPS,
   INIT_TRANSACTIONS,
 } from './types';
@@ -76,15 +78,15 @@ export const loadProperties = (): AppThunk => async (dispatch) => {
   dispatch(action);
 };
 
-export const loadBittrex = (): AppThunk => async (dispatch) => {
+export const loadPrices = (): AppThunk => async (dispatch) => {
   try {
     const prices = await getPrices();
     dispatch({
-      type: GET_BITTREX_PRICE,
+      type: GET_CURRENCY_PRICES,
       payload: prices,
     });
   } catch (e) {
-    console.log('bittrex error', e);
+    console.log('price error', e);
   }
 };
 
@@ -119,6 +121,16 @@ const getAccountTransactions = async (
   memoKey?: string,
 ): Promise<Transaction[]> => {
   try {
+    // TODO: 확인할것
+    // const op = dhive.utils.operationOrders;
+    // const operationsBitmask = dhive.utils.makeBitMaskFilter([op.transfer]);
+    // const transactions = await getClient().database.getAccountHistory(
+    //   accountName,
+    //   start || -1,
+    //   start ? Math.min(10, start) : 1000,
+    //   //@ts-ignore
+    //   operationsBitmask,
+    // );
     const transactions = await getClient().database.call(
       'get_account_history',
       [accountName, start || -1, start ? Math.min(10, start) : 1000],
@@ -163,10 +175,9 @@ const getAccountTransactions = async (
     }
     return trs;
   } catch (e) {
-    //console.log(e);
     return getAccountTransactions(
       accountName,
-      e.jse_info.stack[0].data.sequence - 1,
+      (e as any).jse_info.stack[0].data.sequence - 1,
       memoKey,
     );
   }
@@ -211,9 +222,18 @@ export const fetchConversionRequests =
   (name: string): AppThunk =>
   async (dispatch) => {
     const conversions = await getConversionRequests(name);
-    console.debug('conversions', conversions);
     dispatch({
       type: FETCH_CONVERSION_REQUESTS,
       payload: conversions,
+    });
+  };
+
+export const fetchSavingsRequests =
+  (name: string): AppThunk =>
+  async (dispatch) => {
+    const savings = await getSavingsRequests(name);
+    dispatch({
+      type: FETCH_SAVINGS_REQUESTS,
+      payload: savings,
     });
   };

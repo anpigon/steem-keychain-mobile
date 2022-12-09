@@ -1,7 +1,7 @@
 import {
   fetchPhishingAccounts,
   loadAccount,
-  loadBittrex,
+  loadPrices,
   loadProperties,
 } from 'actions/index';
 import UserPicker from 'components/form/UserPicker';
@@ -119,7 +119,7 @@ const connector = connect(
   {
     loadAccount,
     loadProperties,
-    loadBittrex,
+    loadBittrex: loadPrices,
     fetchPhishingAccounts,
   },
 );

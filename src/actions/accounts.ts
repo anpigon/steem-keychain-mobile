@@ -1,4 +1,4 @@
-import {loadAccount} from 'actions/steem';
+import {loadAccount} from 'actions/hive';
 import Toast from 'react-native-simple-toast';
 import {AppThunk} from 'src/hooks/redux';
 import {encryptJson} from 'utils/encrypt';
@@ -21,34 +21,31 @@ import {
   UPDATE_ACCOUNTS,
 } from './types';
 
-export const addAccount = (
-  name: string,
-  keys: AccountKeys,
-  wallet: boolean,
-  qr: boolean,
-): AppThunk => async (dispatch, getState) => {
-  const mk = getState().auth.mk;
-  const previousAccounts = getState().accounts;
-  if (previousAccounts.find((e) => e.name === name)) {
-    Toast.show(translate('toast.account_already'));
+export const addAccount =
+  (name: string, keys: AccountKeys, wallet: boolean, qr: boolean): AppThunk =>
+  async (dispatch, getState) => {
+    const mk = getState().auth.mk;
+    const previousAccounts = getState().accounts;
+    if (previousAccounts.find((e) => e.name === name)) {
+      Toast.show(translate('toast.account_already'));
+      if (wallet) {
+        qr ? resetStackAndNavigate('WALLET') : navigate('WALLET');
+      }
+      return;
+    }
+    const action: ActionPayload<AccountsPayload> = {
+      type: ADD_ACCOUNT,
+      payload: {account: {name, keys}},
+    };
+    dispatch(action);
+    const accounts = [...previousAccounts, {name, keys}];
+    const encrypted = encryptJson({list: accounts}, mk);
+    await saveOnKeychain('accounts', encrypted);
     if (wallet) {
+      dispatch(loadAccount(name));
       qr ? resetStackAndNavigate('WALLET') : navigate('WALLET');
     }
-    return;
-  }
-  const action: ActionPayload<AccountsPayload> = {
-    type: ADD_ACCOUNT,
-    payload: {account: {name, keys}},
   };
-  dispatch(action);
-  const accounts = [...previousAccounts, {name, keys}];
-  const encrypted = encryptJson({list: accounts}, mk);
-  await saveOnKeychain('accounts', encrypted);
-  if (wallet) {
-    dispatch(loadAccount(name));
-    qr ? resetStackAndNavigate('WALLET') : navigate('WALLET');
-  }
-};
 
 export const forgetAccounts = (): AppThunk => (dispatch) => {
   clearKeychain('accounts');
@@ -57,80 +54,76 @@ export const forgetAccounts = (): AppThunk => (dispatch) => {
   });
 };
 
-export const forgetAccount = (username: string): AppThunk => async (
-  dispatch,
-  getState,
-) => {
-  const mk = getState().auth.mk;
-  const previousAccounts = getState().accounts;
-  const accounts = previousAccounts.filter((e) => e.name !== username);
-  if (accounts.length) {
-    const encrypted = encryptJson({list: accounts}, mk);
-    await saveOnKeychain('accounts', encrypted);
-    const action: ActionPayload<AccountsPayload> = {
-      type: FORGET_ACCOUNT,
-      payload: {name: username},
-    };
-    dispatch(action);
-    navigate('WALLET');
-  } else {
-    dispatch(forgetAccounts());
-  }
-};
+export const forgetAccount =
+  (username: string): AppThunk =>
+  async (dispatch, getState) => {
+    const mk = getState().auth.mk;
+    const previousAccounts = getState().accounts;
+    const accounts = previousAccounts.filter((e) => e.name !== username);
+    if (accounts.length) {
+      const encrypted = encryptJson({list: accounts}, mk);
+      await saveOnKeychain('accounts', encrypted);
+      const action: ActionPayload<AccountsPayload> = {
+        type: FORGET_ACCOUNT,
+        payload: {name: username},
+      };
+      dispatch(action);
+      navigate('WALLET');
+    } else {
+      dispatch(forgetAccounts());
+    }
+  };
 
-export const forgetKey = (username: string, key: KeyTypes): AppThunk => async (
-  dispatch,
-) => {
-  dispatch(
-    updateAccounts((account: Account) => {
-      if (account.name === username) {
-        const keys = {...account.keys};
-        delete keys[key];
-        const pubKey: PubKeyTypes = PubKeyTypes[key];
-        delete keys[pubKey];
-        return {...account, keys};
-      } else {
-        return account;
-      }
-    }),
-  );
-};
-
-export const addKey = (
-  username: string,
-  type: KeyTypes,
-  key: string,
-): AppThunk => async (dispatch) => {
-  const keys = await validateKeys(username, key);
-  if (!keys) {
-    Toast.show(translate('toast.keys.not_a_key'));
-  } else if (!keys[type]) {
-    Toast.show(translate('toast.keys.not_wanted_key', {type}));
-  } else {
+export const forgetKey =
+  (username: string, key: KeyTypes): AppThunk =>
+  async (dispatch) => {
     dispatch(
       updateAccounts((account: Account) => {
         if (account.name === username) {
-          return {...account, keys: {...account.keys, ...keys}};
+          const keys = {...account.keys};
+          delete keys[key];
+          const pubKey: PubKeyTypes = PubKeyTypes[key];
+          delete keys[pubKey];
+          return {...account, keys};
         } else {
           return account;
         }
       }),
     );
-  }
-};
-
-const updateAccounts = (mapper: (arg0: Account) => Account): AppThunk => async (
-  dispatch,
-  getState,
-) => {
-  const mk = getState().auth.mk;
-  const previousAccounts = getState().accounts;
-  const accounts = previousAccounts.map(mapper);
-  const encrypted = encryptJson({list: accounts}, mk);
-  await saveOnKeychain('accounts', encrypted);
-  const actions: ActionPayload<AccountsPayload> = {
-    type: UPDATE_ACCOUNTS,
-    payload: {accounts},
   };
-  dispatch(actions);
-};
+
+export const addKey =
+  (username: string, type: KeyTypes, key: string): AppThunk =>
+  async (dispatch) => {
+    const keys = await validateKeys(username, key);
+    if (!keys) {
+      Toast.show(translate('toast.keys.not_a_key'));
+    } else if (!keys[type]) {
+      Toast.show(translate('toast.keys.not_wanted_key', {type}));
+    } else {
+      dispatch(
+        updateAccounts((account: Account) => {
+          if (account.name === username) {
+            return {...account, keys: {...account.keys, ...keys}};
+          } else {
+            return account;
+          }
+        }),
+      );
+    }
+  };
+
+const updateAccounts =
+  (mapper: (arg0: Account) => Account): AppThunk =>
+  async (dispatch, getState) => {
+    const mk = getState().auth.mk;
+    const previousAccounts = getState().accounts;
+    const accounts = previousAccounts.map(mapper);
+    const encrypted = encryptJson({list: accounts}, mk);
+    await saveOnKeychain('accounts', encrypted);
+    const actions: ActionPayload<AccountsPayload> = {
+      type: UPDATE_ACCOUNTS,
+      payload: {accounts},
+    };
+    dispatch(actions);
+  };

@@ -1,10 +1,10 @@
 import {
   DynamicGlobalProperties,
-  Price,
   ExtendedAccount,
+  Price,
   VestingDelegation,
-} from 'dsteem';
-import {Manabar} from 'dsteem/lib/steem/rc';
+} from '@upvu/dsteem';
+import {Manabar} from '@upvu/dsteem/lib/chain/rc';
 
 export interface ActionPayload<T> {
   readonly type: string;
@@ -22,18 +22,23 @@ export interface Auth {
   mk: NullableString;
 }
 
+export interface Rpc {
+  uri: string;
+  testnet?: boolean;
+  chainId?: string;
+}
 export interface Settings {
-  rpc: string;
+  rpc: string | Rpc;
 }
 
 export interface SettingsPayload {
-  rpc?: string;
+  rpc?: string | Rpc;
 }
 
-export interface History {
+export interface Page {
   url: string;
-  name: string;
-  icon: string;
+  name?: string;
+  icon?: string;
 }
 
 export interface Tab {
@@ -54,17 +59,17 @@ export interface TabFields {
 
 export interface BrowserPayload {
   url?: string;
-  history?: History;
+  history?: Page;
   shouldFocus?: boolean;
   id?: number | null;
   data?: TabFields;
   showManagement?: boolean;
-  whitelist?: [];
+  favorite?: Page;
 }
 
 export interface Browser {
-  history: History[];
-  whitelist: [];
+  history: Page[];
+  favorites: Page[];
   tabs: Tab[];
   activeTab: number | null;
   shouldFocus: boolean;
@@ -203,7 +208,7 @@ export interface Currency extends Btc {
 }
 
 export interface CurrencyPrices {
-  btc: Btc;
+  bitcoin: Currency;
   steem: Currency;
   steem_dollar: Currency;
 }
@@ -261,4 +266,14 @@ export interface GlobalProperties {
   globals?: DynamicGlobalProperties;
   price?: Price;
   rewardFund?: RewardFund;
+}
+
+export interface Witness {
+  name: string;
+  rank?: string;
+  active_rank?: string;
+  votes?: number;
+  votes_count?: number;
+  signing_key?: string;
+  url?: string;
 }

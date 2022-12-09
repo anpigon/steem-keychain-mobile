@@ -2,7 +2,7 @@ import {
   Account,
   ActionPayload,
   BrowserPayload,
-  History,
+  Page,
   KeyTypes,
   Tab,
   TabFields,
@@ -55,8 +55,8 @@ type Props = {
   isManagingTab: boolean;
   accounts: Account[];
   updateTab: (id: number, data: TabFields) => ActionPayload<BrowserPayload>;
-  addToHistory: (history: History) => ActionPayload<BrowserPayload>;
-  history: History[];
+  addToHistory: (history: Page) => ActionPayload<BrowserPayload>;
+  history: Page[];
   clearHistory: () => ActionPayload<BrowserPayload>;
   navigation: BrowserNavigation;
   preferences: UserPreference[];

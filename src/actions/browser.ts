@@ -1,6 +1,6 @@
 import {AppThunk} from 'src/hooks/redux';
 import {navigate} from 'utils/navigation';
-import {ActionPayload, BrowserPayload, History, TabFields} from './interfaces';
+import {ActionPayload, BrowserPayload, Page, TabFields} from './interfaces';
 import {
   ADD_BROWSER_TAB,
   ADD_TO_BROWSER_FAVORITES,
@@ -15,7 +15,7 @@ import {
   UPDATE_MANAGEMENT,
 } from './types';
 
-export const addToHistory = (history: History) => {
+export const addToHistory = (history: Page) => {
   const action: ActionPayload<BrowserPayload> = {
     type: ADD_TO_BROWSER_HISTORY,
     payload: {history},
@@ -30,10 +30,10 @@ export const clearHistory = () => {
   return action;
 };
 
-export const addToFavorites = (url: string) => {
+export const addToFavorites = (page: Page) => {
   const action: ActionPayload<BrowserPayload> = {
     type: ADD_TO_BROWSER_FAVORITES,
-    payload: {url},
+    payload: {favorite: page},
   };
   return action;
 };
@@ -46,28 +46,27 @@ export const removeFromFavorites = (url: string) => {
   return action;
 };
 
-export const addTabFromLinking = (url: string): AppThunk => (
-  dispatch,
-  getState,
-) => {
-  const existingTab = getState().browser.tabs.find((t) => t.url === url);
-  if (existingTab) {
-    dispatch(changeTab(existingTab.id));
-  } else {
-    const id = Date.now();
-    dispatch({
-      type: ADD_BROWSER_TAB,
-      payload: {url, id},
-    });
-    dispatch(changeTab(id));
-  }
-  dispatch(showManagementScreen(false));
-  if (getState().auth.mk) {
-    navigate('BrowserScreen');
-  } else {
-    dispatch(setBrowserFocus(true));
-  }
-};
+export const addTabFromLinking =
+  (url: string): AppThunk =>
+  (dispatch, getState) => {
+    const existingTab = getState().browser.tabs.find((t) => t.url === url);
+    if (existingTab) {
+      dispatch(changeTab(existingTab.id));
+    } else {
+      const id = Date.now();
+      dispatch({
+        type: ADD_BROWSER_TAB,
+        payload: {url, id},
+      });
+      dispatch(changeTab(id));
+    }
+    dispatch(showManagementScreen(false));
+    if (getState().auth.mk) {
+      navigate('BrowserScreen');
+    } else {
+      dispatch(setBrowserFocus(true));
+    }
+  };
 
 export const setBrowserFocus = (shouldFocus: boolean) => {
   const action: ActionPayload<BrowserPayload> = {

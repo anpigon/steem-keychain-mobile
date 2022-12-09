@@ -1,4 +1,4 @@
-import ssc, {hiveEngineAPI} from 'api/steemEngine';
+import hsc, {hiveEngineAPI} from 'api/steemEngine';
 import {AppThunk} from 'src/hooks/redux';
 import {
   ActionPayload,
@@ -8,6 +8,7 @@ import {
   TokenTransaction,
 } from './interfaces';
 import {
+  CLEAR_TOKEN_HISTORY,
   CLEAR_USER_TOKENS,
   LOAD_TOKENS,
   LOAD_TOKENS_MARKET,
@@ -18,7 +19,7 @@ import {
 export const loadTokens = (): AppThunk => async (dispatch) => {
   const action: ActionPayload<Token[]> = {
     type: LOAD_TOKENS,
-    payload: await ssc.find('tokens', 'tokens', {}, 1000, 0, []),
+    payload: await hsc.find('tokens', 'tokens', {}, 1000, 0, []),
   };
   dispatch(action);
 };
@@ -26,7 +27,7 @@ export const loadTokens = (): AppThunk => async (dispatch) => {
 export const loadTokensMarket = (): AppThunk => async (dispatch) => {
   const action: ActionPayload<TokenMarket[]> = {
     type: LOAD_TOKENS_MARKET,
-    payload: await ssc.find('market', 'metrics', {}, 1000, 0, []),
+    payload: await hsc.find('market', 'metrics', {}, 1000, 0, []),
   };
   dispatch(action);
 };
@@ -38,7 +39,7 @@ export const loadUserTokens =
       dispatch({
         type: CLEAR_USER_TOKENS,
       });
-      let tokensBalance: TokenBalance[] = await ssc.find('tokens', 'balances', {
+      let tokensBalance: TokenBalance[] = await hsc.find('tokens', 'balances', {
         account,
       });
       tokensBalance = tokensBalance
@@ -72,3 +73,28 @@ export const loadTokenHistory =
     };
     dispatch(action);
   };
+
+// TODO: 확인할 것
+/* export const loadTokenHistory =
+  (account: string, currency: string): AppThunk =>
+  async (dispatch) => {
+    dispatch({type: CLEAR_TOKEN_HISTORY});
+    //let tokenHistory: TokenTransaction[] = (
+    let tokenHistory: any[] = (
+      await hiveEngineAPI.get('accountHistory', {
+        params: {account, symbol: currency, type: 'user'},
+      })
+    ).data;
+
+    tokenHistory = tokenHistory
+      .filter((e) => e.operation === 'tokens_transfer')
+      .map((e) => {
+        e.amount = `${e.quantity} ${e.symbol}`;
+        return e;
+      });
+    const action: ActionPayload<TokenTransaction[]> = {
+      type: LOAD_TOKEN_HISTORY,
+      payload: tokenHistory,
+    };
+    dispatch(action);
+  }; */
