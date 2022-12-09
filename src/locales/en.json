@@ -10,6 +10,7 @@
   "addAccountByKey": {
     "text": "Add your existing STEEM account to Keychain"
   },
+  "addAccountByQR": {"wrongQR": "Please scan a Hive Keychain account QR Code"},
   "keys": {
     "posting": "Posting",
     "active": "Active",
@@ -33,9 +34,14 @@
     "encrypted": "encrypted",
     "vote": "Vote",
     "unvote": "Unvote",
-    "none": "None"
+    "none": "None",
+    "error": "Error: Something went wrong : {{msg}}",
+    "error_title": "Error",
+    "savings": "Savings",
+    "ok": "OK"
   },
   "wallet": {
+    "menu": {"hive": "Steem", "history": "History", "tokens": "Tokens"},
     "rc": "Resources:",
     "vp": "Voting:",
     "balance": "balance",
@@ -43,12 +49,24 @@
     "no_transaction": "No recent transaction.",
     "add_memo": "Please add your memo key to decrypt this message.",
     "add_active": "Please add your active key to perform this operation.",
+    "claim": {
+      "success": "Successfully claimed {{rewards}}!",
+      "error_posting": "Please add your posting key to be able to claim rewards!"
+    },
     "tab_menus": {
       "primary": "Primary",
       "tokens": "Tokens"
     },
     "operations": {
       "history": "History",
+      "savings": {
+        "deposit": "Deposit Funds",
+        "withdraw": "Withdraw Funds",
+        "disclaimer": "Note: Withdrawing funds from savings will take 3.5 days.",
+        "withdraw_button": "Withdraw",
+        "deposit_button": "Deposit",
+        "prompt": "Select a currency"
+      },
       "transfer": {
         "title": "Transfer funds",
         "memo": "MEMO (optional)",
@@ -82,7 +100,59 @@
       "convert": {
         "title": "Convert to {{to}}",
         "button": "Convert",
-        "conversions": "conversions"
+        "conversions": "conversions",
+        "disclaimer_hive": "You deposit collateral (HIVE), then you are given HBD up front worth half of the collateral amount (minus a 5% fee). Your official final payment is in 3.5 days. At that point remaining collateral (HIVE) is returned.",
+        "disclaimer_hbd": "Your HBD will take 3.5 days to get converted to approximately USD worth of HIVE tokens, based on its 3.5 days median price."
+      }
+    },
+    "has": {
+      "connect": {
+        "title": "Connect to Hive Auth",
+        "text": "A connection has been requested via Hive Auth for account @{{account}}.",
+        "confirm": "Connect",
+        "no_username": "Please add account @{{account}} to your wallet to be able to use it on your favorite dApps!"
+      },
+      "auth": {
+        "title": "Authenticate",
+        "button": "Approve",
+        "text": "Authenticate using account @{{account}} on {{name}}?",
+        "success": "Successfully authenticated @{{account}} on {{name}}! You can now return to your dApp."
+      },
+      "challenge": {
+        "ask": "{{name}} wants to verify that you have the {{key}} authority for account @{{account}}",
+        "success": "Successfully verified @{{account}} {{key}} authority on {{name}}! You can now return to your dApp.",
+        "no_key": "You don't have the {{key}} key for account @{{account}}",
+        "button": "Verify key"
+      },
+      "uuid": "UUID: {{uuid}}",
+      "info": {
+        "h1": "What's Hive Auth?",
+        "t1": "Hive Auth provides a way for any applications, (either web, desktop or mobile) to easily authenticate users, and additionally sign and broadcast transactions to the Hive blockchain, without asking them to provide any password or private key.",
+        "h2": "Get started",
+        "t2": "To connect to a desktop dApp, use the QR Code scanner. On mobile, simply chose 'Sign in with Hive' on your favorite dApp.",
+        "h3": "Hive Auth Indicator",
+        "indicator": {
+          "grey": {"title": "No connection"},
+          "red": {
+            "title": "Disconnected",
+            "press": "Try reconnecting",
+            "longPress": "Delete all sessions and disconnect"
+          },
+          "green": {
+            "title": "Connected",
+            "longPress": "Delete all sessions and disconnect"
+          },
+          "press": "Press",
+          "longPress": "Long press"
+        }
+      },
+      "session": {
+        "time": "How long do you wish to keep this session valid?",
+        "prompt": "Session Validity"
+      },
+      "toast": {
+        "register": "Registering accounts to Hive Auth...",
+        "broadcast": "Broadcasting Hive Auth transaction..."
       }
     }
   },
@@ -139,6 +209,13 @@
       "text6": "and",
       "text7": "Show QR Code"
     },
+    "infoWalletQR": {
+      "title": "QR Code Scanner",
+      "text1": "Use this scanner to read Hive related QR Codes.",
+      "text2": "As of now, we only support starting Hive Authentication Service sessions and opening URLs in the in-App browser, but further functionalities will be added along the way.",
+      "text3": "If you wish to scan a QR Code to import an account, please do so in",
+      "text4": "Settings > Add Account"
+    },
     "forgotPIN": {
       "title": "Forgot PIN?",
       "text": "If you forgot your PIN, you can reset Keychain and clear your data but will have to enter all your keys again.",
@@ -177,7 +254,9 @@
       "not_a_key": "This is not one of your private keys!",
       "copied": "The key was copied to the clipboard!"
     },
-    "error_add_account": "Something went wrong! Please verify your keys and your connection."
+    "error_add_account": "Something went wrong! Please verify your keys and your connection.",
+    "savings_deposit_success": "You succesfully deposited {{amount}} to your savings.",
+    "savings_withdraw_success": "You succesfully started a {{amount}} withdrawal from your savings. It will be credited to your account in 3.5 days."
   },
   "navigation": {
     "log_out": "LOG OUT",
@@ -186,7 +265,8 @@
     "settings": "SETTINGS",
     "about": "ABOUT",
     "wallet": "WALLET",
-    "browser": "BROWSER"
+    "browser": "BROWSER",
+    "governance": "GOVERNANCE"
   },
   "request": {
     "title": {
@@ -214,7 +294,9 @@
       "updateProposalVote": "Vote for Proposal",
       "addKeyAuthority": "Add Key",
       "removeKeyAuthority": "Remove Key",
-      "addAccount": "Add Account"
+      "addAccount": "Add Account",
+      "convert": "Convert",
+      "recurrentTransfer": "Recurrent Transfers"
     },
     "message": {
       "decode": "The website {{domain}} would like to verify that you have access to the private {{method}} key for the account: @{{username}}",
@@ -245,9 +327,25 @@
       "delegatee": "Delegatee",
       "transaction": "Transaction",
       "ids": "Proposal IDs",
-      "keys": "Keys"
+      "keys": "Keys",
+      "role": "Role",
+      "authorized_username": "Authorized Account",
+      "authorized_key": "Authorized Key",
+      "recurrence": "Recurrence",
+      "creator": "Creator",
+      "new_account": "New account",
+      "owner": "Owner Authority",
+      "active": "Active Authority",
+      "posting": "Posting Authority",
+      "memo_key": "Memo Key",
+      "receiver": "Receiver",
+      "duration": "Duration",
+      "daily_pay": "Daily Pay"
     },
     "error": {
+      "no_account": "The current website is trying to send a request to Hive Keychain for account @{{account}} which has not been added to the wallet.",
+      "no_auth": "The current website is trying to send a request to Hive Keychain for account @{{account}} using the {{auth}} key, which has not been added to the wallet.",
+      "no_active_auth": "The current website is trying to send a request to Hive Keychain using active authority, but no account has been adeed with active key.",
       "decode": "Could not verify key.",
       "encode": "Could not encode the message.",
       "signBuffer": "Could not sign.",
@@ -283,13 +381,41 @@
       "stop_power_down": "Stopped Power Down on @{{username}}.",
       "delegate": "Succesfully delegated {{amount}} {{unit}} from @{{username}} to @{{delegatee}}.",
       "undelegate": "Succesfully stopped the delegation to @{{delegatee}} from account @{{username}}.",
-      "sendToken": "The transaction has been broadcasted successfully. Please check your balance to confirm that it was processed succesfully."
+      "sendToken": "The transaction has been broadcasted successfully. Please check your balance to confirm that it was processed succesfully.",
+      "addAccountAuthority": "Successfully gave {{role}} authority to @{{authorizedUsername}} with a weight of {{weight}}.",
+      "removeAccountAuthority": "Successfully removed {{role}} authority from @{{authorizedUsername}}.",
+      "addKeyAuthority": "Successfully added a {{role}} key with a weight of {{weight}}.",
+      "removeKeyAuthority": "Successfully removed a {{role}} key.",
+      "convert": "Succesfully started the conversion of {{amount}} {{from}} to {{to}}.",
+      "recurrentTransfer": "Successfully started a recurrent transfer. {{amount}} {{currency}} will be sent to {{to}} {{executions}} times, every {{recurrence}} hours.",
+      "createClaimedAccount": "Succesfully claimed account @{{new_account}}",
+      "createProposal": "Succesfully created a new proposal!",
+      "removeProposal": "Succesfully removed proposal(s) {{ids}}."
     },
     "confirm": "Confirm",
-    "keep": "Do not prompt again to send {{type}} transactions from the account @{{username}} on {{domain}}."
+    "keep": "Do not prompt again to send {{type}} transactions from the account @{{username}} on {{domain}}.",
+    "keep_has": "Do not prompt again to send {{type}} transactions from the account @{{username}} on {{domain}} until this session expires."
   },
   "browser": {
+    "search": "Search or enter url",
     "history": {"clear": "Clear History"},
+    "home": {
+      "title": "HOME",
+      "menu": {
+        "explore": "EXPLORE",
+        "history": " HISTORY",
+        "favorites": "FAVORITES"
+      },
+      "categories": {
+        "finance": "Finance",
+        "social": "Social",
+        "nft": "NFT",
+        "gaming": "Gaming",
+        "video": "Video",
+        "tool": "Tool"
+      },
+      "nothing": "Nothing to show."
+    },
     "please_enter_the_url": "Please enter the url"
   },
   "drawerFooter": {
@@ -299,5 +425,65 @@
     "error30": "You already vote for 30 witnesses. You will need to unvote one to vote for a new one.",
     "errorActive": "You need an active key to vote for witnesses",
     "error": "Error: Something went wrong :"
+  },
+  "governance": {
+    "menu": {
+      "witnesses": "Witnesses",
+      "proxy": "Proxy",
+      "proposals": "Proposals"
+    },
+    "witness": {
+      "error": {
+        "retrieving_witness_ranking": "An error occured while retrieving the witness ranking. Please try again later.",
+        "unvote_wit": "Error while unvoting @{{name}} as a witness.",
+        "wit": "Error while voting for @{{name}} as a witness.",
+        "active": "To vote for a witness, you must first add your account active key"
+      },
+      "success": {
+        "unvote_wit": "Succesfully unvoted @{{name}} as a witness.",
+        "wit": "Succesfully voted for @{{name}} as a witness."
+      },
+      "remaining_votes": "Votes remaining: {{remainingVotes}}",
+      "has_proxy": "You are currently using @{{proxy}} as a proxy. Their votes are displayed.",
+      "link_to_arcange": "For more information, click here to access the witness database",
+      "using_proxy": "Clear the proxy to vote for a witness",
+      "search_placeholder": "Search",
+      "show_voted": "Only voted for",
+      "hide_inactive": "Hide inactive"
+    },
+    "proxy": {
+      "has_proxy": "The proxy account makes governance decisions on your behalf. If you wish to vote for witnesses and proposals by yourself, you must first remove the proxy.",
+      "proxy_def": "Adding an account as a proxy means that the proxy account can use the weight of your HP in governance matters (voting for witnesses and proposals). This will not affect your HP regarding curation, and you can remove the proxy at any given moment.",
+      "using_proxy": "You are currently using @{{name}} as a proxy.",
+      "placeholder": "Proxy",
+      "buttons": {"set": "Set Proxy", "clear": "Remove Proxy"},
+      "error": {
+        "active": "To change your proxy, you must first add your account active key",
+        "set_proxy": "Error while setting user as proxy",
+        "clear_proxy": "Error while clearing proxy"
+      },
+      "success": {
+        "set_proxy": "Succesfully chose @{{name}} for proxy.",
+        "clear_proxy": "Succesfully removed the proxy"
+      }
+    },
+    "proposal": {
+      "by": "By @{{name}}",
+      "remaining": "{{days}} day(s) remaining",
+      "day": "day",
+      "totally_funded": "Funded",
+      "partially_funded": "Partially funded",
+      "not_funded": "Not funded",
+      "error": {
+        "using_proxy": "Clear the proxy to vote for a proposal",
+        "active": "To vote for a proposal, you must first add your account active key",
+        "vote": "There was an error while voting for a proposal!",
+        "unvote": "There was an error while removing a proposal vote!"
+      },
+      "success": {
+        "vote": "You successfully voted for a proposal!",
+        "unvote": "You successfully removed your vote!"
+      }
+    }
   }
 }
