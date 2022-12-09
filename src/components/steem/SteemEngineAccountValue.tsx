@@ -1,11 +1,11 @@
-import {Bittrex, TokenBalance, TokenMarket} from 'actions/interfaces';
+import {CurrencyPrices, TokenBalance, TokenMarket} from 'actions/interfaces';
 import React from 'react';
 import {StyleSheet, Text} from 'react-native';
 import {withCommas} from 'utils/format';
 
 type Props = {
   tokensMarket: TokenMarket[];
-  bittrex: Bittrex;
+  bittrex: CurrencyPrices;
   tokens: TokenBalance[];
 };
 
@@ -22,7 +22,7 @@ const SteemEngineAccountValue = ({tokens, tokensMarket, bittrex}: Props) => {
   }
   return (
     <Text style={styles.accountValue}>{`$ ${withCommas(
-      accountValue * parseFloat(bittrex.steem.Usd) + '',
+      accountValue * parseFloat(bittrex.steem.usd) + '',
     )}`}</Text>
   );
 };

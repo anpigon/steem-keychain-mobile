@@ -6,6 +6,9 @@ import * as RNLocalize from 'react-native-localize';
 
 const locales = RNLocalize.getLocales();
 
+export const getMainLocale = () => {
+  return locales[0].languageTag;
+};
 if (Array.isArray(locales)) {
   I18n.locale = locales[0].languageTag;
 }

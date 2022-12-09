@@ -1,13 +1,13 @@
 import {decodeMemo} from 'components/bridge';
 import {AppThunk} from 'src/hooks/redux';
-import dsteem, {getClient} from 'utils/hive';
+import hive, {getClient} from 'utils/hive';
 import {
   getConversionRequests,
   getDelegatees,
   getDelegators,
 } from 'utils/hiveUtils';
 import {translate} from 'utils/localize';
-import {getBittrexPrices} from 'utils/price';
+import {getPrices} from 'utils/price';
 import {getPhishingAccounts} from 'utils/transferValidator';
 import {
   ActionPayload,
@@ -78,7 +78,7 @@ export const loadProperties = (): AppThunk => async (dispatch) => {
 
 export const loadBittrex = (): AppThunk => async (dispatch) => {
   try {
-    const prices = await getBittrexPrices();
+    const prices = await getPrices();
     dispatch({
       type: GET_BITTREX_PRICE,
       payload: prices,

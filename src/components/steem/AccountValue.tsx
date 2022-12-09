@@ -1,12 +1,12 @@
 import {ExtendedAccount} from 'dsteem';
-import {Bittrex, GlobalProperties} from 'actions/interfaces';
+import {CurrencyPrices, GlobalProperties} from 'actions/interfaces';
 import React from 'react';
 import {StyleSheet, Text} from 'react-native';
 import {withCommas} from 'utils/format';
 import {getAccountValue} from 'utils/price';
 
 type Props = {
-  bittrex: Bittrex;
+  bittrex: CurrencyPrices;
   account: ExtendedAccount;
   properties: GlobalProperties;
 };

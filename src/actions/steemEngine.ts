@@ -1,4 +1,4 @@
-import ssc, {steemEngineAPI} from 'api/steemEngine';
+import ssc, {hiveEngineAPI} from 'api/steemEngine';
 import {AppThunk} from 'src/hooks/redux';
 import {
   ActionPayload,
@@ -58,7 +58,7 @@ export const loadTokenHistory =
   (account: string, currency: string): AppThunk =>
   async (dispatch) => {
     let tokenHistory: TokenTransaction[] = (
-      await steemEngineAPI.get('/history/accountHistory', {
+      await hiveEngineAPI.get('/history/accountHistory', {
         params: {account, symbol: currency, type: 'user', limit: 50, offset: 0},
       })
     ).data;

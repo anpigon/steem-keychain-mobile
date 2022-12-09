@@ -14,13 +14,13 @@ import Separator from 'components/ui/Separator';
 import React, {useEffect} from 'react';
 import {StyleSheet, useWindowDimensions, View} from 'react-native';
 import {connect, ConnectedProps} from 'react-redux';
-import { RootState } from 'store';
-import { logScreenView } from 'utils/analytics';
+import {RootState} from 'store';
+import {logScreenView} from 'utils/analytics';
 import {toSP} from 'utils/format';
 
 const Primary = ({user, bittrex, properties}: PropsFromRedux) => {
-  const { width } = useWindowDimensions();
-  
+  const {width} = useWindowDimensions();
+
   useEffect(() => {
     logScreenView('WalletScreen');
   }, []);
@@ -54,7 +54,7 @@ const Primary = ({user, bittrex, properties}: PropsFromRedux) => {
         currency="SBD"
         value={parseFloat(user.account.sbd_balance as string)}
         logo={<Steem width={width / 15} fill="#005C09" />}
-        price={bittrex.sbd}
+        price={bittrex.steem_dollar}
         buttons={[
           <Send key="send_sbd" currency="SBD" />,
           <SendConversion key="conversion" currency="SBD" />,
@@ -75,7 +75,7 @@ const Primary = ({user, bittrex, properties}: PropsFromRedux) => {
           properties.globals,
         )}
         logo={<Sp width={width / 15} fill="#e59d15" />}
-        price={bittrex.sbd}
+        price={bittrex.steem_dollar}
         buttons={[<SendDelegation key="del" />, <SendPowerDown key="pd" />]}
       />
       <Separator height={20} />

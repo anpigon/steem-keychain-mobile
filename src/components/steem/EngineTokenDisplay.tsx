@@ -37,7 +37,7 @@ const EngineTokenDisplay = ({token, tokensList, market}: Props) => {
       amountStyle={styles.amount}
       value={parseFloat(token.balance)}
       price={{
-        Usd: withCommas(tokenMarket ? tokenMarket.lastPrice : '0'),
+        usd: withCommas(tokenMarket ? tokenMarket.lastPrice : '0'),
         DailyUsd:
           parseFloat(tokenMarket ? tokenMarket.priceChangePercent : '0') + '',
       }}

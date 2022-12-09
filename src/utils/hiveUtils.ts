@@ -3,6 +3,7 @@ import {
   CollateralizedConversion,
   Delegator,
   GlobalProperties,
+  Rpc,
 } from 'actions/interfaces';
 import api from 'api/keychain';
 import {getClient} from './steem';
@@ -111,6 +112,7 @@ const getVotePowerReserveRate = (properties: GlobalProperties) => {
   return properties.globals!.vote_power_reserve_rate;
 };
 
+// TODO: 서버  API 구현 필요
 export const getDelegators = async (name: string) => {
   // return ((await api.get(`/hive/delegators/${name}`)).data as Delegator[])
   //   .filter((e) => e.vesting_shares !== 0)
@@ -150,24 +152,34 @@ export const getConversionRequests = async (name: string) => {
   );
 };
 
+export const getSavingsRequests = async (name: string) => {
+  return await getClient().database.call('get_savings_withdraw_to', [name]);
+};
+
 // ref: https://steemyy.com/node-status.php
-export const rpcList = [
-  'DEFAULT',
-  'https://api.steemit.com',
-  'https://api.steemitdev.com',
-  'https://api.justyy.com',
-  'https://e51ewpb9dk.execute-api.us-east-1.amazonaws.com/release',
-  'https://api.steemyy.com',
-  'https://api.steemzzang.com',
-  'https://x68bp3mesd.execute-api.ap-northeast-1.amazonaws.com/release',
-  'https://cn.steems.top',
-  'https://justyy.azurewebsites.net/api/steem',
-  'https://steem.justyy.workers.dev',
-  'https://steem.ecosynthesizer.com',
-  'https://steem.61bts.com',
-  'https://api.steem.buzz',
-  'https://api.steem.fans',
-  'TESTNET',
+export const rpcList: Rpc[] = [
+  {uri: 'DEFAULT', testnet: false},
+  {uri: 'https://api.steemit.com', testnet: false},
+  {uri: 'https://api.upvu.org', testnet: false},
+  {uri: 'https://api.justyy.com', testnet: false},
+  {
+    uri: 'https://e51ewpb9dk.execute-api.us-east-1.amazonaws.com/release',
+    testnet: false,
+  },
+  {uri: 'https://api.steemyy.com', testnet: false},
+  {uri: 'https://api.steemzzang.com', testnet: false},
+  {
+    uri: 'https://x68bp3mesd.execute-api.ap-northeast-1.amazonaws.com/release',
+    testnet: false,
+  },
+  {uri: 'https://cn.steems.top', testnet: false},
+  {uri: 'https://justyy.azurewebsites.net/api/steem', testnet: false},
+  {uri: 'https://steem.justyy.workers.dev', testnet: false},
+  {uri: 'https://steem.ecosynthesizer.com', testnet: false},
+  {uri: 'https://steem.61bts.com', testnet: false},
+  {uri: 'https://api.steem.buzz', testnet: false},
+  {uri: 'https://api.steem.fans', testnet: false},
+  {uri: 'https://api.steemitdev.com', testnet: false},
 ];
 
 export const getAccountKeys = async (username: string) => {

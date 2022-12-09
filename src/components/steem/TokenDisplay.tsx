@@ -83,9 +83,11 @@ const renderLeftBottom = (
   if (currency !== 'SP') {
     return (
       <View style={[styles.row, styles.halfLine]}>
-        <Text style={styles.price}>{`$ ${Number(price?.Usd)?.toFixed(2) || 0.0}`}</Text>
+        <Text style={styles.price}>{`$ ${
+          Number(price?.usd)?.toFixed(2) || 0.0
+        }`}</Text>
         <Text style={styles.change}>{`${signedNumber(
-          +Number(price?.DailyUsd)?.toFixed(2) || 0.0
+          +Number(price?.DailyUsd)?.toFixed(2) || 0.0,
         )}%`}</Text>
       </View>
     );

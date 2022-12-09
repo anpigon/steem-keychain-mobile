@@ -1,4 +1,4 @@
-import {DynamicGlobalProperties} from 'dsteem';
+import {DynamicGlobalProperties} from '@upvu/dsteem';
 import {translate} from 'utils/localize';
 import {SteemErrorMessage} from './keychain.types';
 
@@ -55,10 +55,10 @@ export const beautifyTransferError = (
   err: SteemErrorMessage,
   {currency, username, to}: {currency?: string; username?: string; to?: string},
 ) => {
-  if (!err.jse_info && err.message.includes('Unable to serialize')) {
+  if (!err.data && err.message.includes('Unable to serialize')) {
     return translate('request.error.transfer.encrypt');
   }
-  switch (err.jse_info.stack[0].context.method) {
+  switch (err.data.stack[0].context.method) {
     case 'adjust_balance':
       return translate('request.error.transfer.adjust_balance', {
         currency,
@@ -69,4 +69,51 @@ export const beautifyTransferError = (
     default:
       return translate('request.error.broadcasting');
   }
+};
+
+export const getSymbol = (nai: string) => {
+  if (nai === '@@000000013') return 'SBD';
+  if (nai === '@@000000021') return 'STEEM';
+  if (nai === '@@000000037') return 'SP';
+};
+
+export const nFormatter = (num: number, digits: number) => {
+  var si = [
+    {
+      value: 1,
+      symbol: '',
+    },
+    {
+      value: 1e3,
+      symbol: 'k',
+    },
+    {
+      value: 1e6,
+      symbol: 'M',
+    },
+    {
+      value: 1e9,
+      symbol: 'G',
+    },
+    {
+      value: 1e12,
+      symbol: 'T',
+    },
+    {
+      value: 1e15,
+      symbol: 'P',
+    },
+    {
+      value: 1e18,
+      symbol: 'E',
+    },
+  ];
+  var rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+  var i;
+  for (i = si.length - 1; i > 0; i--) {
+    if (num >= si[i].value) {
+      break;
+    }
+  }
+  return (num / si[i].value).toFixed(digits).replace(rx, '$1') + si[i].symbol;
 };

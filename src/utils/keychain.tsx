@@ -25,17 +25,30 @@ export const validateAuthority = (
   const wifType = getRequiredWifType(req);
   if (username) {
     const account = accounts.find((e) => e.name === username);
-    if (!account || !account.keys[wifType]) {
-      // TODO: not found user
-      return false;
+    if (!account) {
+      return {
+        valid: false,
+        error: translate('request.error.no_account', {account: username}),
+      };
+    } else if (!account.keys[wifType]) {
+      return {
+        valid: false,
+        error: translate('request.error.no_auth', {
+          account: username,
+          auth: wifType,
+        }),
+      };
     }
   } else if (KeychainConfig.NO_USERNAME_TYPES.includes(type)) {
     if (!accounts.filter((e) => !!e.keys[wifType]).length) {
       // TODO: not found key
-      return false;
+      return {
+        valid: false,
+        error: translate('request.error.no_active_auth'),
+      };
     }
   }
-  return true;
+  return {valid: true};
 };
 
 export const getValidAuthorityAccounts = (
@@ -215,6 +228,8 @@ export const getRequiredWifType: (request: KeychainRequest) => KeyTypes = (
     case 'createProposal':
     case 'removeProposal':
     case 'updateProposalVote':
+    case 'convert':
+    case 'recurrentTransfer':
       return KeyTypes.active;
   }
 };

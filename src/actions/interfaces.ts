@@ -198,13 +198,14 @@ interface Btc {
 
 export interface Currency extends Btc {
   DailyUsd?: string;
-  Usd?: string;
+  usd_24h_change?: number;
+  usd?: number;
 }
 
-export interface Bittrex {
+export interface CurrencyPrices {
   btc: Btc;
   steem: Currency;
-  sbd: Currency;
+  steem_dollar: Currency;
 }
 
 export interface AccountKeys {

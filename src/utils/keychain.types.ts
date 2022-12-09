@@ -37,6 +37,12 @@ export enum KeychainKeyTypes {
   memo = 'Memo',
 }
 
+export enum KeychainKeyTypesLC {
+  posting = 'posting',
+  active = 'active',
+  memo = 'memo',
+}
+
 type CommonRequestParams = {
   rpc?: string;
   domain: string;
@@ -299,14 +305,14 @@ export type KeychainRequestData =
   | RequestConvert
   | RequestRecurrentTransfer;
 
-export type RequestId = {request_id: number};
-
-export type KeychainRequest = KeychainRequestData & RequestId;
+export type RequestId = {request_id?: number};
+export type UsingHAS = {has?: boolean};
+export type KeychainRequest = KeychainRequestData & RequestId & UsingHAS;
 
 export type SteemErrorMessage = {
   message: string;
-  name: number;
-  jse_info?: any;
+  code: number;
+  data?: any;
 };
 
 export type RequestSuccess = {

@@ -1,9 +1,9 @@
-import {ActionPayload, Bittrex} from 'actions/interfaces';
+import {ActionPayload, CurrencyPrices} from 'actions/interfaces';
 import {GET_BITTREX_PRICE} from 'actions/types';
 
 const bittrexReducer = (
-  state: Bittrex = {btc: {}, steem: {}, sbd: {}},
-  {type, payload}: ActionPayload<Bittrex>,
+  state: CurrencyPrices = {btc: {}, steem: {}, steem_dollar: {}},
+  {type, payload}: ActionPayload<CurrencyPrices>,
 ) => {
   switch (type) {
     case GET_BITTREX_PRICE:

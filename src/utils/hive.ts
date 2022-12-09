@@ -1,29 +1,47 @@
-const dsteem = require('dsteem');
+const hive = require('@upvu/dsteem');
 import {
+  AccountUpdateOperation,
   AccountWitnessProxyOperation,
   AccountWitnessVoteOperation,
+  ClaimRewardBalanceOperation,
   Client,
   CollateralizedConvertOperation,
   CommentOptionsOperation,
   ConvertOperation,
+  CreateClaimedAccountOperation,
+  CreateProposalOperation,
   DelegateVestingSharesOperation,
   Operation,
   RecurrentTransferOperation,
+  RemoveProposalOperation,
+  TransferFromSavingsOperation,
   TransferOperation,
+  TransferToSavingsOperation,
+  TransferToVestingOperation,
   UpdateProposalVotesOperation,
   VoteOperation,
   PrivateKey,
-} from 'dsteem/lib';
+} from '@upvu/dsteem';
 import api from 'api/keychain';
 import hiveTx from 'hive-tx';
-import {steemEngine} from 'utils/config';
-import {RequestPost} from './keychain.types';
+import {hiveEngine} from 'utils/config';
+import {
+  KeychainKeyTypes,
+  RequestAddAccountAuthority,
+  RequestAddKeyAuthority,
+  RequestPost,
+  RequestRemoveAccountAuthority,
+  RequestRemoveKeyAuthority,
+} from './keychain.types';
 
 type BroadcastResult = {id: string};
 
 const timeout = 10 * 1000;
 const DEFAULT_RPC = 'https://api.steemit.com';
+const DEFAULT_CHAIN_ID =
+  'beeab0de00000000000000000000000000000000000000000000000000000000';
 let client = new Client(DEFAULT_RPC, {timeout});
+let testnet = false;
 hiveTx.updateOperations();
 
 const getDefault: () => Promise<string> = async () => {
@@ -34,12 +52,31 @@ const getDefault: () => Promise<string> = async () => {
   }
 };
 
-export const setRpc = async (rpc: string) => {
-  if (rpc === 'DEFAULT') {
+export const setRpc = async (rpcObj: Rpc | string) => {
+  let rpc = typeof rpcObj === 'string' ? rpcObj : rpcObj.uri;
+  testnet = typeof rpcObj === 'string' ? false : rpcObj.testnet || false;
+    if (rpc === 'DEFAULT') {
     rpc = await getDefault();
   }
   client = new Client(rpc, {timeout});
   hiveTx.config.node = rpc;
+  f (typeof rpcObj !== 'string') {
+    client.chainId = Buffer.from(rpcObj.chainId || DEFAULT_CHAIN_ID);
+    hiveTx.config.chain_id = rpcObj.chainId || DEFAULT_CHAIN_ID;
+  }
+};
+
+export const isTestnet = () => testnet;
+
+export const getCurrency = (baseCurrency: 'STEEM' | 'SBD' | 'SP') => {
+  switch (baseCurrency) {
+    case 'STEEM':
+      return testnet ? 'TESTS' : 'STEEM';
+    case 'SBD':
+      return testnet ? 'TBD' : 'SBD';
+    case 'SP':
+      return testnet ? 'TP' : 'SP';
+  }
 };
 
 export const getClient = () => client;
@@ -79,7 +116,7 @@ export const sendToken = async (key: string, username: string, obj: object) => {
   const result = (await broadcastJson(
     key,
     username,
-    steemEngine.CHAIN_ID,
+    hiveEngine.CHAIN_ID,
     true,
     {
       contractName: 'tokens',
@@ -90,7 +127,10 @@ export const sendToken = async (key: string, username: string, obj: object) => {
   return result;
 };
 
-export const powerUp = async (key: string, obj: object) => {
+export const powerUp = async (
+  key: string,
+  obj: TransferToVestingOperation[1],
+) => {
   return await broadcast(key, [['transfer_to_vesting', obj]]);
 };
 
@@ -116,6 +156,20 @@ export const collateralizedConvert = async (
   return await broadcast(key, [['collateralized_convert', obj]]);
 };
 
+export const depositToSavings = async (
+  key: string,
+  obj: TransferToSavingsOperation[1],
+) => {
+  return await broadcast(key, [['transfer_to_savings', obj]]);
+};
+
+export const withdrawFromSavings = async (
+  key: string,
+  obj: TransferFromSavingsOperation[1],
+) => {
+  return await broadcast(key, [['transfer_from_savings', obj]]);
+};
+
 export const vote = async (key: string, obj: VoteOperation[1]) => {
   return await broadcast(key, [['vote', obj]]);
 };
@@ -134,6 +188,12 @@ export const setProxy = async (
   return await broadcast(key, [['account_witness_proxy', obj]]);
 };
 
+export const createClaimedAccount = async (
+  key: string,
+  obj: CreateClaimedAccountOperation[1],
+) => {
+  return await broadcast(key, [['create_claimed_account', obj]]);
+};
 export const post = async (
   key: string,
   {
@@ -170,6 +230,185 @@ export const signTx = (key: string, tx: object) => {
   return signed;
 };
 
+
+
+export const addAccountAuth = async (
+  key: string,
+  {
+    username,
+    authorizedUsername,
+    role = KeychainKeyTypes.posting,
+    weight,
+  }: RequestAddAccountAuthority,
+) => {
+  const userAccount = (await getClient().database.getAccounts([username]))[0];
+
+  const updatedAuthority =
+    userAccount[role.toLowerCase() as 'posting' | 'active'];
+
+  /** Release callback if the account already exist in the account_auths array */
+  const authorizedAccounts = updatedAuthority.account_auths.map(
+    (auth) => auth[0],
+  );
+  const hasAuthority = authorizedAccounts.indexOf(authorizedUsername) !== -1;
+  if (hasAuthority) {
+    throw new Error('Already has authority');
+  }
+
+  /** Use weight_thresold as default weight */
+  weight =
+    weight ||
+    userAccount[role.toLowerCase() as 'posting' | 'active'].weight_threshold;
+  updatedAuthority.account_auths.push([authorizedUsername, +weight]);
+  updatedAuthority.account_auths.sort((a, b) => a[0].localeCompare(b[0]));
+
+  const active =
+    role === KeychainKeyTypes.active ? updatedAuthority : userAccount.active;
+  const posting =
+    role === KeychainKeyTypes.posting ? updatedAuthority : userAccount.posting;
+
+  /** Add authority on user account */
+  return await accountUpdate(key, {
+    account: userAccount.name,
+    owner: undefined,
+    active,
+    posting,
+    memo_key: userAccount.memo_key,
+    json_metadata: userAccount.json_metadata,
+  });
+};
+
+export const removeAccountAuth = async (
+  key: string,
+  {
+    username,
+    authorizedUsername,
+    role = KeychainKeyTypes.posting,
+  }: RequestRemoveAccountAuthority,
+) => {
+  const userAccount = (await getClient().database.getAccounts([username]))[0];
+
+  const updatedAuthority =
+    userAccount[role.toLowerCase() as 'posting' | 'active'];
+  const totalAuthorizedUser = updatedAuthority.account_auths.length;
+  for (let i = 0; i < totalAuthorizedUser; i++) {
+    const user = updatedAuthority.account_auths[i];
+    if (user[0] === authorizedUsername) {
+      updatedAuthority.account_auths.splice(i, 1);
+      break;
+    }
+  }
+
+  /** Release callback if the account does not exist in the account_auths array */
+  if (totalAuthorizedUser === updatedAuthority.account_auths.length) {
+    throw new Error('Nothing to remove');
+  }
+
+  const active =
+    role === KeychainKeyTypes.active ? updatedAuthority : undefined;
+  const posting =
+    role === KeychainKeyTypes.posting ? updatedAuthority : undefined;
+
+  return await accountUpdate(key, {
+    account: userAccount.name,
+    owner: undefined,
+    active,
+    posting,
+    memo_key: userAccount.memo_key,
+    json_metadata: userAccount.json_metadata,
+  });
+};
+
+export const addKeyAuth = async (
+  key: string,
+  {
+    username,
+    authorizedKey,
+    role = KeychainKeyTypes.posting,
+    weight,
+  }: RequestAddKeyAuthority,
+) => {
+  const userAccount = (await getClient().database.getAccounts([username]))[0];
+  const updatedAuthority =
+    userAccount[role.toLowerCase() as 'posting' | 'active'];
+
+  /** Release callback if the key already exist in the key_auths array */
+  const authorizedKeys = updatedAuthority.key_auths.map((auth) => auth[0]);
+  const hasAuthority = authorizedKeys.indexOf(authorizedKey) !== -1;
+  if (hasAuthority) {
+    throw new Error('already has authority');
+  }
+
+  /** Use weight_thresold as default weight */
+  weight =
+    weight ||
+    userAccount[role.toLowerCase() as 'posting' | 'active'].weight_threshold;
+  updatedAuthority.key_auths.push([authorizedKey, +weight]);
+  updatedAuthority.key_auths.sort((a, b) =>
+    (a[0] as string).localeCompare(b[0] as string),
+  );
+
+  const active =
+    role === KeychainKeyTypes.active ? updatedAuthority : undefined;
+  const posting =
+    role === KeychainKeyTypes.posting ? updatedAuthority : undefined;
+
+  /** Add authority on user account */
+  accountUpdate(key, {
+    account: userAccount.name,
+    owner: undefined,
+    active,
+    posting,
+    memo_key: userAccount.memo_key,
+    json_metadata: userAccount.json_metadata,
+  });
+};
+
+export const removeKeyAuth = async (
+  key: string,
+  {
+    username,
+    authorizedKey,
+    role = KeychainKeyTypes.posting,
+  }: RequestRemoveKeyAuthority,
+) => {
+  const userAccount = (await getClient().database.getAccounts([username]))[0];
+
+  const updatedAuthority =
+    userAccount[role.toLowerCase() as 'posting' | 'active'];
+  const totalAuthorizedKey = updatedAuthority.key_auths.length;
+  for (let i = 0; i < totalAuthorizedKey; i++) {
+    const user = updatedAuthority.key_auths[i];
+    if (user[0] === authorizedKey) {
+      updatedAuthority.key_auths.splice(i, 1);
+      break;
+    }
+  }
+
+  /** Release callback if the key does not exist in the key_auths array */
+  if (totalAuthorizedKey === updatedAuthority.key_auths.length) {
+    throw new Error('Missing authority');
+  }
+
+  const active =
+    role === KeychainKeyTypes.active ? updatedAuthority : undefined;
+  const posting =
+    role === KeychainKeyTypes.posting ? updatedAuthority : undefined;
+
+  accountUpdate(key, {
+    account: userAccount.name,
+    owner: undefined,
+    active,
+    posting,
+    memo_key: userAccount.memo_key,
+    json_metadata: userAccount.json_metadata,
+  });
+};
+
+const accountUpdate = async (key: string, obj: AccountUpdateOperation[1]) => {
+  return await broadcast(key, [['account_update', obj]]);
+};
+
 export const updateProposalVote = async (
   key: string,
   obj: UpdateProposalVotesOperation[1],
@@ -177,16 +416,32 @@ export const updateProposalVote = async (
   return await broadcast(key, [['update_proposal_votes', obj]]);
 };
 
-export const broadcast = async (key: string, arr: Operation[]) => {
-  try {
-    const result = await client.broadcast.sendOperations(
-      arr,
-      PrivateKey.from(key),
-    );
-    return result;
-  } catch (e) {
-    console.error(e);
-    throw e;
-  }
+export const createProposal = async (
+  key: string,
+  obj: CreateProposalOperation[1],
+) => {
+  return await broadcast(key, [['create_proposal', obj]]);
 };
-export default dsteem;
+
+export const claimRewards = async (
+  key: string,
+  obj: ClaimRewardBalanceOperation[1],
+) => {
+  return await broadcast(key, [['claim_reward_balance', obj]]);
+};
+
+export const removeProposal = async (
+  key: string,
+  obj: RemoveProposalOperation[1],
+) => {
+  return await broadcast(key, [['remove_proposal', obj]]);
+};
+
+export const broadcast = async (key: string, arr: Operation[]) => {
+  return client.broadcast.sendOperations(
+    arr,
+    PrivateKey.from(key),
+  );
+};
+
+export default hive;

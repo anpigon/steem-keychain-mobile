@@ -5,6 +5,7 @@ import {decodeWithoutConfirmation} from 'components/browser/requestOperations/De
 import {encodeWithoutConfirmation} from 'components/browser/requestOperations/Encode';
 import {postWithoutConfirmation} from 'components/browser/requestOperations/Post';
 import {signBufferWithoutConfirmation} from 'components/browser/requestOperations/SignBuffer';
+import {signTxWithoutConfirmation} from 'components/browser/requestOperations/SignTx';
 import {voteWithoutConfirmation} from 'components/browser/requestOperations/Vote';
 import {
   KeychainRequest,
@@ -17,6 +18,7 @@ import {
   RequestId,
   RequestPost,
   RequestSignBuffer,
+  RequestSignTx,
   RequestSuccess,
   RequestVote,
 } from './keychain.types';
@@ -26,27 +28,46 @@ export const requestWithoutConfirmation = (
   request: KeychainRequest,
   sendResponse: (msg: RequestSuccess) => void,
   sendError: (msg: RequestError) => void,
+  has?: boolean,
 ) => {
   switch (request.type) {
     case KeychainRequestTypes.decode:
       request as RequestDecode & RequestId;
-      decodeWithoutConfirmation(accounts, request, sendResponse, sendError);
+      decodeWithoutConfirmation(
+        accounts,
+        request,
+        sendResponse,
+        sendError,
+        has,
+      );
       break;
     case KeychainRequestTypes.signBuffer:
       request as RequestSignBuffer & RequestId;
-      signBufferWithoutConfirmation(accounts, request, sendResponse, sendError);
+      signBufferWithoutConfirmation(
+        accounts,
+        request,
+        sendResponse,
+        sendError,
+        has,
+      );
       break;
     case KeychainRequestTypes.broadcast:
       request as RequestBroadcast & RequestId;
-      broadcastWithoutConfirmation(accounts, request, sendResponse, sendError);
+      broadcastWithoutConfirmation(
+        accounts,
+        request,
+        sendResponse,
+        sendError,
+        has,
+      );
       break;
     case KeychainRequestTypes.vote:
       request as RequestVote & RequestId;
-      voteWithoutConfirmation(accounts, request, sendResponse, sendError);
+      voteWithoutConfirmation(accounts, request, sendResponse, sendError, has);
       break;
     case KeychainRequestTypes.post:
       request as RequestPost & RequestId;
-      postWithoutConfirmation(accounts, request, sendResponse, sendError);
+      postWithoutConfirmation(accounts, request, sendResponse, sendError, has);
       break;
     case KeychainRequestTypes.custom:
       request as RequestCustomJSON & RequestId;
@@ -55,11 +76,28 @@ export const requestWithoutConfirmation = (
         request,
         sendResponse,
         sendError,
+        has,
       );
       break;
     case KeychainRequestTypes.encode:
       request as RequestEncode & RequestId;
-      encodeWithoutConfirmation(accounts, request, sendResponse, sendError);
+      encodeWithoutConfirmation(
+        accounts,
+        request,
+        sendResponse,
+        sendError,
+        has,
+      );
+      break;
+    case KeychainRequestTypes.signTx:
+      request as RequestSignTx & RequestId;
+      signTxWithoutConfirmation(
+        accounts,
+        request,
+        sendResponse,
+        sendError,
+        has,
+      );
       break;
   }
 };
