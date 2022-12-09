@@ -4,7 +4,7 @@ import usePotentiallyAnonymousRequest from 'hooks/usePotentiallyAnonymousRequest
 import React from 'react';
 import {beautifyTransferError} from 'utils/format';
 import {transfer} from 'utils/hive';
-import {getAccountKeys} from 'utils/steemUtils';
+import {getAccountKeys} from 'utils/hiveUtils';
 import {RequestId, RequestTransfer} from 'utils/keychain.types';
 import {translate} from 'utils/localize';
 import RequestItem from './components/RequestItem';

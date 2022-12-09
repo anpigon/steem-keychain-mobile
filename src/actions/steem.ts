@@ -5,7 +5,7 @@ import {
   getConversionRequests,
   getDelegatees,
   getDelegators,
-} from 'utils/steemUtils';
+} from 'utils/hiveUtils';
 import {translate} from 'utils/localize';
 import {getBittrexPrices} from 'utils/price';
 import {getPhishingAccounts} from 'utils/transferValidator';

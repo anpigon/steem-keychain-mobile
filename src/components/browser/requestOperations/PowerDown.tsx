@@ -4,7 +4,7 @@ import {connect, ConnectedProps} from 'react-redux';
 import {RootState} from 'store';
 import {fromSP} from 'utils/format';
 import {powerDown} from 'utils/hive';
-import {sanitizeAmount} from 'utils/steemUtils';
+import {sanitizeAmount} from 'utils/hiveUtils';
 import {RequestId, RequestPowerDown} from 'utils/keychain.types';
 import {translate} from 'utils/localize';
 import RequestItem from './components/RequestItem';

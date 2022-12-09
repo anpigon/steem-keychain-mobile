@@ -11,7 +11,7 @@ import {connect, ConnectedProps} from 'react-redux';
 import {RootState} from 'store';
 import {powerUp} from 'utils/hive';
 import {getCurrencyProperties} from 'utils/steemReact';
-import {sanitizeAmount, sanitizeUsername} from 'utils/steemUtils';
+import {sanitizeAmount, sanitizeUsername} from 'utils/hiveUtils';
 import {translate} from 'utils/localize';
 import {goBack} from 'utils/navigation';
 import Balance from './Balance';

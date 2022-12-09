@@ -15,7 +15,7 @@ import Primary from 'screens/wallet/Primary';
 import Tokens from 'screens/wallet/Tokens';
 import {RootState} from 'store';
 import {Width} from 'utils/common.types';
-import {getVotingDollarsPerAccount, getVP} from 'utils/steemUtils';
+import {getVotingDollarsPerAccount, getVP} from 'utils/hiveUtils';
 import {translate} from 'utils/localize';
 
 const Main = ({

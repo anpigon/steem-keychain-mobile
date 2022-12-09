@@ -11,7 +11,7 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {connect, ConnectedProps} from 'react-redux';
 import {RootState} from 'store';
-import {rpcList} from 'utils/steemUtils';
+import {rpcList} from 'utils/hiveUtils';
 import {translate} from 'utils/localize';
 
 const AccountManagement = ({
@@ -47,12 +47,14 @@ const AccountManagement = ({
         <Text style={styles.subtitle}>
           {translate('settings.settings.rpc')}
         </Text>
-        {//@ts-ignore
-        translate('settings.settings.disclaimer').map((disclaimer, i) => (
-          <Text key={i} style={styles.disclaimer}>
-            {disclaimer}
-          </Text>
-        ))}
+        {
+          //@ts-ignore
+          translate('settings.settings.disclaimer').map((disclaimer, i) => (
+            <Text key={i} style={styles.disclaimer}>
+              {disclaimer}
+            </Text>
+          ))
+        }
         <Separator height={20} />
         <CustomPicker
           onSelected={setRpc}

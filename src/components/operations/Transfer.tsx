@@ -28,7 +28,7 @@ import {
   getAccountKeys,
   sanitizeAmount,
   sanitizeUsername,
-} from 'utils/steemUtils';
+} from 'utils/hiveUtils';
 import {translate} from 'utils/localize';
 import {goBack} from 'utils/navigation';
 import {getTransferWarning} from 'utils/transferValidator';

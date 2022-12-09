@@ -2,7 +2,7 @@ import {Authority} from 'dsteem';
 import {Account, KeyTypes} from 'actions/interfaces';
 import {encodeMemo} from 'components/bridge';
 import React from 'react';
-import {getAccountKeys} from 'utils/steemUtils';
+import {getAccountKeys} from 'utils/hiveUtils';
 import {
   RequestEncode,
   RequestError,

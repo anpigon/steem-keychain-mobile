@@ -5,7 +5,7 @@ import {connect, ConnectedProps} from 'react-redux';
 import {RootState} from 'store';
 import {beautifyTransferError, fromSP} from 'utils/format';
 import {delegate} from 'utils/hive';
-import {sanitizeAmount} from 'utils/steemUtils';
+import {sanitizeAmount} from 'utils/hiveUtils';
 import {RequestDelegation, RequestId} from 'utils/keychain.types';
 import {translate} from 'utils/localize';
 import RequestItem from './components/RequestItem';
