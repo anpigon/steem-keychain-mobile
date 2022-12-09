@@ -1,4 +1,4 @@
-let toggleElement: string = '0';
+let toggleElement: string;
 
 export const setToggleElement = (elt: string) => {
   toggleElement = elt;
@@ -6,5 +6,7 @@ export const setToggleElement = (elt: string) => {
 
 export const getToggleElement = () =>
   toggleElement
-    .replace('0', 'WalletScreen')
-    .replace('1', 'EngineWalletScreen');
+    ? toggleElement
+        .replace('Primary', 'WalletScreen')
+        .replace('Tokens', 'EngineWalletScreen')
+    : null;
