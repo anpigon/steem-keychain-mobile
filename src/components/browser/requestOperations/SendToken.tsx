@@ -1,6 +1,6 @@
 import {KeyTypes} from 'actions/interfaces';
 import React from 'react';
-import {sendToken} from 'utils/steem';
+import {sendToken} from 'utils/hive';
 import {RequestId, RequestSendToken} from 'utils/keychain.types';
 import {translate} from 'utils/localize';
 import RequestItem from './components/RequestItem';

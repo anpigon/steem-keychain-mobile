@@ -3,7 +3,7 @@ import React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {RootState} from 'store';
 import {fromSP} from 'utils/format';
-import {powerDown} from 'utils/steem';
+import {powerDown} from 'utils/hive';
 import {sanitizeAmount} from 'utils/steemUtils';
 import {RequestId, RequestPowerDown} from 'utils/keychain.types';
 import {translate} from 'utils/localize';

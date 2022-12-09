@@ -9,7 +9,7 @@ import {Keyboard, StyleSheet, Text} from 'react-native';
 import Toast from 'react-native-simple-toast';
 import {connect, ConnectedProps} from 'react-redux';
 import {RootState} from 'store';
-import {powerUp} from 'utils/steem';
+import {powerUp} from 'utils/hive';
 import {getCurrencyProperties} from 'utils/steemReact';
 import {sanitizeAmount, sanitizeUsername} from 'utils/steemUtils';
 import {translate} from 'utils/localize';

@@ -1,6 +1,6 @@
 import {Account, KeyTypes} from 'actions/interfaces';
 import React from 'react';
-import {signTx} from 'utils/steem';
+import {signTx} from 'utils/hive';
 import {
   RequestError,
   RequestId,

@@ -4,7 +4,7 @@ import React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {RootState} from 'store';
 import {beautifyTransferError, fromSP} from 'utils/format';
-import {delegate} from 'utils/steem';
+import {delegate} from 'utils/hive';
 import {sanitizeAmount} from 'utils/steemUtils';
 import {RequestDelegation, RequestId} from 'utils/keychain.types';
 import {translate} from 'utils/localize';
@@ -27,11 +27,8 @@ const Delegation = ({
 }: Props) => {
   const {request_id, ...data} = request;
   const {delegatee, unit, amount} = data;
-  const {
-    getUsername,
-    getAccountKey,
-    RequestUsername,
-  } = usePotentiallyAnonymousRequest(request, accounts);
+  const {getUsername, getAccountKey, RequestUsername} =
+    usePotentiallyAnonymousRequest(request, accounts);
 
   return (
     <RequestOperation

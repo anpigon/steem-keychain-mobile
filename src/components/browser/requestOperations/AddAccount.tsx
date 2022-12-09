@@ -2,7 +2,7 @@ import {addAccount} from 'actions/index';
 import {AccountKeys} from 'actions/interfaces';
 import React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
-import {getClient} from 'utils/steem';
+import {getClient} from 'utils/hive';
 import {
   RequestAddAccount,
   RequestError,

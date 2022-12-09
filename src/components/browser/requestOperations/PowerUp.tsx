@@ -1,6 +1,6 @@
 import {KeyTypes} from 'actions/interfaces';
 import React from 'react';
-import {powerUp} from 'utils/steem';
+import {powerUp} from 'utils/hive';
 import {RequestId, RequestPowerUp} from 'utils/keychain.types';
 import {translate} from 'utils/localize';
 import RequestItem from './components/RequestItem';
@@ -18,7 +18,7 @@ export default ({
   sendError,
 }: Props) => {
   const {request_id, ...data} = request;
-  const {username, recipient: to, steem } = data;
+  const {username, recipient: to, steem} = data;
 
   return (
     <RequestOperation

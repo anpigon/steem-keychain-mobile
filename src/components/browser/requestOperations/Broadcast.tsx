@@ -2,7 +2,7 @@ import {Operation} from 'dsteem';
 import {Account, KeyTypes} from 'actions/interfaces';
 import {encodeMemo} from 'components/bridge';
 import React from 'react';
-import {broadcast} from 'utils/steem';
+import {broadcast} from 'utils/hive';
 import {getAccountKeys} from 'utils/steemUtils';
 import {
   RequestBroadcast,

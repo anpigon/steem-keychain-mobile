@@ -1,6 +1,6 @@
 import {decodeMemo} from 'components/bridge';
 import {AppThunk} from 'src/hooks/redux';
-import dsteem, {getClient} from 'utils/steem';
+import dsteem, {getClient} from 'utils/hive';
 import {
   getConversionRequests,
   getDelegatees,
@@ -28,38 +28,39 @@ import {
   INIT_TRANSACTIONS,
 } from './types';
 
-export const loadAccount = (
-  name: string,
-  initTransactions?: boolean,
-): AppThunk => async (dispatch, getState) => {
-  dispatch({
-    type: ACTIVE_ACCOUNT,
-    payload: {
-      name,
-    },
-  });
-  dispatch(getAccountRC(name));
-  if (initTransactions) {
-    dispatch(initAccountTransactions(name));
-  }
-  const account = (await getClient().database.getAccounts([name]))[0];
-  const keys = getState().accounts.find((e) => e.name === name)!.keys;
-  dispatch({
-    type: ACTIVE_ACCOUNT,
-    payload: {
-      account,
-      keys,
-    },
-  });
-};
+export const loadAccount =
+  (name: string, initTransactions?: boolean): AppThunk =>
+  async (dispatch, getState) => {
+    dispatch({
+      type: ACTIVE_ACCOUNT,
+      payload: {
+        name,
+      },
+    });
+    dispatch(getAccountRC(name));
+    if (initTransactions) {
+      dispatch(initAccountTransactions(name));
+    }
+    const account = (await getClient().database.getAccounts([name]))[0];
+    const keys = getState().accounts.find((e) => e.name === name)!.keys;
+    dispatch({
+      type: ACTIVE_ACCOUNT,
+      payload: {
+        account,
+        keys,
+      },
+    });
+  };
 
-const getAccountRC = (username: string): AppThunk => async (dispatch) => {
-  const rc = await getClient().rc.getRCMana(username);
-  dispatch({
-    type: ACTIVE_ACCOUNT_RC,
-    payload: rc,
-  });
-};
+const getAccountRC =
+  (username: string): AppThunk =>
+  async (dispatch) => {
+    const rc = await getClient().rc.getRCMana(username);
+    dispatch({
+      type: ACTIVE_ACCOUNT_RC,
+      payload: rc,
+    });
+  };
 
 export const loadProperties = (): AppThunk => async (dispatch) => {
   const [globals, price, rewardFund] = await Promise.all([
@@ -87,31 +88,30 @@ export const loadBittrex = (): AppThunk => async (dispatch) => {
   }
 };
 
-export const initAccountTransactions = (
-  accountName: string,
-): AppThunk => async (dispatch, getState) => {
-  const memoKey = getState().accounts.find((a) => a.name === accountName)!.keys
-    .memo;
-  const transfers = await getAccountTransactions(accountName, null, memoKey);
+export const initAccountTransactions =
+  (accountName: string): AppThunk =>
+  async (dispatch, getState) => {
+    const memoKey = getState().accounts.find((a) => a.name === accountName)!
+      .keys.memo;
+    const transfers = await getAccountTransactions(accountName, null, memoKey);
 
-  dispatch({
-    type: INIT_TRANSACTIONS,
-    payload: transfers,
-  });
-};
+    dispatch({
+      type: INIT_TRANSACTIONS,
+      payload: transfers,
+    });
+  };
 
-export const fetchAccountTransactions = (
-  accountName: string,
-  start: number,
-): AppThunk => async (dispatch, getState) => {
-  const memoKey = getState().accounts.find((a) => a.name === accountName)!.keys
-    .memo;
-  const transfers = await getAccountTransactions(accountName, start, memoKey);
-  dispatch({
-    type: ADD_TRANSACTIONS,
-    payload: transfers,
-  });
-};
+export const fetchAccountTransactions =
+  (accountName: string, start: number): AppThunk =>
+  async (dispatch, getState) => {
+    const memoKey = getState().accounts.find((a) => a.name === accountName)!
+      .keys.memo;
+    const transfers = await getAccountTransactions(accountName, start, memoKey);
+    dispatch({
+      type: ADD_TRANSACTIONS,
+      payload: transfers,
+    });
+  };
 
 const getAccountTransactions = async (
   accountName: string,
@@ -119,12 +119,11 @@ const getAccountTransactions = async (
   memoKey?: string,
 ): Promise<Transaction[]> => {
   try {
-    const transactions = await getClient().database.call('get_account_history', [
-      accountName,
-      start || -1,
-      start ? Math.min(10, start) : 1000,
-    ]);
-   
+    const transactions = await getClient().database.call(
+      'get_account_history',
+      [accountName, start || -1, start ? Math.min(10, start) : 1000],
+    );
+
     const transfers = transactions
       .filter((e) => e[1].op[0] === 'transfer')
       .map((e) => {
@@ -173,33 +172,33 @@ const getAccountTransactions = async (
   }
 };
 
-export const loadDelegators = (username: string): AppThunk => async (
-  dispatch,
-) => {
-  try {
-    const action: ActionPayload<DelegationsPayload> = {
-      type: FETCH_DELEGATORS,
-      payload: {incoming: await getDelegators(username)},
-    };
-    dispatch(action);
-  } catch (e) {
-    console.log(e);
-  }
-};
+export const loadDelegators =
+  (username: string): AppThunk =>
+  async (dispatch) => {
+    try {
+      const action: ActionPayload<DelegationsPayload> = {
+        type: FETCH_DELEGATORS,
+        payload: {incoming: await getDelegators(username)},
+      };
+      dispatch(action);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
-export const loadDelegatees = (username: string): AppThunk => async (
-  dispatch,
-) => {
-  try {
-    const action: ActionPayload<DelegationsPayload> = {
-      type: FETCH_DELEGATEES,
-      payload: {outgoing: await getDelegatees(username)},
-    };
-    dispatch(action);
-  } catch (e) {
-    console.log(e);
-  }
-};
+export const loadDelegatees =
+  (username: string): AppThunk =>
+  async (dispatch) => {
+    try {
+      const action: ActionPayload<DelegationsPayload> = {
+        type: FETCH_DELEGATEES,
+        payload: {outgoing: await getDelegatees(username)},
+      };
+      dispatch(action);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
 export const fetchPhishingAccounts = (): AppThunk => async (dispatch) => {
   dispatch({
@@ -208,13 +207,13 @@ export const fetchPhishingAccounts = (): AppThunk => async (dispatch) => {
   });
 };
 
-export const fetchConversionRequests = (name: string): AppThunk => async (
-  dispatch,
-) => {
-  const conversions = await getConversionRequests(name);
-  console.debug('conversions', conversions);
-  dispatch({
-    type: FETCH_CONVERSION_REQUESTS,
-    payload: conversions,
-  });
-};
+export const fetchConversionRequests =
+  (name: string): AppThunk =>
+  async (dispatch) => {
+    const conversions = await getConversionRequests(name);
+    console.debug('conversions', conversions);
+    dispatch({
+      type: FETCH_CONVERSION_REQUESTS,
+      payload: conversions,
+    });
+  };

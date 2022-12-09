@@ -3,7 +3,7 @@ import {encodeMemo} from 'components/bridge';
 import usePotentiallyAnonymousRequest from 'hooks/usePotentiallyAnonymousRequest';
 import React from 'react';
 import {beautifyTransferError} from 'utils/format';
-import {transfer} from 'utils/steem';
+import {transfer} from 'utils/hive';
 import {getAccountKeys} from 'utils/steemUtils';
 import {RequestId, RequestTransfer} from 'utils/keychain.types';
 import {translate} from 'utils/localize';
@@ -24,12 +24,8 @@ export default ({
 }: Props) => {
   const {request_id, ...data} = request;
   const {to, memo, amount, currency} = data;
-  const {
-    getUsername,
-    getAccountKey,
-    getAccountMemoKey,
-    RequestUsername,
-  } = usePotentiallyAnonymousRequest(request, accounts);
+  const {getUsername, getAccountKey, getAccountMemoKey, RequestUsername} =
+    usePotentiallyAnonymousRequest(request, accounts);
 
   return (
     <RequestOperation

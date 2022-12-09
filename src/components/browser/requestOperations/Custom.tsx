@@ -1,7 +1,7 @@
 import {Account, KeyTypes} from 'actions/interfaces';
 import usePotentiallyAnonymousRequest from 'hooks/usePotentiallyAnonymousRequest';
 import React from 'react';
-import {broadcastJson} from 'utils/steem';
+import {broadcastJson} from 'utils/hive';
 import {
   RequestCustomJSON,
   RequestError,
@@ -28,11 +28,8 @@ export default ({
 }: Props) => {
   const {request_id, ...data} = request;
   const {display_msg, id, json, method} = data;
-  const {
-    getUsername,
-    getAccountKey,
-    RequestUsername,
-  } = usePotentiallyAnonymousRequest(request, accounts);
+  const {getUsername, getAccountKey, RequestUsername} =
+    usePotentiallyAnonymousRequest(request, accounts);
 
   return (
     <RequestOperation

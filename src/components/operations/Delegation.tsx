@@ -10,7 +10,7 @@ import Toast from 'react-native-simple-toast';
 import {connect, ConnectedProps} from 'react-redux';
 import {RootState} from 'store';
 import {fromSP} from 'utils/format';
-import dsteem, {delegate} from 'utils/steem';
+import dsteem, {delegate} from 'utils/hive';
 import {getCurrencyProperties} from 'utils/steemReact';
 import {sanitizeAmount, sanitizeUsername} from 'utils/steemUtils';
 import {translate} from 'utils/localize';
@@ -56,7 +56,7 @@ const Delegation = ({
       if (e instanceof Error) {
         if (e.message.startsWith('unknown key:')) {
           Toast.show(
-            translate('request.error.transfer.get_account', { to }),
+            translate('request.error.transfer.get_account', {to}),
             Toast.LONG,
           );
         } else {

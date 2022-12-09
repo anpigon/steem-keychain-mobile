@@ -1,6 +1,6 @@
 import {ExtendedAccount, Authority} from 'dsteem';
 import {AccountKeys} from 'actions/interfaces';
-import dsteem, {getClient} from 'utils/steem';
+import dsteem, {getClient} from 'utils/hive';
 import {translate} from './localize';
 
 const isMemoWif = (publicKey: string, memo: string) => {

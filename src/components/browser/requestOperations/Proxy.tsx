@@ -1,7 +1,7 @@
 import {KeyTypes} from 'actions/interfaces';
 import usePotentiallyAnonymousRequest from 'hooks/usePotentiallyAnonymousRequest';
 import React from 'react';
-import {setProxy} from 'utils/steem';
+import {setProxy} from 'utils/hive';
 import {RequestId, RequestProxy} from 'utils/keychain.types';
 import {translate} from 'utils/localize';
 import RequestItem from './components/RequestItem';
@@ -21,11 +21,8 @@ export default ({
 }: Props) => {
   const {request_id, ...data} = request;
   const {proxy} = data;
-  const {
-    getAccountKey,
-    RequestUsername,
-    getUsername,
-  } = usePotentiallyAnonymousRequest(request, accounts);
+  const {getAccountKey, RequestUsername, getUsername} =
+    usePotentiallyAnonymousRequest(request, accounts);
 
   return (
     <RequestOperation

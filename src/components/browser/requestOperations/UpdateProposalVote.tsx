@@ -1,6 +1,6 @@
 import {KeyTypes} from 'actions/interfaces';
 import React from 'react';
-import {updateProposalVote} from 'utils/steem';
+import {updateProposalVote} from 'utils/hive';
 import {RequestId, RequestUpdateProposalVote} from 'utils/keychain.types';
 import {translate} from 'utils/localize';
 import RequestItem from './components/RequestItem';

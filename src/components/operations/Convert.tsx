@@ -15,7 +15,7 @@ import {
 import Toast from 'react-native-simple-toast';
 import {connect, ConnectedProps} from 'react-redux';
 import {RootState} from 'store';
-import {collateralizedConvert, convert} from 'utils/steem';
+import {collateralizedConvert, convert} from 'utils/hive';
 import {getCurrencyProperties} from 'utils/steemReact';
 import {sanitizeAmount} from 'utils/steemUtils';
 import {translate} from 'utils/localize';
