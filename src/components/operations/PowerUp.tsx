@@ -10,7 +10,7 @@ import Toast from 'react-native-simple-toast';
 import {connect, ConnectedProps} from 'react-redux';
 import {RootState} from 'store';
 import {powerUp} from 'utils/hive';
-import {getCurrencyProperties} from 'utils/steemReact';
+import {getCurrencyProperties} from 'utils/hiveReact';
 import {sanitizeAmount, sanitizeUsername} from 'utils/hiveUtils';
 import {translate} from 'utils/localize';
 import {goBack} from 'utils/navigation';

@@ -22,8 +22,8 @@ import {RootState} from 'store';
 import {beautifyTransferError} from 'utils/format';
 import {ScrollView} from 'react-native-gesture-handler';
 import {recurrentTransfer, sendToken, transfer} from 'utils/hive';
-import {tryConfirmTransaction} from 'utils/steemEngine';
-import {getCurrencyProperties} from 'utils/steemReact';
+import {tryConfirmTransaction} from 'utils/hiveEngine';
+import {getCurrencyProperties} from 'utils/hiveReact';
 import {
   getAccountKeys,
   sanitizeAmount,

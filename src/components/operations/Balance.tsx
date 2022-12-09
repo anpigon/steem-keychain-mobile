@@ -3,7 +3,7 @@ import React from 'react';
 import {StyleSheet, Text, useWindowDimensions, View} from 'react-native';
 import {Width} from 'utils/common.types';
 import {formatBalance, toSP} from 'utils/format';
-import {getCurrencyProperties} from 'utils/steemReact';
+import {getCurrencyProperties} from 'utils/hiveReact';
 import {translate} from 'utils/localize';
 
 type Props = {
