@@ -1,7 +1,11 @@
+import Clipboard from '@react-native-community/clipboard';
 import {ActionPayload, BrowserPayload, Page} from 'actions/interfaces';
+import Copy from 'assets/browser/copy.svg';
+import ShareIcon from 'assets/browser/share.svg';
 import React, {MutableRefObject, useRef} from 'react';
 import {
   NativeSyntheticEvent,
+  Share,
   Platform,
   StyleSheet,
   Text,
@@ -10,6 +14,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
 import {EdgeInsets, useSafeAreaInsets} from 'react-native-safe-area-context';
 import {translate} from 'utils/localize';
@@ -102,15 +107,36 @@ const UrlModal = ({
             <Text style={styles.eraseText}>X</Text>
           </TouchableOpacity>
         ) : null}
+        {url.length ? (
+          <TouchableOpacity
+            style={styles.option}
+            onPress={() => Share.share({message: url})}>
+            <ShareIcon width={16} height={16} />
+          </TouchableOpacity>
+        ) : null}
+        {url.length ? (
+          <TouchableOpacity
+            style={styles.option}
+            onPress={() => Clipboard.setString(url)}>
+            <Copy width={16} height={16} />
+          </TouchableOpacity>
+        ) : null}
+        {url.length ? (
+          <TouchableOpacity style={styles.option} onPress={() => setUrl('')}>
+            <Text style={styles.eraseText}>X</Text>
+          </TouchableOpacity>
+        ) : null}
       </View>
-      <UrlAutocomplete onSubmit={onSubmitUrl} input={url} history={history} />
-      {history.length ? (
-        <TouchableOpacity onPress={clearHistory}>
-          <Text style={styles.clearHistory}>
-            {translate('browser.history.clear')}
-          </Text>
-        </TouchableOpacity>
-      ) : null}
+      <ScrollView>
+        <UrlAutocomplete onSubmit={onSubmitUrl} input={url} history={history} />
+        {history.length ? (
+          <TouchableOpacity onPress={clearHistory}>
+            <Text style={styles.clearHistory}>
+              {translate('browser.history.clear')}
+            </Text>
+          </TouchableOpacity>
+        ) : null}
+      </ScrollView>
     </Modal>
   );
 };
@@ -120,21 +146,23 @@ const getStyles = (insets: EdgeInsets) =>
     urlModal: {
       height: '100%',
       width: '100%',
-      backgroundColor: 'white',
       margin: 0,
-      padding: insets.top,
+      paddingTop: insets.top,
       justifyContent: 'flex-start',
+      backgroundColor: 'white',
     },
+    option: {alignSelf: 'center', marginLeft: 20},
     erase: {width: '10%', alignSelf: 'center'},
-    eraseText: {fontWeight: 'bold'},
+    eraseText: {fontWeight: 'bold', fontSize: 16},
     urlModalContent: {
       backgroundColor: 'white',
       flexDirection: 'row',
       borderColor: 'lightgrey',
       borderBottomWidth: 2,
       padding: 20,
+      margin: 0,
     },
-    urlInput: {width: '90%'},
+    urlInput: {flex: 1},
     clearHistory: {
       marginLeft: 20,
       marginTop: 20,

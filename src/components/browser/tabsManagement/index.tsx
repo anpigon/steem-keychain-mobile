@@ -1,19 +1,19 @@
 import {Tab} from 'actions/interfaces';
-import React from 'react';
+import React, {MutableRefObject} from 'react';
 import {
   Dimensions,
-  Image,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
+import Image from 'react-native-fast-image';
 import TabsManagementBottomBar from './BottomBar';
 
 //TODO: put in config
-const margin = 7;
-const THUMB_WIDTH = (Dimensions.get('window').width - margin * 2) * 0.48;
+const margin = Dimensions.get('window').width * 0.02;
+const THUMB_WIDTH = Dimensions.get('window').width * 0.46;
 const THUMB_HEIGHT = THUMB_WIDTH * 1.3;
 
 type Props = {
@@ -22,7 +22,11 @@ type Props = {
   onCloseTab: (id: number) => void;
   onCloseAllTabs: () => void;
   onQuitManagement: () => void;
-  onAddTab: () => void;
+  onAddTab: (
+    isManagingTab: boolean,
+    tab: Tab,
+    webview: MutableRefObject<View>,
+  ) => void;
   activeTab: number;
   show: boolean;
 };
@@ -39,6 +43,9 @@ export default ({
   return (
     <View style={[styles.container, show ? null : styles.hide]}>
       <ScrollView>
+        <Text style={styles.tip}>
+          Switch between tabs by swiping left or right on the url bar.
+        </Text>
         <View style={styles.subcontainer}>
           {tabs.map(({icon, image, name, id}) => (
             <TouchableOpacity
@@ -72,7 +79,9 @@ export default ({
       </ScrollView>
       <TabsManagementBottomBar
         onCloseAllTabs={onCloseAllTabs}
-        onAddTab={onAddTab}
+        onAddTab={() => {
+          onAddTab(true, null, null);
+        }}
         onQuitManagement={onQuitManagement}
         showSideButtons={!!activeTab}
       />
@@ -81,7 +90,14 @@ export default ({
 };
 
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: 'lightgrey'},
+  tip: {
+    color: '#000',
+    fontSize: 14,
+    fontStyle: 'italic',
+    margin: 10,
+    textAlign: 'justify',
+  },
+  container: {flex: 1, backgroundColor: 'white'},
   subcontainer: {flex: 1, flexDirection: 'row', flexWrap: 'wrap'},
   hide: {display: 'none'},
   tabWrapper: {
@@ -110,7 +126,13 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   icon: {width: 16, height: 16},
-  name: {fontSize: 16, color: 'white', marginLeft: 10},
+  name: {
+    fontSize: 16,
+    color: 'white',
+    textAlign: 'center',
+    flex: 1,
+    marginHorizontal: 10,
+  },
   close: {color: 'white', fontWeight: 'bold', fontSize: 18},
   closeView: {
     minWidth: 30,

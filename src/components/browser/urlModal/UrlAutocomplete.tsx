@@ -2,6 +2,7 @@ import {Page, TabFields} from 'actions/interfaces';
 import Fuse from 'fuse.js';
 import React, {useEffect, useState} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import HistoryItem from './HistoryItem';
 
 type Props = {
   onSubmit: (string: string) => void;
@@ -18,7 +19,7 @@ export default ({input, onSubmit, history}: Props) => {
       location: 0,
       distance: 100,
       //maxPatternLength: 32,
-      minMatchCharLength: 1,
+      minMatchCharLength: 0,
       keys: [
         {name: 'name', weight: 0.5},
         {name: 'url', weight: 0.5},
@@ -31,31 +32,26 @@ export default ({input, onSubmit, history}: Props) => {
       setCandidates([]);
     }
   }, [input, history]);
-
-  const renderItem = ({name, url, icon}: TabFields) => {
+  if (candidates.length)
     return (
-      <TouchableOpacity onPress={() => onSubmit(url)} key={url}>
-        <View style={styles.itemWrapper}>
-          <Image style={styles.img} source={{uri: icon}} />
-          <View style={styles.text}>
-            <Text style={styles.name} numberOfLines={1}>
-              {name}
-            </Text>
-            <Text numberOfLines={1}>{url}</Text>
-          </View>
-        </View>
-      </TouchableOpacity>
+      <View style={styles.wrapper}>
+        {candidates.map((e) => (
+          <HistoryItem onSubmit={onSubmit} data={e} />
+        ))}
+      </View>
     );
-  };
-  return (
-    <View style={styles.wrapper}>{candidates.map((e) => renderItem(e))}</View>
-  );
+  else {
+    let historyCopy = [...history].reverse().slice(0, 10);
+    return (
+      <View style={styles.wrapper}>
+        {historyCopy.map((e) => (
+          <HistoryItem onSubmit={onSubmit} data={e} />
+        ))}
+      </View>
+    );
+  }
 };
 
 const styles = StyleSheet.create({
   wrapper: {marginTop: 20},
-  itemWrapper: {flexDirection: 'row', marginHorizontal: 20, marginVertical: 5},
-  text: {marginLeft: 10},
-  name: {fontWeight: 'bold'},
-  img: {width: 20, height: 20},
 });
