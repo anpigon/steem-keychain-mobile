@@ -2,8 +2,8 @@ import {
   Account,
   ActionPayload,
   BrowserPayload,
-  Page,
   KeyTypes,
+  Page,
   Tab,
   TabFields,
 } from 'actions/interfaces';
@@ -40,18 +40,23 @@ import {RequestError, RequestSuccess} from 'utils/keychain.types';
 import {goBack as navigationGoBack, navigate} from 'utils/navigation';
 import {hasPreference} from 'utils/preferences';
 import {requestWithoutConfirmation} from 'utils/requestWithoutConfirmation';
-import {steem_keychain} from './bridges/SteemKeychainBridge';
+import {steem_keychain} from './bridges/HiveKeychainBridge';
 import {BRIDGE_WV_INFO} from './bridges/WebviewInfo';
 import Footer from './Footer';
 import NotFound from './NotFound';
+import HomeTab from './HomeTab';
 import ProgressBar from './ProgressBar';
 import RequestModalContent from './RequestModalContent';
+import RequestErr from './requestOperations/components/RequestError';
 import UrlModal from './urlModal';
 
 type Props = {
   data: Tab;
   active: boolean;
-  manageTabs: (tab: Tab, webview: MutableRefObject<WebView>) => void;
+  manageTabs: (
+    tab: Tab,
+    webview: MutableRefObject<WebView> | MutableRefObject<View>,
+  ) => void;
   isManagingTab: boolean;
   accounts: Account[];
   updateTab: (id: number, data: TabFields) => ActionPayload<BrowserPayload>;
@@ -60,9 +65,19 @@ type Props = {
   clearHistory: () => ActionPayload<BrowserPayload>;
   navigation: BrowserNavigation;
   preferences: UserPreference[];
+  favorites: Page[];
+  addTab: (
+    isManagingTab: boolean,
+    tab: Tab,
+    webview: MutableRefObject<View>,
+  ) => void;
+  tabsNumber: number;
+  orientation: string;
+  isUrlModalOpen: boolean;
 };
+
 export default ({
-  data: {url, id, icon},
+  data: {url, id, icon, name},
   active,
   updateTab,
   accounts,
@@ -73,12 +88,21 @@ export default ({
   manageTabs,
   isManagingTab,
   preferences,
+  favorites,
+  addTab,
+  tabsNumber,
+  orientation,
+  isUrlModalOpen,
 }: Props) => {
+  const tabData = {url, id, icon, name};
   const tabRef = useRef<WebView>(null);
+  const tabParentRef = useRef<View>(null);
+  const homeRef = useRef<View>(null);
   const [searchUrl, setSearchUrl] = useState(url);
   const [canGoBack, setCanGoBack] = useState(false);
   const [canGoForward, setCanGoForward] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [shouldUpdateWvInfo, setShouldUpdateWvInfo] = useState(true);
   const [isVisible, toggleVisibility] = useState(false);
   const insets = useSafeAreaInsets();
   const FOOTER_HEIGHT = BrowserConfig.FOOTER_HEIGHT + insets.bottom;
@@ -111,6 +135,15 @@ export default ({
     setSearchUrl(url);
   }, [url]);
 
+  useEffect(() => {
+    if (isUrlModalOpen) {
+      setShouldUpdateWvInfo(false);
+    } else {
+      setTimeout(() => {
+        setShouldUpdateWvInfo(true);
+      }, 2100);
+    }
+  }, [isUrlModalOpen]);
   const goBack = () => {
     if (!canGoBack) {
       return;
@@ -118,7 +151,6 @@ export default ({
     const {current} = tabRef;
     current && current.goBack();
   };
-
   const goForward = () => {
     if (!canGoForward) {
       return;
@@ -143,7 +175,9 @@ export default ({
   }) => {
     updateTab(id, {url});
   };
-
+  const updateTabUrl = (link: string) => {
+    updateTab(id, {url: link});
+  };
   const onLoadProgress = ({nativeEvent: {progress}}: WebViewProgressEvent) => {
     setProgress(progress === 1 ? 0 : progress);
   };
@@ -156,6 +190,8 @@ export default ({
     if (loading) {
       return;
     }
+    setCanGoBack(canGoBack);
+    setCanGoForward(canGoForward);
     if (current) {
       current.injectJavaScript(BRIDGE_WV_INFO);
     }
@@ -187,7 +223,8 @@ export default ({
         break;
       case 'swRequest_steem':
         if (validateRequest(data)) {
-          if (validateAuthority(accounts, data)) {
+          const validateAuth = validateAuthority(accounts, data);
+          if (validateAuth.valid) {
             showOperationRequestModal(request_id, data);
           } else {
             sendError(tabRef, {
@@ -195,6 +232,17 @@ export default ({
               message: 'Request was canceled by the user.',
               data,
               request_id,
+            });
+            navigate('ModalScreen', {
+              name: `Operation_${data.type}`,
+              modalContent: (
+                <RequestErr
+                  onClose={() => {
+                    navigationGoBack();
+                  }}
+                  error={validateAuth.error}
+                />
+              ),
             });
           }
         } else {
@@ -209,11 +257,26 @@ export default ({
       case 'WV_INFO':
         const {icon, name, url} = data as TabFields;
         if ('about:blank' === url || url.startsWith('chrome-error://')) return;
-        navigation.setParams({icon});
-        if (name && url && url !== 'chromewebdata') {
-          addToHistory({icon, name, url});
+        if (
+          urlTransformer(url).host !== urlTransformer(tabData.url).host ||
+          !shouldUpdateWvInfo ||
+          urlTransformer(url).host === 'www.risingstargame.com' //TODO : improve
+        ) {
+          break;
         }
-        updateTab(id, {url, name, icon});
+        if (
+          tabData.url !== 'about:blank' &&
+          (icon !== tabData.icon ||
+            name !== tabData.name ||
+            url !== tabData.url)
+        ) {
+          navigation.setParams({icon});
+
+          if (name && url && url !== 'chromewebdata') {
+            addToHistory({icon, name, url});
+          }
+          updateTab(id, {url, name, icon});
+        }
         break;
     }
   };
@@ -293,49 +356,101 @@ export default ({
       <View style={styles.container}>
         <ProgressBar progress={progress} />
 
-        <WebView
-          ref={tabRef}
-          source={{uri: url}}
-          sharedCookiesEnabled
-          injectedJavaScriptForMainFrameOnly
-          injectedJavaScript={steem_keychain}
-          onMessage={onMessage}
-          bounces={false}
-          javaScriptEnabled
-          cacheEnabled
-          allowsInlineMediaPlayback
-          onLoadEnd={onLoadEnd}
-          onLoadStart={onLoadStart}
-          onLoadProgress={onLoadProgress}
-          onNavigationStateChange={onNavigationStateChange}
-          renderError={(errorDomain, errorCode, errorDesc) => (
-            <NotFound
-              errorDomain={errorDomain || url}
-              errorCode={errorCode}
-              errorDesc={errorDesc}
-            />
-          )}
-        />
+        {url === BrowserConfig.HOMEPAGE_URL ? (
+          <HomeTab
+            history={history}
+            favorites={favorites}
+            updateTabUrl={updateTabUrl}
+            homeRef={homeRef}
+            accounts={accounts}
+          />
+        ) : null}
+        {url === BrowserConfig.HOMEPAGE_URL ? (
+          <HomeTab
+            history={history}
+            favorites={favorites}
+            updateTabUrl={updateTabUrl}
+            homeRef={homeRef}
+            accounts={accounts}
+          />
+        ) : null}
+        <View
+          style={
+            url === BrowserConfig.HOMEPAGE_URL ? styles.hide : styles.container
+          }
+          ref={tabParentRef}
+          collapsable={false}>
+          <WebView
+            source={{
+              uri: url === BrowserConfig.HOMEPAGE_URL ? null : url,
+            }}
+            domStorageEnabled={true}
+            allowFileAccess={true}
+            allowUniversalAccessFromFileURLs={true}
+            mixedContentMode={'always'}
+            ref={tabRef}
+            sharedCookiesEnabled={
+              url.includes('risingstargame.com') ? false : true
+            }
+            injectedJavaScriptBeforeContentLoaded={steem_keychain}
+            onMessage={onMessage}
+            javaScriptEnabled
+            allowsInlineMediaPlayback
+            onLoadEnd={onLoadEnd}
+            onLoadStart={onLoadStart}
+            onLoadProgress={onLoadProgress}
+            pullToRefreshEnabled
+            onError={(error) => {
+              console.log('Error', error);
+            }}
+            onHttpError={(error) => {
+              console.log('HttpError', error);
+            }}
+            useWebView2
+            injectedJavaScriptForMainFrameOnly
+            bounces={false}
+            cacheEnabled
+            onNavigationStateChange={onNavigationStateChange}
+            renderError={(errorDomain, errorCode, errorDesc) => (
+              <NotFound
+                errorDomain={errorDomain || url}
+                errorCode={errorCode}
+                errorDesc={errorDesc}
+              />
+            )}
+          />
+        </View>
       </View>
-      {active && (
+      {active && orientation === 'PORTRAIT' && (
         <Footer
           canGoBack={canGoBack}
           canGoForward={canGoForward}
           goBack={goBack}
           goForward={goForward}
           reload={reload}
+          addTab={() => {
+            addTab(
+              isManagingTab,
+              {url, id, icon},
+              url === BrowserConfig.HOMEPAGE_URL ? homeRef : tabParentRef,
+            );
+          }}
           manageTabs={() => {
-            manageTabs({url, id, icon}, tabRef);
+            manageTabs(
+              {url, id, icon},
+              url === BrowserConfig.HOMEPAGE_URL ? homeRef : tabParentRef,
+            );
           }}
           height={FOOTER_HEIGHT}
-          toggleSearchBar={() => {
-            setSearchUrl(url);
-            toggleVisibility(true);
-          }}
-          goHome={goHome}
+          tabs={tabsNumber}
+          // toggleSearchBar={() => {
+          //   setSearchUrl(url);
+          //   toggleVisibility(true);
+          // }}
+          // goHome={goHome}
         />
       )}
-      {active && (
+      {/* {active && (
         <UrlModal
           isVisible={isVisible}
           toggle={toggleVisibility}
@@ -345,12 +460,12 @@ export default ({
           setUrl={setSearchUrl}
           clearHistory={clearHistory}
         />
-      )}
+      )} */}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {flex: 1},
+  container: {flex: 1, flexDirection: 'column'},
   hide: {flex: 0, opacity: 0, display: 'none', width: 0, height: 0},
 });

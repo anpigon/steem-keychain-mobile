@@ -8,6 +8,7 @@ const getWebviewInfo = `
 			if (rel === "icon" || rel === "shortcut icon")
 			{
 				favicon = nodeList[i]
+				break;
 			}
 		}
 		return favicon && favicon.href
@@ -27,6 +28,19 @@ const getWebviewInfo = `
 			}
 		}
 	))
+
+	setInterval(()=>{
+		window.ReactNativeWebView && window.ReactNativeWebView.postMessage(JSON.stringify(
+			{
+				name: 'WV_INFO',
+				data: {
+					url: location.href,
+					icon: __getFavicon(),
+					name: __getName()
+				}
+			}
+		))
+	},2000);
 `;
 
 export const BRIDGE_WV_INFO = `
