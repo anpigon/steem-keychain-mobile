@@ -1,12 +1,12 @@
 import {loadTokenHistory} from 'actions/index';
 import HistoryIcon from 'assets/wallet/icon_history.svg';
-import Transfer from 'components/steem/Transfer';
+import Transfer from 'components/hive/Transfer';
 import Separator from 'components/ui/Separator';
 import React, {useEffect} from 'react';
 import {FlatList} from 'react-native';
 import {connect, ConnectedProps} from 'react-redux';
 import {RootState} from 'store';
-import {translate} from 'utils/localize';
+import {getMainLocale, translate} from 'utils/localize';
 import Balance from './Balance';
 import Operation from './Operation';
 
@@ -40,14 +40,21 @@ const History = ({
           currency={currency}
           tokenBalance={tokenBalance}
           tokenLogo={tokenLogo}
-          engine
+          isHiveEngine
         />
         <Separator />
         <FlatList
           data={history}
           keyExtractor={(item) => item._id}
           renderItem={({item}) => {
-            return <Transfer transaction={item} user={user} token />;
+            return (
+              <Transfer
+                transaction={item}
+                user={user}
+                token
+                locale={getMainLocale()}
+              />
+            );
           }}
         />
       </>

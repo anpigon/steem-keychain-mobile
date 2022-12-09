@@ -6,46 +6,41 @@ import {voteForWitness} from 'utils/hive';
 import {translate} from 'utils/localize';
 
 export default ({user}: {user: ActiveAccount}) => {
-  const showVoteForWitness = () => {
-    if (
-      user.account.witness_votes &&
-      user.account.witness_votes.includes('stoodkev')
-    )
-      return <></>;
-    return (
-      <TouchableOpacity
-        style={styles.witness}
-        onPress={async () => {
-          try {
-            if (!user.keys[KeyTypes.active]) {
-              Toast.show(translate('drawerFooter.errorActive'), Toast.LONG);
-              return;
-            }
-            if (user.account.witness_votes.length === 30) {
-              Toast.show(translate('drawerFooter.error30'), Toast.LONG);
-              return;
-            }
-            await voteForWitness(user.keys[KeyTypes.active], {
-              account: user.name,
-              witness: 'stoodkev',
-              approve: true,
-            });
-            Toast.show(translate('drawerFooter.thanks'), Toast.LONG);
-          } catch (e) {
-            Toast.show(
-              translate('drawerFooter.error') + JSON.stringify(e),
-              Toast.LONG,
-            );
-          }
-        }}>
-        <Text style={styles.footerText}>{translate('drawerFooter.vote')}</Text>
-      </TouchableOpacity>
-    );
-  };
   return (
     <View style={styles.footer}>
       <Text style={styles.footerText}>{translate('drawerFooter.madeBy')}</Text>
-      {/* {showVoteForWitness()} */}
+      {/* TODO: witness_votes 버튼 노출 일단 숨김 */}
+      {/* {!user?.account?.witness_votes?.includes('stoodkev') && (
+        <TouchableOpacity
+          style={styles.witness}
+          onPress={async () => {
+            try {
+              if (!user.keys[KeyTypes.active]) {
+                Toast.show(translate('drawerFooter.errorActive'), Toast.LONG);
+                return;
+              }
+              if (user.account.witness_votes.length === 30) {
+                Toast.show(translate('drawerFooter.error30'), Toast.LONG);
+                return;
+              }
+              await voteForWitness(user.keys[KeyTypes.active], {
+                account: user.name,
+                witness: 'stoodkev',
+                approve: true,
+              });
+              Toast.show(translate('drawerFooter.thanks'), Toast.LONG);
+            } catch (e) {
+              Toast.show(
+                translate('drawerFooter.error') + JSON.stringify(e),
+                Toast.LONG,
+              );
+            }
+          }}>
+          <Text style={styles.footerText}>
+            {translate('drawerFooter.vote')}
+          </Text>
+        </TouchableOpacity>
+      )} */}
     </View>
   );
 };

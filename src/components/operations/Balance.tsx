@@ -1,6 +1,7 @@
 import {DynamicGlobalProperties, ExtendedAccount} from '@upvu/dsteem';
 import React from 'react';
 import {StyleSheet, Text, useWindowDimensions, View} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Width} from 'utils/common.types';
 import {formatBalance, toSP} from 'utils/format';
 import {getCurrencyProperties} from 'utils/hiveReact';
@@ -11,19 +12,21 @@ type Props = {
   account?: ExtendedAccount;
   pd?: boolean;
   globalProperties?: DynamicGlobalProperties;
-  engine?: boolean;
+  isHiveEngine?: boolean;
   tokenBalance?: string;
   tokenLogo?: JSX.Element;
+  setMax?: (value: string) => void;
 };
 
-const TokenDisplay = ({
+const Balance = ({
   currency,
   account,
   pd,
   globalProperties,
-  engine,
+  isHiveEngine,
   tokenBalance,
   tokenLogo,
+  setMax,
 }: Props) => {
   let {color, value, logo} = getCurrencyProperties(currency, account);
   let parsedValue = parseFloat(value as string);
@@ -34,7 +37,7 @@ const TokenDisplay = ({
       parseFloat(account.delegated_vesting_shares as string);
     parsedValue = toSP(value as string, globalProperties);
   }
-  if (engine) {
+  if (isHiveEngine) {
     parsedValue = +tokenBalance!;
     logo = tokenLogo!;
   }
@@ -43,7 +46,13 @@ const TokenDisplay = ({
     ...useWindowDimensions(),
   });
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={() => {
+        if (setMax) {
+          setMax(parsedValue.toFixed(3) + '');
+        }
+      }}>
       <View style={styles.main}>
         <View style={styles.left}>
           <View style={styles.logo}>{logo}</View>
@@ -59,7 +68,7 @@ const TokenDisplay = ({
           <Text style={styles.currency}>{` ${currency}`}</Text>
         </Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -97,4 +106,4 @@ const getDimensionedStyles = ({width, color}: Width & {color?: string}) =>
     },
   });
 
-export default TokenDisplay;
+export default Balance;

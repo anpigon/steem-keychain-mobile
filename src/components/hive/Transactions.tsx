@@ -5,7 +5,7 @@ import React, {useEffect, useState} from 'react';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {connect, ConnectedProps} from 'react-redux';
 import {RootState} from 'store';
-import {translate} from 'utils/localize';
+import {getMainLocale, translate} from 'utils/localize';
 import Transfer from './Transfer';
 
 type Props = PropsFromRedux & {user: ActiveAccount};
@@ -23,10 +23,14 @@ const Transactions = ({
     }
   }, [user.account.name, initAccountTransactions]);
   const [end, setEnd] = useState(0);
-
+  const locale = getMainLocale();
   const renderTransactions = () => {
     if (loading) {
-      return <Loader animating />;
+      return (
+        <View style={{flex: 1, justifyContent: 'center'}}>
+          <Loader animating />
+        </View>
+      );
     } else {
       return transactions.length ? (
         <FlatList
@@ -42,7 +46,13 @@ const Transactions = ({
             }
           }}
           renderItem={(transaction) => {
-            return <Transfer transaction={transaction.item} user={user} />;
+            return (
+              <Transfer
+                transaction={transaction.item}
+                user={user}
+                locale={locale}
+              />
+            );
           }}
           keyExtractor={(transaction) => transaction.key}
           style={basicStyles.flex}

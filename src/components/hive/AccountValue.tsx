@@ -6,14 +6,14 @@ import {withCommas} from 'utils/format';
 import {getAccountValue} from 'utils/price';
 
 type Props = {
-  bittrex: CurrencyPrices;
+  prices: CurrencyPrices;
   account: ExtendedAccount;
   properties: GlobalProperties;
 };
-const AccountValue = ({bittrex, account, properties}: Props) => {
+const AccountValue = ({prices, account, properties}: Props) => {
   let accountValue = '...';
-  if (bittrex.btc && account && properties.globals) {
-    accountValue = getAccountValue(account, bittrex, properties.globals) + '';
+  if (prices.bitcoin && account && properties.globals) {
+    accountValue = getAccountValue(account, prices, properties.globals) + '';
     accountValue = isNaN(+accountValue)
       ? '...'
       : `$ ${withCommas(accountValue, 2)}`;

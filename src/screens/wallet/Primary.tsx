@@ -1,8 +1,8 @@
 import Steem from 'assets/wallet/icon_steem.svg';
 import Sp from 'assets/wallet/icon_power.svg';
-import AccountValue from 'components/steem/AccountValue';
-import TokenDisplay from 'components/steem/TokenDisplay';
-import Transactions from 'components/steem/Transactions';
+import AccountValue from 'components/hive/AccountValue';
+import TokenDisplay from 'components/hive/TokenDisplay';
+import Transactions from 'components/hive/Transactions';
 import {
   Send,
   SendConversion,

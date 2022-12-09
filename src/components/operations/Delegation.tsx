@@ -10,7 +10,7 @@ import Toast from 'react-native-simple-toast';
 import {connect, ConnectedProps} from 'react-redux';
 import {RootState} from 'store';
 import {fromSP} from 'utils/format';
-import hive, {delegate} from 'utils/hive';
+import {delegate} from 'utils/hive';
 import {getCurrencyProperties} from 'utils/hiveReact';
 import {sanitizeAmount, sanitizeUsername} from 'utils/hiveUtils';
 import {translate} from 'utils/localize';
@@ -82,6 +82,9 @@ const Delegation = ({
           account={user.account}
           pd
           globalProperties={properties.globals}
+          setMax={(value: string) => {
+            setAmount(value);
+          }}
         />
 
         <Separator />

@@ -2,7 +2,7 @@ import {addKey, forgetAccount, forgetKey} from 'actions/index';
 import {KeyTypes} from 'actions/interfaces';
 import EllipticButton from 'components/form/EllipticButton';
 import UserPicker from 'components/form/UserPicker';
-import Key from 'components/steem/Key';
+import Key from 'components/hive/Key';
 import FocusAwareStatusBar from 'components/ui/FocusAwareStatusBar';
 import SafeArea from 'components/ui/SafeArea';
 import Separator from 'components/ui/Separator';

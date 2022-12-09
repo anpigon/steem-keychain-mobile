@@ -5,7 +5,7 @@ import {
   loadProperties,
 } from 'actions/index';
 import UserPicker from 'components/form/UserPicker';
-import PercentageDisplay from 'components/steem/PercentageDisplay';
+import PercentageDisplay from 'components/hive/PercentageDisplay';
 import ScreenToggle from 'components/ui/ScreenToggle';
 import WalletPage from 'components/ui/WalletPage';
 import React, {useEffect} from 'react';

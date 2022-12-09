@@ -15,18 +15,22 @@ type Props = {
   user: ActiveAccount;
   transaction: Transaction | TokenTransaction;
   token?: boolean;
+  locale: string;
 };
-const Transfer = ({transaction, user, token = false}: Props) => {
+const Transfer = ({transaction, user, locale, token = false}: Props) => {
   const [toggle, setToggle] = useState(false);
   const username = user.name;
   const {timestamp, from, to, amount, memo} = transaction;
   const other = from === username ? to : from;
   const direction = from === username ? '-' : '+';
   const color = direction === '+' ? '#3BB26E' : '#B9122F';
-  const date = format(
-    token ? (timestamp as number) * 1000 : new Date(`${timestamp}Z`),
-    'yy-MM-dd HH:mm',
-  );
+  const date = new Date(
+    token ? (timestamp as number) * 1000 : timestamp,
+  ).toLocaleDateString([locale], {
+    year: '2-digit',
+    month: '2-digit',
+    day: '2-digit',
+  });
 
   const styles = getDimensionedStyles({
     ...useWindowDimensions(),
@@ -44,7 +48,7 @@ const Transfer = ({transaction, user, token = false}: Props) => {
           <Text style={styles.username}>{`@${other}`}</Text>
         </View>
 
-        <Text style={styles.amount}>{`${direction}${withCommas(amount)} ${
+        <Text style={styles.amount}>{`${direction} ${withCommas(amount)} ${
           amount.split(' ')[1]
         }`}</Text>
       </View>

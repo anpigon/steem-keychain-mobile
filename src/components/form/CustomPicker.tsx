@@ -6,6 +6,7 @@ import {
   StyleProp,
   StyleSheet,
   Text,
+  TextStyle,
   TouchableOpacity,
   ViewStyle,
 } from 'react-native';
@@ -16,7 +17,10 @@ type Props = {
   onSelected: (value: any) => void;
   prefix?: string;
   prompt: string;
-  style?: StyleProp<ViewStyle>;
+  style?: StyleProp<TextStyle>;
+  dropdownIconColor?: string;
+  labelCreator?: (obj: any) => string;
+  iosTextStyle?: StyleProp<TextStyle>;
 };
 const CustomPicker = ({
   list,
@@ -25,6 +29,9 @@ const CustomPicker = ({
   prefix,
   prompt,
   style,
+  labelCreator,
+  dropdownIconColor,
+  iosTextStyle,
 }: Props) => {
   const styles = getDimensionedStyles();
   switch (Platform.OS) {
@@ -35,17 +42,19 @@ const CustomPicker = ({
           onPress={() => {
             ActionSheetIOS.showActionSheetWithOptions(
               {
-                options: list,
+                options: labelCreator ? list.map((e) => labelCreator(e)) : list,
               },
               (index) => {
                 onSelected(list[index]);
               },
             );
           }}>
-          <Text style={styles.iosLabel}>{`${
+          <Text style={[styles.iosLabel, iosTextStyle]}>{`${
             prefix ? prefix : ''
-          }${selectedValue}`}</Text>
-          <Text>{'\u25BC'}</Text>
+          }${
+            labelCreator ? labelCreator(selectedValue) : selectedValue
+          }`}</Text>
+          <Text style={iosTextStyle}>{'\u25BC'}</Text>
         </TouchableOpacity>
       );
     default:
@@ -53,14 +62,15 @@ const CustomPicker = ({
         <Picker
           style={[styles.picker, style]}
           selectedValue={selectedValue}
-          prompt={prompt}
-          dropdownIconColor="black"
+          prompt={prompt}dropdownIconColor={dropdownIconColor || 'black'}
           onValueChange={onSelected}>
           {list.map((item, i) => {
             return (
               <Picker.Item
                 key={i}
-                label={`${prefix ? prefix : ''}${item}`}
+                label={`${prefix ? prefix : ''}${
+                  labelCreator ? labelCreator(item) : item
+                }`}
                 value={item}
               />
             );

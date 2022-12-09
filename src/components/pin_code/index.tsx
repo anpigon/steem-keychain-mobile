@@ -11,7 +11,6 @@ import Toast from 'react-native-simple-toast';
 import {translate} from 'utils/localize';
 import PinCompletionIndicator from './PinCompletionIndicator';
 import PinElement from './PinElement';
-
 interface Props {
   children: JSX.Element;
   signup?: boolean;
@@ -146,7 +145,7 @@ const PinCode = ({
           </View>
         ))}
       </View>
-      {false && (
+      {visible && (
         <CustomModal
           bottomHalf={true}
           outsideClick={() => {

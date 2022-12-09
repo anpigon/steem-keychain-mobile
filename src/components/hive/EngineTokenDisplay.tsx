@@ -1,31 +1,53 @@
 import {Token, TokenBalance, TokenMarket} from 'actions/interfaces';
-import SteemEngine from 'assets/wallet/steem_engine.png';
+import HiveEngine from 'assets/wallet/steem_engine.png';
 import {Send, ShowHistory} from 'components/operations/OperationsButtons';
-import React from 'react';
+import React, {useState} from 'react';
 import {Image as Img, StyleSheet, useWindowDimensions} from 'react-native';
 import Image from 'react-native-fast-image';
 import {Width} from 'utils/common.types';
-import {withCommas} from 'utils/format';
 import TokenDisplay from './TokenDisplay';
 
 type Props = {
   token: TokenBalance;
   tokensList: Token[];
   market: TokenMarket[];
+  toggled: boolean;
+  setToggle: () => void;
 };
-const EngineTokenDisplay = ({token, tokensList, market}: Props) => {
+const EngineTokenDisplay = ({
+  token,
+  tokensList,
+  market,
+  toggled,
+  setToggle,
+}: Props) => {
   const styles = getDimensionedStyles(useWindowDimensions());
+  const [hasError, setHasError] = useState(false);
   const tokenInfo = tokensList.find((t) => t.symbol === token.symbol);
   const tokenMarket = market.find((t) => t.symbol === token.symbol);
+
   if (!tokenInfo) {
     return null;
   }
   const metadata = JSON.parse(tokenInfo.metadata);
-  const logo = (
+  const logo = hasError ? (
     <Image
       style={styles.icon}
       source={{
-        uri: metadata.icon || Img.resolveAssetSource(SteemEngine).uri,
+        uri: Img.resolveAssetSource(HiveEngine).uri,
+      }}
+      onError={() => {
+        console.log('default');
+      }}
+    />
+  ) : (
+    <Image
+      style={styles.icon}
+      source={{
+        uri: metadata.icon || Img.resolveAssetSource(HiveEngine).uri,
+      }}
+      onError={() => {
+        setHasError(true);
       }}
     />
   );
@@ -36,10 +58,13 @@ const EngineTokenDisplay = ({token, tokensList, market}: Props) => {
       color="black"
       amountStyle={styles.amount}
       value={parseFloat(token.balance)}
+      toggled={toggled}
+      setToggle={setToggle}
       price={{
-        usd: withCommas(tokenMarket ? tokenMarket.lastPrice : '0'),
-        DailyUsd:
-          parseFloat(tokenMarket ? tokenMarket.priceChangePercent : '0') + '',
+        usd: tokenMarket ? parseFloat(tokenMarket.lastPrice) : 0,
+        usd_24h_change: parseFloat(
+          tokenMarket ? tokenMarket.priceChangePercent : '0',
+        ),
       }}
       buttons={[
         <Send

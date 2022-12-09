@@ -1,6 +1,6 @@
 import {Currency} from 'actions/interfaces';
 import DelegationsList from 'components/operations/DelegationsList';
-import React, {useState} from 'react';
+import React from 'react';
 import {
   StyleProp,
   StyleSheet,
@@ -19,12 +19,17 @@ type Props = {
   logo: JSX.Element;
   currency: string;
   value: number;
+  secondaryCurrency?: string;
+  secondaryValue?: number;
   color: string;
-  price: Currency;
+  price?: Currency;
   incoming?: number;
   outgoing?: number;
   buttons: JSX.Element[];
   amountStyle?: StyleProp<TextStyle>;
+  bottomLeft?: JSX.Element;
+  toggled: boolean;
+  setToggle: () => void;
 };
 
 const TokenDisplay = ({
@@ -38,32 +43,42 @@ const TokenDisplay = ({
   incoming,
   outgoing,
   amountStyle,
+  secondaryCurrency,
+  secondaryValue,
+  bottomLeft,
+  toggled,
+  setToggle,
 }: Props) => {
   const styles = getDimensionedStyles({
     color,
     ...useWindowDimensions(),
-    change: price?.DailyUsd ?? '0.0',
+    change: price ? price.usd_24h_change! + '' : '0',
   });
-  const [toggle, setToggle] = useState(false);
   return (
-    <TouchableOpacity
-      style={styles.container}
-      onPress={() => {
-        setToggle(!toggle);
-      }}>
+    <TouchableOpacity style={styles.container} onPress={setToggle}>
       <View style={styles.main}>
         <View style={styles.left}>
           <View style={styles.logo}>{logo}</View>
           <Text style={styles.name}>{name}</Text>
         </View>
-        <Text style={amountStyle || styles.amount}>
-          {value ? formatBalance(value) : 0}
-          <Text style={styles.currency}>{` ${currency}`}</Text>
-        </Text>
+        <View>
+          <Text style={amountStyle || styles.amount}>
+            {value ? formatBalance(value) : 0}
+            <Text style={styles.currency}>{` ${currency}`}</Text>
+          </Text>
+          {secondaryCurrency ? (
+            <Text style={amountStyle || styles.amount}>
+              {secondaryValue ? formatBalance(secondaryValue) : 0}
+              <Text style={styles.currency}>{` ${secondaryCurrency}`}</Text>
+            </Text>
+          ) : null}
+        </View>
       </View>
-      {toggle && (
+      {toggled && (
         <View style={[styles.row, styles.toggle]}>
-          {renderLeftBottom(styles, price, currency, incoming, outgoing)}
+          {bottomLeft
+            ? bottomLeft
+            : renderLeftBottom(styles, price, currency, incoming, outgoing)}
           <View style={[styles.row, styles.halfLine, styles.rowReverse]}>
             {buttons}
           </View>
@@ -83,17 +98,15 @@ const renderLeftBottom = (
   if (currency !== 'SP') {
     return (
       <View style={[styles.row, styles.halfLine]}>
-        <Text style={styles.price}>{`$ ${
-          Number(price?.usd)?.toFixed(2) || 0.0
-        }`}</Text>
+        <Text style={styles.price}>{`$ ${price.usd.toFixed(2)}`}</Text>
         <Text style={styles.change}>{`${signedNumber(
-          +Number(price?.DailyUsd)?.toFixed(2) || 0.0,
+          +price.usd_24h_change!.toFixed(2),
         )}%`}</Text>
       </View>
     );
   } else {
     return (
-      <View style={styles.halfLine}>
+      <View style={styles.flex}>
         <View style={styles.row}>
           <TouchableOpacity
             onPress={() => {
@@ -113,7 +126,7 @@ const renderLeftBottom = (
                 modalContent: <DelegationsList type="outgoing" />,
               });
             }}>
-            <Text style={styles.red}>{`-${formatBalance(outgoing!)} SP`}</Text>
+            <Text style={styles.red}>{`- ${formatBalance(outgoing!)} SP`}</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -148,6 +161,7 @@ const getDimensionedStyles = ({
       display: 'flex',
       flexDirection: 'row',
       alignItems: 'center',
+      alignSelf: 'flex-start',
     },
     logo: {justifyContent: 'center', alignItems: 'center'},
     name: {
@@ -155,7 +169,7 @@ const getDimensionedStyles = ({
       fontSize: 15,
       color: '#7E8C9A',
     },
-    amount: {fontWeight: 'bold', fontSize: 17},
+    amount: {fontWeight: 'bold', fontSize: 17, textAlign: 'right'},
     currency: {color},
     row: {
       display: 'flex',
@@ -170,8 +184,9 @@ const getDimensionedStyles = ({
     change: {color: +change > 0 ? '#3BB26E' : '#B9122F'},
     green: {color: '#3BB26E'},
     red: {color: '#B9122F'},
-    halfLine: {width: '40%'},
+    halfLine: {width: '50%'},
     rowReverse: {flexDirection: 'row-reverse'},
+    flex: {flex: 1, marginRight: 30},
   });
 type Styles = ReturnType<typeof getDimensionedStyles>;
 

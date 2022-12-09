@@ -16,11 +16,11 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
 import Toast from 'react-native-simple-toast';
 import {connect, ConnectedProps} from 'react-redux';
 import {RootState} from 'store';
 import {beautifyTransferError} from 'utils/format';
-import {ScrollView} from 'react-native-gesture-handler';
 import {recurrentTransfer, sendToken, transfer} from 'utils/hive';
 import {tryConfirmTransaction} from 'utils/hiveEngine';
 import {getCurrencyProperties} from 'utils/hiveReact';
@@ -137,9 +137,9 @@ const Transfer = ({
     }
   };
   const {color} = getCurrencyProperties(currency);
-  const {width} = useWindowDimensions();
+  const {height} = useWindowDimensions();
 
-  const styles = getDimensionedStyles(color, width);
+  const styles = getDimensionedStyles(color, height);
   if (step === 1) {
     return (
       <Operation
@@ -152,7 +152,10 @@ const Transfer = ({
             account={user.account}
             tokenBalance={tokenBalance}
             tokenLogo={tokenLogo}
-            engine={engine}
+            isHiveEngine={engine}
+            setMax={(value: string) => {
+              setAmount(value);
+            }}
           />
 
           <Separator />
@@ -185,6 +188,7 @@ const Transfer = ({
             onSelect={setPrivacy}
           />
           <Separator height={20} />
+          {/* TODO: 일단 주석 처리 */}
           {/* <OptionsToggle
             title="Recurrent transfers"
             toggled={isRecurrent}
@@ -310,15 +314,11 @@ const getDimensionedStyles = (color: string, width: number) => {
     send: {backgroundColor: '#68A0B4'},
     confirm: {
       backgroundColor: '#68A0B4',
-      flex: 1,
+      width: width / 5,
       marginHorizontal: 0,
     },
     warning: {color: 'red', fontWeight: 'bold'},
-    back: {
-      backgroundColor: '#7E8C9A',
-      flex: 1,
-      marginHorizontal: 0,
-    },
+    back: {backgroundColor: '#7E8C9A', width: width / 5, marginHorizontal: 0},
     currency: {fontWeight: 'bold', fontSize: 18, color},
     title: {fontWeight: 'bold', fontSize: 16},
     buttonsContainer: {

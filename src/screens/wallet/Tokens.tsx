@@ -1,7 +1,7 @@
 import analytics from '@react-native-firebase/analytics';
 import {loadTokens, loadTokensMarket, loadUserTokens} from 'actions/index';
-import EngineTokenDisplay from 'components/steem/EngineTokenDisplay';
-import SteemEngineAccountValue from 'components/steem/SteemEngineAccountValue';
+import EngineTokenDisplay from 'components/hive/EngineTokenDisplay';
+import HiveEngineAccountValue from 'components/hive/HiveEngineAccountValue';
 import Loader from 'components/ui/Loader';
 import Separator from 'components/ui/Separator';
 import React, {useEffect} from 'react';
@@ -64,7 +64,7 @@ const Tokens = ({
   return (
     <View style={styles.container}>
       <Separator />
-      <SteemEngineAccountValue
+      <HiveEngineAccountValue
         bittrex={bittrex}
         tokens={userTokens.list}
         tokensMarket={tokensMarket}

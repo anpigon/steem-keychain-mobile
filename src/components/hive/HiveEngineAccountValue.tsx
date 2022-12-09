@@ -5,11 +5,11 @@ import {withCommas} from 'utils/format';
 
 type Props = {
   tokensMarket: TokenMarket[];
-  bittrex: CurrencyPrices;
+  prices: CurrencyPrices;
   tokens: TokenBalance[];
 };
 
-const SteemEngineAccountValue = ({tokens, tokensMarket, bittrex}: Props) => {
+const HiveEngineAccountValue = ({tokens, tokensMarket, prices}: Props) => {
   let accountValue = 0;
   if (tokensMarket.length) {
     for (const token of tokens) {
@@ -20,11 +20,10 @@ const SteemEngineAccountValue = ({tokens, tokensMarket, bittrex}: Props) => {
       }
     }
   }
-  return (
-    <Text style={styles.accountValue}>{`$ ${withCommas(
-      accountValue * parseFloat(bittrex.steem.usd) + '',
-    )}`}</Text>
-  );
+  let usdValue = prices?.steem?.usd
+    ? withCommas(accountValue * prices.steem.usd + '')
+    : '...';
+  return <Text style={styles.accountValue}>{`$ ${usdValue}`}</Text>;
 };
 
 const styles = StyleSheet.create({
@@ -36,4 +35,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SteemEngineAccountValue;
+export default HiveEngineAccountValue;

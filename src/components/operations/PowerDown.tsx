@@ -85,6 +85,9 @@ const PowerDown = ({currency = 'SP', user, loadAccount, properties}: Props) => {
           account={user.account}
           pd
           globalProperties={properties.globals}
+          setMax={(value: string) => {
+            setAmount(value);
+          }}
         />
 
         <Separator />

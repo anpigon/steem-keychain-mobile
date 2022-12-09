@@ -18,41 +18,54 @@ export default ({list, onSelect, selected}: Props) => (
   <View style={styles.radioGroup}>
     {list.map((data) => (
       <RadioButton
-        data={data}
+        label={data}
         onSelect={onSelect}
         selected={selected === data}
         key={data}
+        radioStyle={{width: 150}}
       />
     ))}
   </View>
 );
 
 type RadioProps = {
-  data?: string;
+  label?: string;
   onSelect: (arg0: string) => void;
   selected: boolean;
   style?: StyleProp<ViewStyle>;
 };
 
-export const RadioButton = ({data, onSelect, selected, style}: RadioProps) => (
+
+export const RadioButton = ({
+  label,
+  onSelect,
+  selected,
+  style,
+  radioStyle,
+}: RadioProps) => (
   <TouchableOpacity
     style={styles.radioButton}
     onPress={() => {
-      onSelect(data);
+      onSelect(label);
     }}>
     <View
       style={[styles.button, selected ? styles.buttonActive : null, style]}
     />
-    <Text style={styles.label}>{data}</Text>
+    <View style={styles.labelView}>
+      <Text style={styles.label}>{label}</Text>
+    </View>
   </TouchableOpacity>
 );
 
 const styles = StyleSheet.create({
-  radioGroup: {flexDirection: 'row', justifyContent: 'flex-end'},
+  radioGroup: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    flex: 1,
+  },
   radioButton: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
   },
   button: {
     borderColor: '#77B9D1',
@@ -63,5 +76,8 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   buttonActive: {backgroundColor: '#77B9D1'},
-  label: {marginLeft: 10, marginRight: 10},
+  label: {marginLeft: 10, marginRight: 20},
+  labelView: {
+    flexDirection: 'column',
+  },
 });
