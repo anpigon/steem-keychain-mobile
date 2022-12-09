@@ -1,4 +1,4 @@
-import {ExtendedAccount} from 'dsteem';
+import {ExtendedAccount} from '@upvu/dsteem';
 import {Manabar} from 'dsteem/lib/steem/rc';
 import {AccountKeys, ActionPayload, ActiveAccount} from 'actions/interfaces';
 import {

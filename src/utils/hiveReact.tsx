@@ -1,4 +1,4 @@
-import {ExtendedAccount} from 'dsteem';
+import {ExtendedAccount} from '@upvu/dsteem';
 import Steem from 'assets/wallet/icon_steem.svg';
 import Sp from 'assets/wallet/icon_power.svg';
 import React from 'react';

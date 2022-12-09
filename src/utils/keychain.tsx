@@ -1,4 +1,4 @@
-import {CommentOptionsOperation} from 'dsteem';
+import {CommentOptionsOperation} from '@upvu/dsteem';
 import {Account, KeyTypes} from 'actions/interfaces';
 import {MutableRefObject} from 'react';
 import WebView from 'react-native-webview';

@@ -1,4 +1,4 @@
-import {DynamicGlobalProperties, ExtendedAccount} from 'dsteem';
+import {DynamicGlobalProperties, ExtendedAccount} from '@upvu/dsteem';
 import React from 'react';
 import {StyleSheet, Text, useWindowDimensions, View} from 'react-native';
 import {Width} from 'utils/common.types';

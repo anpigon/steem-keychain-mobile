@@ -1,4 +1,4 @@
-import {Operation, Transaction} from 'dsteem';
+import {Operation, Transaction} from '@upvu/dsteem';
 import {KeyTypes} from 'actions/interfaces';
 
 export enum KeychainRequestTypes {

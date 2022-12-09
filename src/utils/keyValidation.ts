@@ -1,4 +1,4 @@
-import {ExtendedAccount, Authority} from 'dsteem';
+import {ExtendedAccount, Authority} from '@upvu/dsteem';
 import {AccountKeys} from 'actions/interfaces';
 import hive, {getClient} from 'utils/hive';
 import {translate} from './localize';

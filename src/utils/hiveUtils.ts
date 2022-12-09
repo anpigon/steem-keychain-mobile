@@ -1,4 +1,4 @@
-import {ExtendedAccount} from 'dsteem';
+import {ExtendedAccount} from '@upvu/dsteem';
 import {
   CollateralizedConversion,
   Delegator,

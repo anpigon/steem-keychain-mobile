@@ -1,4 +1,4 @@
-import {DynamicGlobalProperties, ExtendedAccount} from 'dsteem';
+import {DynamicGlobalProperties, ExtendedAccount} from '@upvu/dsteem';
 import {CurrencyPrices} from 'actions/interfaces';
 import api from 'api/keychain';
 import {toSP} from 'utils/format';

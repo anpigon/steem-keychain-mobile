@@ -1,4 +1,4 @@
-import {ExtendedAccount} from 'dsteem';
+import {ExtendedAccount} from '@upvu/dsteem';
 import {CurrencyPrices, GlobalProperties} from 'actions/interfaces';
 import React from 'react';
 import {StyleSheet, Text} from 'react-native';

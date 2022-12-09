@@ -28,8 +28,11 @@ export default ({
 }: Props) => {
   const {request_id, ...data} = request;
   const {display_msg, id, json, method} = data;
-  const {getUsername, getAccountKey, RequestUsername} =
-    usePotentiallyAnonymousRequest(request, accounts);
+  const {
+    getUsername,
+    getAccountKey,
+    RequestUsername,
+  } = usePotentiallyAnonymousRequest(request, accounts);
 
   return (
     <RequestOperation
@@ -40,6 +43,7 @@ export default ({
       beautifyError
       method={method.toLowerCase() as KeyTypes}
       request={request}
+      selectedUsername={getUsername()}
       closeGracefully={closeGracefully}
       performOperation={async () => {
         return await broadcastJson(
@@ -83,6 +87,7 @@ export const broacastCustomJSONWithoutConfirmation = (
   request: RequestCustomJSON & RequestId,
   sendResponse: (msg: RequestSuccess) => void,
   sendError: (msg: RequestError) => void,
+  has?: boolean,
 ) => {
   processOperationWithoutConfirmation(
     async () => await performBroadcastJSONOperation(accounts, request),

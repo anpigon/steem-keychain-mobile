@@ -1,4 +1,4 @@
-import {Authority} from 'dsteem';
+import {Authority} from '@upvu/dsteem';
 import {Account, KeyTypes} from 'actions/interfaces';
 import {encodeMemo} from 'components/bridge';
 import React from 'react';
@@ -85,6 +85,7 @@ export const encodeWithoutConfirmation = (
   request: RequestEncode & RequestId,
   sendResponse: (msg: RequestSuccess) => void,
   sendError: (msg: RequestError) => void,
+  has?: boolean,
 ) => {
   processOperationWithoutConfirmation(
     () => performEncodeOperation(accounts, request),
