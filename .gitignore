@@ -62,6 +62,17 @@ buck-out/
 
 .env.json
 
+ios/mobileKeychain/GoogleService-Info.plist
+android/app/google-services.json
+ios/GoogleService-Info.plist
+
+# jest related
+.jest/
+/coverage
+
+# env
+.env
+
 # fastlane
 ios/*.mobileprovision
 ios/*.cer

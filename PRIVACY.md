@@ -1,5 +1,5 @@
 ## Privacy Policy
-## Effective date: December 1, 2020
+## Effective date: June 30, 2022
 
 Pigon Coperation (@anpigon) ("us", "we", or "our") provides and operates the Steem Keychain Mobile App (the "Service").
 
@@ -9,7 +9,7 @@ This page informs you of our policies regarding the collection, use, and disclos
 The Steem Keychain Mobile App does not collect any personal data of any kind. Account names and private keys entered into the extension are stored locally, are never transmitted anywhere, and are securely encrypted using the user-chosen password.
 
 ### Usage Data
-The Steem Keychain Mobile App does not collect usage data of any kind.
+The Steem Keychain Mobile App collects encrypted navigation data in an anonymous fashion, through an encrypted communication channel. These information will never be given or sold to a third-party.
 
 ### Tracking & Cookies Data
 The Service does not perform any tracking or store any cookies on users' devices.

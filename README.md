@@ -9,6 +9,7 @@ React Native wallet for the Steem Blockchain
 
 - `npm i`
 - `cp android/gradle.properties.example android/gradle.properties`
+- `cd ios; pod install`
 
 # Run in dev environment
 
