@@ -1,4 +1,10 @@
 {
   "name": "mobileKeychain",
-  "displayName": "Steem Keychain for Mobile"
+  "displayName": "Steem Keychain for Mobile",
+  "android": {
+    "package": "com.mobilekeychain.steem"
+  },
+  "ios": {
+    "bundleIdentifier": "com.mobilekeychain.steem"
+  }
 }

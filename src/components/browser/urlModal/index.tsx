@@ -1,4 +1,4 @@
-import Clipboard from '@react-native-community/clipboard';
+import Clipboard from '@react-native-clipboard/clipboard';
 import {ActionPayload, BrowserPayload, Page} from 'actions/interfaces';
 import Copy from 'assets/browser/copy.svg';
 import ShareIcon from 'assets/browser/share.svg';
