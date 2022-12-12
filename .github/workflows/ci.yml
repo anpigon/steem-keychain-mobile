@@ -11,16 +11,14 @@ jobs:
   build_android:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version-file: '.nvmrc'
 
       - name: Cache node modules
         id: node-cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         env:
           cache-name: cache-node-modules
         with:
@@ -28,7 +26,7 @@ jobs:
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-modules-
-
+          
       - name: Install Dependencies
         if: steps.node-cache.outputs.cache-hit != 'true'
         run: npm install
@@ -37,10 +35,14 @@ jobs:
         run: npm run test
 
       - name: Cache Gradle Wrapper
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
-          path: ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties', '**/buildSrc/**/*.kt') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
       - name: Cache Gradle Dependencies
         uses: actions/cache@v2
@@ -69,7 +71,7 @@ jobs:
           keyPassword: ${{ secrets.ANDROID_SIGNING_KEY_PASSWORD }}
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: Signed App Bundle
           path: ${{steps.sign_app.outputs.signedReleaseFile}}
