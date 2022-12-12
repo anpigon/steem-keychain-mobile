@@ -8,6 +8,7 @@ export type MainDrawerStackParam = {
   AddAccountStack: undefined;
   SettingsScreen: undefined;
   ABOUT: undefined;
+  Governance: undefined;
 };
 
 export type BrowserNavigation = StackNavigationProp<
@@ -21,7 +22,15 @@ export type BrowserNavigationProps = {
   route: BrowserNavigationRoute;
 };
 
-type WalletNavigation = StackNavigationProp<MainDrawerStackParam, 'WALLET'>;
+export type WalletNavigation = StackNavigationProp<
+  MainDrawerStackParam,
+  'WALLET'
+>;
+
+export type GovernanceNavigation = StackNavigationProp<
+  MainDrawerStackParam,
+  'Governance'
+>;
 
 export type WalletNavigationProps = {
   navigation: WalletNavigation;
@@ -35,3 +44,13 @@ export type MgtNavigation = StackNavigationProp<
 export type MgtNavigationProps = {
   navigation: MgtNavigation;
 };
+
+export type AboutNavigation = StackNavigationProp<
+  MainDrawerStackParam,
+  'ABOUT'
+>;
+
+export type SettingsNavigation = StackNavigationProp<
+  MainDrawerStackParam,
+  'SettingsScreen'
+>;

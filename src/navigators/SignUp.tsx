@@ -1,5 +1,5 @@
 import {createStackNavigator} from '@react-navigation/stack';
-import MoreInformation from 'components/info_buttons/MoreInfo';
+import MoreInformation, {Info} from 'components/info_buttons/MoreInfo';
 import React from 'react';
 import AddAccountByKey from 'screens/addAccounts/AddAccountByKey';
 import ScanQR from 'screens/addAccounts/ScanQR';
@@ -29,8 +29,9 @@ export default () => {
       <Stack.Screen
         name="AddAccountByKeyScreen"
         options={{
+          headerBackTitle: ' ',
           title: translate('navigation.add_account'),
-          headerRight: () => <MoreInformation type="moreInfo" />,
+          headerRight: () => <MoreInformation type={Info.KEYS} />,
           headerTintColor: 'white',
           headerTransparent: true,
         }}
@@ -39,11 +40,12 @@ export default () => {
       <Stack.Screen
         name="ScanQRScreen"
         options={{
+          headerBackTitle: translate('navigation.add_account'),
           headerStyle: {backgroundColor: 'black'},
           headerTintColor: 'white',
           title: '',
           headerRight: () => {
-            return <MoreInformation type="qr" />;
+            return <MoreInformation type={Info.QR_ACCOUNT} />;
           },
         }}
         component={ScanQR}

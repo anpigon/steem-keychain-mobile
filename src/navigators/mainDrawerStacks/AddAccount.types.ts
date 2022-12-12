@@ -1,5 +1,5 @@
-import { RouteProp } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
+import {RouteProp} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 
 export type AddAccountFromWalletParamList = {
   ScanQRScreen: {wallet: boolean};
@@ -7,11 +7,11 @@ export type AddAccountFromWalletParamList = {
 };
 
 export type AddAccFromWalletNavigation = StackNavigationProp<
-AddAccountFromWalletParamList,
+  AddAccountFromWalletParamList,
   'AddAccountFromWalletScreen'
 >;
 type AddAccFromWalletNavigationRoute = RouteProp<
-AddAccountFromWalletParamList,
+  AddAccountFromWalletParamList,
   'AddAccountFromWalletScreen'
 >;
 

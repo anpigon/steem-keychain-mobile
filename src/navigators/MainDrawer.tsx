@@ -10,6 +10,7 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import {translate} from 'utils/localize';
 import {MainDrawerStackParam} from './MainDrawer.types';
+// import GovernanceStack from './mainDrawerStacks/GovernanceStack';
 
 const Drawer = createDrawerNavigator<MainDrawerStackParam>();
 
@@ -28,9 +29,6 @@ export default () => {
       drawerContent={(props) => <DrawerContent {...props} />}>
       <Drawer.Screen
         name="WALLET"
-        options={{
-          title: translate('navigation.wallet'),
-        }}
         component={WalletStack}
       />
       <Drawer.Screen
@@ -52,6 +50,14 @@ export default () => {
         options={{title: translate('navigation.add_account')}}
         component={AddAccountStack}
       />
+      {/* <Drawer.Screen
+        name="Governance"
+        options={{
+          title: translate('navigation.governance'),
+          unmountOnBlur: true,
+        }}
+        component={GovernanceStack}
+      /> */}
       <Drawer.Screen
         name="SettingsScreen"
         component={SettingsStack}
