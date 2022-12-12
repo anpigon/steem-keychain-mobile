@@ -7,12 +7,13 @@ import CustomInput from 'components/form/CustomInput';
 import Button from 'components/form/EllipticButton';
 import Background from 'components/ui/Background';
 import Separator from 'components/ui/Separator';
+import useLockedPortrait from 'hooks/useLockedPortrait';
 import {
   AddAccFromWalletNavigation,
   AddAccFromWalletNavigationProps,
 } from 'navigators/mainDrawerStacks/AddAccount.types';
 import {AddAccNavigationProps} from 'navigators/Signup.types';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
   StatusBar,
   StyleSheet,
@@ -26,7 +27,6 @@ import {connect, ConnectedProps} from 'react-redux';
 import {RootState} from 'store';
 import validateNewAccount from 'utils/keyValidation';
 import {translate} from 'utils/localize';
-import axios from 'axios';
 
 const AddAccountByKey = ({
   addAccount,
@@ -34,9 +34,12 @@ const AddAccountByKey = ({
   route,
 }: PropsFromRedux &
   (AddAccNavigationProps | AddAccFromWalletNavigationProps)) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [account, setAccount] = useState('');
+  const [isLoading, setIsLoading] = useState(false);  
+  const [account, setAccount] = useState('');  
   const [key, setKey] = useState('');
+
+  useLockedPortrait(navigation);
+
   const onImportKeys = async () => {
     if (!account || !key) return;
 
@@ -49,21 +52,19 @@ const AddAccountByKey = ({
         const wallet = route.params ? route.params.wallet : false;
         addAccount(_account, keys, wallet, false);
       } else {
-        Toast.show(translate('toast.error_add_account'));
+        Toast.show(translate('toast.error_add_account'), Toast.LONG);
       }
     } catch (e) {
       console.error(e);
       if (e instanceof Error) {
-        Toast.show(e.message);
+        Toast.show(e.message, Toast.LONG);
       } else {
-        Toast.show(e.toString());
+        Toast.show(e.toString(), Toast.LONG);
       }
-    } finally {
-      setIsLoading(false);
     }
   };
-  const { height } = useWindowDimensions();
-  
+  const {height} = useWindowDimensions();
+
   return (
     <Background>
       <>
@@ -104,7 +105,6 @@ const AddAccountByKey = ({
           />
           <Separator height={height / 7.5} />
           <Button
-            isLoading={isLoading}
             title={translate('common.import').toUpperCase()}
             onPress={onImportKeys}
           />

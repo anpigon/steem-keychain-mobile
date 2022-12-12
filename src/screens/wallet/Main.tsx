@@ -3,50 +3,93 @@ import {
   loadAccount,
   loadPrices,
   loadProperties,
-} from 'actions/index';
+} from 'actions/hive';
 import UserPicker from 'components/form/UserPicker';
 import PercentageDisplay from 'components/hive/PercentageDisplay';
+import Transactions from 'components/hive/Transactions';
+import Survey from 'components/survey';
 import ScreenToggle from 'components/ui/ScreenToggle';
 import WalletPage from 'components/ui/WalletPage';
-import React, {useEffect} from 'react';
-import {StyleSheet, useWindowDimensions, View} from 'react-native';
+import useLockedPortrait from 'hooks/useLockedPortrait';
+import {WalletNavigation} from 'navigators/MainDrawer.types';
+import React, {useEffect, useRef} from 'react';
+import {
+  AppState,
+  AppStateStatus,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import {connect, ConnectedProps} from 'react-redux';
 import Primary from 'screens/wallet/Primary';
 import Tokens from 'screens/wallet/Tokens';
 import {RootState} from 'store';
 import {Width} from 'utils/common.types';
+import {restartHASSockets} from 'utils/hiveAuthenticationService';
 import {getVotingDollarsPerAccount, getVP} from 'utils/hiveUtils';
 import {translate} from 'utils/localize';
 
 const Main = ({
   loadAccount,
   loadProperties,
-  loadBittrex,
+  loadPrices,
   fetchPhishingAccounts,
   user,
   properties,
   accounts,
   lastAccount,
-}: PropsFromRedux) => {
+  navigation,
+  hive_authentication_service,
+}: PropsFromRedux & {navigation: WalletNavigation}) => {
   const styles = getDimensionedStyles(useWindowDimensions());
 
   useEffect(() => {
-    loadAccount(lastAccount || accounts[0].name, true);
+    loadAccount(lastAccount || accounts[0].name);
     loadProperties();
-    loadBittrex();
+    loadPrices();
     fetchPhishingAccounts();
   }, [
     loadAccount,
     accounts,
     loadProperties,
-    loadBittrex,
+    loadPrices,
     fetchPhishingAccounts,
     lastAccount,
   ]);
 
+  useLockedPortrait(navigation);
+
+  const appState = useRef(AppState.currentState);
+
+  useEffect(() => {
+    const handler = (nextAppState: AppStateStatus) => {
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextAppState === 'active'
+      ) {
+        if (
+          hive_authentication_service.instances.length &&
+          !hive_authentication_service.instances.filter(
+            (e) => e.init && e.connected,
+          ).length
+        ) {
+          restartHASSockets();
+        }
+      }
+
+      appState.current = nextAppState;
+    };
+    AppState.addEventListener('change', handler);
+
+    return () => {
+      AppState.removeEventListener('change', handler);
+    };
+  }, []);
+
   if (!user) {
     return null;
   }
+
   return (
     <WalletPage>
       <>
@@ -78,12 +121,14 @@ const Main = ({
         <ScreenToggle
           style={styles.toggle}
           menu={[
-            translate('wallet.tab_menus.primary'),
-            translate('wallet.tab_menus.tokens'),
+            translate(`wallet.menu.hive`),
+            translate(`wallet.menu.history`),
+            translate(`wallet.menu.tokens`),
           ]}
           toUpperCase
-          components={[<Primary />, <Tokens />]}
+          components={[<Primary />, <Transactions user={user} />, <Tokens />]}
         />
+        <Survey navigation={navigation} />
       </>
     </WalletPage>
   );
@@ -107,6 +152,7 @@ const getDimensionedStyles = ({width}: Width) =>
       paddingRight: width * 0.05,
     },
   });
+
 const connector = connect(
   (state: RootState) => {
     return {
@@ -114,12 +160,13 @@ const connector = connect(
       properties: state.properties,
       accounts: state.accounts,
       lastAccount: state.lastAccount.name,
+      hive_authentication_service: state.hive_authentication_service,
     };
   },
   {
     loadAccount,
     loadProperties,
-    loadBittrex: loadPrices,
+    loadPrices,
     fetchPhishingAccounts,
   },
 );

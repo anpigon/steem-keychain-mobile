@@ -14,15 +14,13 @@ import {
 import Browser from 'components/browser';
 import {BrowserNavigationProps} from 'navigators/MainDrawer.types';
 import React from 'react';
+import Orientation from 'react-native-orientation-locker';
 import {connect, ConnectedProps} from 'react-redux';
 import {RootState} from 'store';
 
 const BrowserScreen = ({
   accounts,
-  activeTab,
-  tabs,
-  history,
-  favorites,
+  browser,
   changeTab,
   addTab,
   updateTab,
@@ -39,15 +37,23 @@ const BrowserScreen = ({
   showManagement,
   preferences,
 }: BrowserPropsFromRedux & BrowserNavigationProps) => {
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      Orientation.getAutoRotateState((s) => {
+        if (s) {
+          Orientation.unlockAllOrientations();
+        }
+      });
+    });
+
+    return unsubscribe;
+  }, [navigation]);
   return (
     <Browser
       accounts={accounts}
       navigation={navigation}
       route={route}
-      activeTab={activeTab}
-      tabs={tabs}
-      history={history}
-      favorites={favorites}
+      browser={browser}
       changeTab={changeTab}
       addTab={addTab}
       updateTab={updateTab}
@@ -58,7 +64,6 @@ const BrowserScreen = ({
       addToFavorites={addToFavorites}
       removeFromFavorites={removeFromFavorites}
       setBrowserFocus={setBrowserFocus}
-      showManagement={showManagement}
       showManagementScreen={showManagementScreen}
       preferences={preferences}
     />
@@ -68,11 +73,7 @@ const BrowserScreen = ({
 const mapStateToProps = (state: RootState) => {
   return {
     accounts: state.accounts,
-    activeTab: state.browser.activeTab,
-    tabs: state.browser.tabs,
-    history: state.browser.history,
-    favorites: state.browser.whitelist,
-    showManagement: state.browser.showManagement,
+    browser: state.browser,
     preferences: state.preferences,
   };
 };

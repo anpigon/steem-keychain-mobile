@@ -1,46 +1,61 @@
 import Steem from 'assets/wallet/icon_steem.svg';
 import Sp from 'assets/wallet/icon_power.svg';
+import Savings from 'assets/wallet/icon_savings.svg';
 import AccountValue from 'components/hive/AccountValue';
 import TokenDisplay from 'components/hive/TokenDisplay';
-import Transactions from 'components/hive/Transactions';
 import {
   Send,
   SendConversion,
   SendDelegation,
+  SendDeposit,
   SendPowerDown,
   SendPowerUp,
+  SendWithdraw,
 } from 'components/operations/OperationsButtons';
 import Separator from 'components/ui/Separator';
-import React, {useEffect} from 'react';
-import {StyleSheet, useWindowDimensions, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, Text, useWindowDimensions, View} from 'react-native';
 import {connect, ConnectedProps} from 'react-redux';
 import {RootState} from 'store';
 import {logScreenView} from 'utils/analytics';
 import {toSP} from 'utils/format';
+import {translate} from 'utils/localize';
 
-const Primary = ({user, bittrex, properties}: PropsFromRedux) => {
+enum Token {
+  NONE,
+  HIVE,
+  HBD,
+  HP,
+  SAVINGS,
+}
+
+const Primary = ({user, prices, properties}: PropsFromRedux) => {
   const {width} = useWindowDimensions();
-
   useEffect(() => {
     logScreenView('WalletScreen');
   }, []);
-
+  const [toggled, setToggled] = useState(Token.NONE);
   return (
     <View style={styles.container}>
-      <Separator height={20} />
+      <Separator height={30} />
       <AccountValue
         account={user.account}
-        bittrex={bittrex}
+        prices={prices}
         properties={properties}
       />
-      <Separator height={20} />
+      <Separator height={30} />
+
       <TokenDisplay
         color="#4CA2F0"
         name="STEEM"
         currency="STEEM"
         value={parseFloat(user.account.balance as string)}
         logo={<Steem width={width / 15} fill="#4CA2F0" />}
-        price={bittrex.steem}
+        price={prices.steem}
+        toggled={toggled === Token.HIVE}
+        setToggle={() => {
+          setToggled(toggled === Token.HIVE ? Token.NONE : Token.HIVE);
+        }}
         buttons={[
           <Send key="send_steem" currency="STEEM" />,
           <SendPowerUp key="pu" />,
@@ -54,10 +69,15 @@ const Primary = ({user, bittrex, properties}: PropsFromRedux) => {
         currency="SBD"
         value={parseFloat(user.account.sbd_balance as string)}
         logo={<Steem width={width / 15} fill="#005C09" />}
-        price={bittrex.steem_dollar}
+        price={prices.steem_dollar}
+        toggled={toggled === Token.HBD}
+        setToggle={() => {
+          setToggled(toggled === Token.HBD ? Token.NONE : Token.HBD);
+        }}
         buttons={[
           <Send key="send_sbd" currency="SBD" />,
           <SendConversion key="conversion" currency="SBD" />,
+          <View style={{width: 20}}></View>,
         ]}
       />
       <Separator height={20} />
@@ -75,23 +95,61 @@ const Primary = ({user, bittrex, properties}: PropsFromRedux) => {
           properties.globals,
         )}
         logo={<Sp width={width / 15} fill="#e59d15" />}
-        price={bittrex.steem_dollar}
-        buttons={[<SendDelegation key="del" />, <SendPowerDown key="pd" />]}
+        toggled={toggled === Token.HP}
+        setToggle={() => {
+          setToggled(toggled === Token.HP ? Token.NONE : Token.HP);
+        }}
+        price={prices.steem_dollar}
+        buttons={[
+          <SendDelegation key="del" />,
+          <SendPowerDown key="pd" />,
+          <View style={{width: 20}}></View>,
+        ]}
       />
       <Separator height={20} />
-      <Transactions user={user} />
+      <TokenDisplay
+        color="#7E8C9A"
+        name={translate('common.savings').toUpperCase()}
+        currency="HIVE"
+        value={parseFloat(user.account.savings_balance as string)}
+        secondaryCurrency="HBD"
+        secondaryValue={parseFloat(user.account.savings_hbd_balance as string)}
+        logo={<Savings width={width / 15} />}
+        toggled={toggled === Token.SAVINGS}
+        setToggle={() => {
+          setToggled(toggled === Token.SAVINGS ? Token.NONE : Token.SAVINGS);
+        }}
+        bottomLeft={
+          <Text>
+            <Text style={styles.apr}>HBD APR:</Text>
+            <Text style={styles.aprValue}>
+              {'   '}
+              {properties.globals && properties.globals.hbd_interest_rate
+                ? `${properties.globals.hbd_interest_rate / 100}%`
+                : ''}
+            </Text>
+          </Text>
+        }
+        buttons={[
+          <SendWithdraw key="savings_withdraw" currency="HBD" />,
+          <SendDeposit key="savings_deposit" currency="HBD" />,
+          <View style={{width: 20}}></View>,
+        ]}
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {width: '100%', flex: 1},
+  apr: {color: '#7E8C9A', fontSize: 14},
+  aprValue: {color: '#3BB26E', fontSize: 14},
 });
 
 const mapStateToProps = (state: RootState) => {
   return {
     user: state.activeAccount,
-    bittrex: state.bittrex,
+    prices: state.currencyPrices,
     properties: state.properties,
   };
 };

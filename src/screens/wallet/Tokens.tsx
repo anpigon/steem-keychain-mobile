@@ -4,11 +4,12 @@ import EngineTokenDisplay from 'components/hive/EngineTokenDisplay';
 import HiveEngineAccountValue from 'components/hive/HiveEngineAccountValue';
 import Loader from 'components/ui/Loader';
 import Separator from 'components/ui/Separator';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {connect, ConnectedProps} from 'react-redux';
 import {RootState} from 'store';
 import {logScreenView} from 'utils/analytics';
+import {getHiveEngineTokenValue} from 'utils/hiveEngine';
 import {translate} from 'utils/localize';
 
 const Tokens = ({
@@ -18,14 +19,14 @@ const Tokens = ({
   loadTokensMarket,
   tokens,
   userTokens,
-  bittrex,
+  prices,
   tokensMarket,
 }: PropsFromRedux) => {
   useEffect(() => {
     loadTokens();
     loadTokensMarket();
   }, [loadTokens, loadTokensMarket]);
-  
+
   useEffect(() => {
     logScreenView('EngineWalletScreen');
   }, []);
@@ -36,13 +37,25 @@ const Tokens = ({
     }
   }, [loadUserTokens, user.name]);
 
+  const [toggled, setToggled] = useState<number>(null);
   const renderContent = () => {
-    if (userTokens.loading) {
-      return <Loader animating />;
+    if (userTokens.loading || !tokensMarket.length) {
+      return (
+        <View style={{flex: 1, justifyContent: 'center'}}>
+          <Loader animating />
+        </View>
+      );
     } else if (userTokens.list.length) {
+      const list = userTokens.list.sort((a, b) => {
+        return (
+          getHiveEngineTokenValue(b, tokensMarket) -
+          getHiveEngineTokenValue(a, tokensMarket)
+        );
+      });
       return (
         <FlatList
-          data={userTokens.list}
+          data={list}
+          contentContainerStyle={styles.flatlist}
           keyExtractor={(item) => item._id.toString()}
           ItemSeparatorComponent={() => <Separator height={10} />}
           renderItem={({item}) => (
@@ -50,6 +63,11 @@ const Tokens = ({
               token={item}
               tokensList={tokens}
               market={tokensMarket}
+              toggled={toggled === item._id}
+              setToggle={() => {
+                if (toggled === item._id) setToggled(null);
+                else setToggled(item._id);
+              }}
             />
           )}
         />
@@ -65,7 +83,7 @@ const Tokens = ({
     <View style={styles.container}>
       <Separator />
       <HiveEngineAccountValue
-        bittrex={bittrex}
+        prices={prices}
         tokens={userTokens.list}
         tokensMarket={tokensMarket}
       />
@@ -77,6 +95,7 @@ const Tokens = ({
 
 const styles = StyleSheet.create({
   container: {flex: 1},
+  flatlist: {paddingBottom: 20},
   no_tokens: {
     fontWeight: 'bold',
     color: 'black',
@@ -91,7 +110,7 @@ const mapStateToProps = (state: RootState) => {
     tokens: state.tokens,
     userTokens: state.userTokens,
     tokensMarket: state.tokensMarket,
-    bittrex: state.bittrex,
+    prices: state.currencyPrices,
   };
 };
 const connector = connect(mapStateToProps, {

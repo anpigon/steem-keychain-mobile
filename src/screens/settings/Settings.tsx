@@ -1,5 +1,6 @@
 import {loadAccount} from 'actions/hive';
 import {setRpc} from 'actions/index';
+import {Rpc} from 'actions/interfaces';
 import {removePreference} from 'actions/preferences';
 import CustomPicker from 'components/form/CustomPicker';
 import UserPicker from 'components/form/UserPicker';
@@ -7,6 +8,8 @@ import CollaspibleSettings from 'components/settings/CollapsibleSettings';
 import FocusAwareStatusBar from 'components/ui/FocusAwareStatusBar';
 import SafeArea from 'components/ui/SafeArea';
 import Separator from 'components/ui/Separator';
+import useLockedPortrait from 'hooks/useLockedPortrait';
+import {SettingsNavigation} from 'navigators/MainDrawer.types';
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {connect, ConnectedProps} from 'react-redux';
@@ -14,7 +17,7 @@ import {RootState} from 'store';
 import {rpcList} from 'utils/hiveUtils';
 import {translate} from 'utils/localize';
 
-const AccountManagement = ({
+const Settings = ({
   setRpc,
   settings,
   accounts,
@@ -22,7 +25,9 @@ const AccountManagement = ({
   loadAccount,
   preferences,
   removePreference,
-}: PropsFromRedux) => {
+  navigation,
+}: PropsFromRedux & {navigation: SettingsNavigation}) => {
+  useLockedPortrait(navigation);
   const showPreferencesHandler = () => {
     const userPreference = preferences.find((e) => e.username === active.name);
     if (!userPreference || !userPreference.domains.length)
@@ -59,6 +64,9 @@ const AccountManagement = ({
         <CustomPicker
           onSelected={setRpc}
           selectedValue={settings.rpc}
+          labelCreator={(rpc: Rpc) =>
+            `${rpc.uri} ${rpc.testnet ? '(TESTNET)' : ''}`
+          }
           list={rpcList}
           prompt={translate('components.picker.prompt_rpc')}
         />
@@ -118,4 +126,4 @@ const connector = connect(mapStateToProps, {
   removePreference,
 });
 type PropsFromRedux = ConnectedProps<typeof connector>;
-export default connector(AccountManagement);
+export default connector(Settings);
