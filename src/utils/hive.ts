@@ -60,8 +60,9 @@ export const setRpc = async (rpcObj: Rpc | string) => {
   }
   client = new Client(rpc, {timeout});
   hiveTx.config.node = rpc;
-  f (typeof rpcObj !== 'string') {
-    client.chainId = Buffer.from(rpcObj.chainId || DEFAULT_CHAIN_ID);
+  if (typeof rpcObj !== 'string') {
+    // client.chainId = Buffer.from(rpcObj.chainId || DEFAULT_CHAIN_ID);
+    // client.options.chainId = Buffer.from(rpcObj.chainId || DEFAULT_CHAIN_ID);
     hiveTx.config.chain_id = rpcObj.chainId || DEFAULT_CHAIN_ID;
   }
 };

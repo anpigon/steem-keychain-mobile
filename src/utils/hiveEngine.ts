@@ -34,52 +34,52 @@ export const loadTokensMarket = (): AppThunk => async (dispatch) => {
   dispatch(action);
 };
 
-export const loadUserTokens = (account: string): AppThunk => async (
-  dispatch,
-) => {
-  try {
-    dispatch({
-      type: CLEAR_USER_TOKENS,
-    });
-    let tokensBalance: TokenBalance[] = await hsc.find('tokens', 'balances', {
-      account,
-    });
-    tokensBalance = tokensBalance
-      .filter((t) => parseFloat(t.balance) !== 0)
-      .sort((a, b) => parseFloat(b.balance) - parseFloat(a.balance));
-    const action: ActionPayload<TokenBalance[]> = {
-      type: LOAD_USER_TOKENS,
-      payload: tokensBalance,
+export const loadUserTokens =
+  (account: string): AppThunk =>
+  async (dispatch) => {
+    try {
+      dispatch({
+        type: CLEAR_USER_TOKENS,
+      });
+      let tokensBalance: TokenBalance[] = await hsc.find('tokens', 'balances', {
+        account,
+      });
+      tokensBalance = tokensBalance
+        .filter((t) => parseFloat(t.balance) !== 0)
+        .sort((a, b) => parseFloat(b.balance) - parseFloat(a.balance));
+      const action: ActionPayload<TokenBalance[]> = {
+        type: LOAD_USER_TOKENS,
+        payload: tokensBalance,
+      };
+      dispatch(action);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+export const loadTokenHistory =
+  (account: string, currency: string): AppThunk =>
+  async (dispatch) => {
+    dispatch({type: CLEAR_TOKEN_HISTORY});
+    //let tokenHistory: TokenTransaction[] = (
+    let tokenHistory: any[] = (
+      await hiveEngineAPI.get('accountHistory', {
+        params: {account, symbol: currency, type: 'user'},
+      })
+    ).data;
+
+    tokenHistory = tokenHistory
+      .filter((e) => e.operation === 'tokens_transfer')
+      .map((e) => {
+        e.amount = `${e.quantity} ${e.symbol}`;
+        return e;
+      });
+    const action: ActionPayload<TokenTransaction[]> = {
+      type: LOAD_TOKEN_HISTORY,
+      payload: tokenHistory,
     };
     dispatch(action);
-  } catch (e) {
-    console.log(e);
-  }
-};
-
-export const loadTokenHistory = (
-  account: string,
-  currency: string,
-): AppThunk => async (dispatch) => {
-  dispatch({type: CLEAR_TOKEN_HISTORY});
-  //let tokenHistory: TokenTransaction[] = (
-  let tokenHistory: any[] = (
-    await hiveEngineAPI.get('accountHistory', {
-      params: {account, symbol: currency, type: 'user'},
-    })
-  ).data;
-
-  tokenHistory = tokenHistory
-    .filter((e) => e.operation === 'tokens_transfer')
-    .map((e) => {
-      e.amount = `${e.quantity} ${e.symbol}`;
-      return e;
-    });
-  const action: ActionPayload<TokenTransaction[]> = {
-    type: LOAD_TOKEN_HISTORY,
-    payload: tokenHistory,
   };
-  dispatch(action);
 
 export const tryConfirmTransaction = async (trxId: string) => {
   let result;
