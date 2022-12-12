@@ -1,4 +1,4 @@
-import mockAsyncStorage from '@react-native-community/async-storage/jest/async-storage-mock';
+import mockAsyncStorage from '@react-native-async-storage/async-storage/jest/async-storage-mock';
 import {WebSocket} from 'mock-socket';
 global.WebSocket = WebSocket;
 
@@ -22,7 +22,7 @@ jest.mock('react-native-simple-toast', () => ({
   SHORT: jest.fn(),
 }));
 
-jest.mock('@react-native-community/async-storage', () => mockAsyncStorage);
+jest.mock('@react-native-async-storage/async-storage', () => mockAsyncStorage);
 
 jest.mock('redux-persist', () => {
   const real = jest.requireActual('redux-persist');

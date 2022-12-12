@@ -51,10 +51,10 @@
     "codepush:android:staging": "appcenter codepush release-react -a anpigon/steem-keychain-mobile-android -d Staging"
   },
   "dependencies": {
-    "@react-native-community/async-storage": "^1.12.1",
+    "@react-native-async-storage/async-storage": "^1.17.11",
+    "@react-native-community/blur": "^3.6.0",
     "@react-native-community/clipboard": "^1.5.1",
     "@react-native-community/masked-view": "^0.1.11",
-    "@react-native-community/blur": "^3.6.0",
     "@react-native-firebase/analytics": "^12.9.3",
     "@react-native-firebase/app": "^12.9.3",
     "@react-native-picker/picker": "^2.4.8",
